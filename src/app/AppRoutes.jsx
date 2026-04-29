@@ -3,12 +3,15 @@ import Login from "../pages/Login";
 import ProtectedRoute from "../routes/ProtectedRoute";
 import Admin from "../pages/Admin";
 import Analyst from "../pages/Analyst";
+import NotFound from "../pages/NotFound";
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+
+        <Route path="*" element={<NotFound />} />
 
         <Route
           path="/admin"
