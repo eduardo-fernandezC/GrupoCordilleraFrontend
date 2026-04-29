@@ -7,7 +7,7 @@ const NotFound = () => {
           alt="404"
         />
       </div>
-      <a href="/">🡸 Volver al inicio</a>
+      <a href="/">🡸 Volver</a>
     </>
   );
 };
