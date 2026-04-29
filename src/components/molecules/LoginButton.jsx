@@ -5,19 +5,17 @@ import { auth0Config } from "../../auth/authConfig";
 const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
 
+  const handleLogin = () => {
+    loginWithRedirect({
+      authorizationParams: {
+        audience: auth0Config.audience,
+        prompt: "login",
+      },
+    });
+  };
+
   return (
-    <Button
-      text="iniciar sesion"
-      onClick={() =>
-        loginWithRedirect({
-          authorizationParams: {
-            audience: auth0Config.audience,
-            prompt: "login",
-          },
-        })
-      }
-      className=""
-    ></Button>
+    <Button text="iniciar sesion" onClick={handleLogin} className=""></Button>
   );
 };
 
