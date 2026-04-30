@@ -1,11 +1,11 @@
 import Footer from "../organisms/Footer";
+import Navbar from "../organisms/Navbar";
 
 const LandingTemplate = ({ children }) => {
   return (
     <div>
-      <main>
-        {children}
-      </main>
+      <Navbar />
+      <main>{children}</main>
       <Footer />
     </div>
   );
