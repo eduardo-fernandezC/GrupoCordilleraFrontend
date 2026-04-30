@@ -1,0 +1,47 @@
+.not-found-page {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1.5rem;
+	background:
+		radial-gradient(circle at top, rgba(84, 131, 179, 0.16), transparent 34%),
+		linear-gradient(180deg, #03111f 0%, var(--color-bg) 100%);
+}
+
+.not-found-page__content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	text-align: center;
+}
+
+.not-found-page__image {
+	max-width: min(420px, 90vw);
+	width: 100%;
+	height: auto;
+	border-radius: 1rem;
+	box-shadow: 0 18px 45px var(--color-shadow);
+}
+
+.not-found-page__link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.75rem 1rem;
+	border-radius: 999px;
+	background: rgba(5, 38, 89, 0.88);
+	border: 1px solid var(--color-border);
+	color: var(--color-text);
+	text-decoration: none;
+	font-weight: 700;
+	transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.not-found-page__link:hover,
+.not-found-page__link:focus-visible {
+	transform: translateY(-1px);
+	background: rgba(84, 131, 179, 0.22);
+}
