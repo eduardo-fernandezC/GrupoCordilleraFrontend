@@ -3,9 +3,9 @@ import Navbar from "../organisms/Navbar";
 
 const LandingTemplate = ({ children }) => {
   return (
-    <div>
+    <div className="app-shell">
       <Navbar />
-      <main>{children}</main>
+      <main className="app-shell__main">{children}</main>
       <Footer />
     </div>
   );
