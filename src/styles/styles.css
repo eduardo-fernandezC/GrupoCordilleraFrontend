@@ -1,0 +1,38 @@
+:root {
+	--color-bg: #021024;
+	--color-surface: #052659;
+	--color-brand: #5483b3;
+	--color-secondary: #7da0ca;
+	--color-text: #c1e8ff;
+	--color-accent: #ffb703;
+	--color-border: rgba(193, 232, 255, 0.16);
+	--color-shadow: rgba(2, 16, 36, 0.45);
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	min-width: 320px;
+	min-height: 100vh;
+	background: #021024;
+	color: #c1e8ff;
+	font-family: "Avenir Next", "Segoe UI", "Trebuchet MS", sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+a {
+	color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}

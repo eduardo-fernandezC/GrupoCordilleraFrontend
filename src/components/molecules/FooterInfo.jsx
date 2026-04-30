@@ -1,4 +1,5 @@
 import Text from "../atoms/Text";
+import "../../styles/components/molecules/FooterInfo.css";
 
 const FooterInfo = () => {
   return (

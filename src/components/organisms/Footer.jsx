@@ -1,4 +1,5 @@
 import FooterInfo from "../molecules/FooterInfo";
+import "../../styles/components/organisms/Footer.css";
 
 const Footer = () => {
   return (

@@ -1,5 +1,6 @@
 import Footer from "../organisms/Footer";
 import Navbar from "../organisms/Navbar";
+import "../../styles/components/templates/LandingTemplate.css";
 
 const LandingTemplate = ({ children }) => {
   return (

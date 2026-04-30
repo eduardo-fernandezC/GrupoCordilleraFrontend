@@ -1,6 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from "react-router-dom";
 import { getRoles } from "../../auth/Roles";
+import "../../styles/components/organisms/Navbar.css";
 
 const Navbar = () => {
   const { isAuthenticated, user } = useAuth0();
