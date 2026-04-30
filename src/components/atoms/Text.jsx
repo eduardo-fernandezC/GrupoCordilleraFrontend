@@ -1,3 +1,5 @@
-export default function Text({ children, className }) {
+const Text = ({ children, className }) => {
   return <span className={className}>{children}</span>;
-}
+};
+
+export default Text;
