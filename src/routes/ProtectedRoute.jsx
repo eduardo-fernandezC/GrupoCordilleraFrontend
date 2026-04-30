@@ -6,11 +6,11 @@ const ProtectedRoute = ({ children, role }) => {
   const { isAuthenticated, user, isLoading } = useAuth0();
 
   if (isLoading) {
-    return <h1>Cargnado...</h1>;
+    return <h1>Cargando...</h1>;
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/" replace />; // redirige a la pagina de inicio de sesion si no está autenticado
+    return <Navigate to="/" replace />; // redirige a la pagina de inicio de sesion si no esta autenticado
   }
 
   const roles = getRoles(user);

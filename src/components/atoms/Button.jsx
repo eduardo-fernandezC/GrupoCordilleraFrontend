@@ -1,3 +1,5 @@
+import "../../styles/components/atoms/Button.css";
+
 const Button = ({
   children,
   text,
