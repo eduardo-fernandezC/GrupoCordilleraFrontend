@@ -1,14 +1,14 @@
-import LandingTemplate from "../components/organisms/HeroSection";
-import HeroSection from "../components/templates/LandingTemplate";
+import HeroSection from "../components/organisms/HeroSection";
 import useRoleRedirect from "../hooks/useRoleRedirect";
+import "../styles/pages/Login.css";
 
 const Login = () => {
   useRoleRedirect();
 
   return (
-    <LandingTemplate>
+    <main className="login-page">
       <HeroSection />
-    </LandingTemplate>
+    </main>
   );
 };
 

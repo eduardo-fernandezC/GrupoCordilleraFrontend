@@ -6,7 +6,9 @@ const LandingTemplate = ({ children }) => {
   return (
     <div className="app-shell">
       <Navbar />
-      <main className="app-shell__main">{children}</main>
+      <main className="app-shell__main">
+        <section className="app-shell__content">{children}</section>
+      </main>
       <Footer />
     </div>
   );
