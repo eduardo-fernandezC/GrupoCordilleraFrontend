@@ -1,6 +1,6 @@
 .site-navbar {
-	width: min(1120px, calc(100% - 2rem));
-	margin: 1rem auto 0;
+	width: 100%;
+	margin: 1rem 0 0 0;
 	padding: 0.95rem 1rem;
 	display: flex;
 	align-items: center;
