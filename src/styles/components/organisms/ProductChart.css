@@ -1,0 +1,29 @@
+.product-chart {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.product-chart__title {
+	margin: 0;
+	font-size: 1.05rem;
+	color: var(--color-brand);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.product-chart__container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.product-chart .recharts-pie-sector path {
+	stroke: var(--color-bg);
+	stroke-width: 2px;
+}
+
+.product-chart .recharts-text {
+	fill: var(--color-text);
+	font-weight: 600;
+}
