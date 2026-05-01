@@ -1,9 +1,11 @@
+import "../../styles/components/atoms/StatCard.css";
+
 const StatCard = ({ title, value }) => {
   return (
-    <div>
-      <h3>{title}</h3>
-      <p>{value}</p>
-    </div>
+    <article className="stat-card">
+      <h3 className="stat-card__title">{title}</h3>
+      <p className="stat-card__value">{value}</p>
+    </article>
   );
 };
 

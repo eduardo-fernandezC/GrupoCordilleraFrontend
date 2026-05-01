@@ -2,6 +2,7 @@ import useDashboardData from "../hooks/useDashboardData";
 import DashboardTemplate from "../components/templates/DashboardTemplate";
 import DashboardHeader from "../components/molecules/DashboardHeader";
 import ProductChart from "../components/organisms/ProductChart";
+import "../styles/pages/ProductosPage.css";
 
 const ProductosPage = () => {
   const { data, loading, error } = useDashboardData();
@@ -11,14 +12,16 @@ const ProductosPage = () => {
 
   return (
     <DashboardTemplate>
-      <DashboardHeader
-        title="Productos"
-        subtitle="productos mas y menos vendidos"
-      />
-      <ProductChart
-        productoMasVendido={data.productoMasVendido}
-        productoMenosVendido={data.productoMenosVendido}
-      />
+      <section className="page-content page-content--productos">
+        <DashboardHeader
+          title="Productos"
+          subtitle="productos mas y menos vendidos"
+        />
+        <ProductChart
+          productoMasVendido={data.productoMasVendido}
+          productoMenosVendido={data.productoMenosVendido}
+        />
+      </section>
     </DashboardTemplate>
   );
 };

@@ -1,4 +1,5 @@
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import "../../styles/components/organisms/ProductChart.css";
 
 const ProductChart = ({ productoMasVendido, productoMenosVendido }) => {
   const data = [
@@ -13,19 +14,21 @@ const ProductChart = ({ productoMasVendido, productoMenosVendido }) => {
   ];
 
   return (
-    <div>
-      <h2>Productos Destacados</h2>
+    <section className="product-chart">
+      <h2 className="product-chart__title">Productos Destacados</h2>
 
-      <ResponsiveContainer width="100%" height={300}>
-        <PieChart>
-          <Pie data={data} dataKey="value" outerRadius={100} label>
-            {data.map((entry, index) => (
-              <Cell key={index} />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
+      <div className="product-chart__container">
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie data={data} dataKey="value" outerRadius={100} label>
+              {data.map((entry, index) => (
+                <Cell key={index} />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </section>
   );
 };
 

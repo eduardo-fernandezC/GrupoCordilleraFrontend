@@ -1,0 +1,35 @@
+.ventas-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: clamp(1.2rem, 2vw, 1.8rem);
+}
+
+.ventas-page__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.85rem;
+}
+
+.ventas-page h1 {
+  margin: 0;
+  color: var(--color-text);
+  text-transform: capitalize;
+  letter-spacing: 0.01em;
+}
+
+.ventas-page > div > p,
+.ventas-page p {
+  color: rgba(193, 232, 255, 0.88);
+}
+
+.ventas-page--mes .sales-chart__container {
+  background: linear-gradient(180deg, rgba(84, 131, 179, 0.14), rgba(5, 38, 89, 0.24));
+}
+
+@media (max-width: 680px) {
+  .ventas-page {
+    gap: 1rem;
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,29 @@
+.page-content {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	padding: clamp(1.2rem, 2vw, 1.8rem);
+}
+
+.page-content--sucursal {
+	padding-block: clamp(1.35rem, 2.2vw, 2rem);
+}
+
+.page-content--sucursal .branch-chart__container {
+	padding: 1.25rem 1rem 1rem;
+	border: 1px solid var(--color-border);
+	border-radius: 16px;
+	background: linear-gradient(180deg, rgba(125, 160, 202, 0.12), rgba(5, 38, 89, 0.22));
+	box-shadow: 0 12px 26px rgba(2, 16, 36, 0.34);
+}
+
+@media (max-width: 680px) {
+	.page-content {
+		gap: 1rem;
+		padding: 1rem;
+	}
+
+	.page-content--sucursal {
+		padding-block: 1.1rem;
+	}
+}

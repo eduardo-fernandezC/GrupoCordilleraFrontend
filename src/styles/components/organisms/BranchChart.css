@@ -1,0 +1,28 @@
+.branch-chart {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+}
+
+.branch-chart__title {
+	margin: 0;
+	font-size: 1.05rem;
+	color: var(--color-accent);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.branch-chart__container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.branch-chart .recharts-cartesian-grid line {
+	stroke: rgba(193, 232, 255, 0.1);
+}
+
+.branch-chart .recharts-cartesian-axis-tick text {
+	fill: var(--color-text);
+	font-size: 0.82rem;
+}

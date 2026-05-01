@@ -1,0 +1,38 @@
+.sales-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sales-chart__title {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.sales-chart__container {
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 0.85rem 0.65rem 0.5rem;
+  background: linear-gradient(180deg, rgba(125, 160, 202, 0.1), rgba(5, 38, 89, 0.22));
+  box-shadow: 0 12px 26px rgba(2, 16, 36, 0.36);
+}
+
+.sales-chart .recharts-cartesian-grid line {
+  stroke: rgba(193, 232, 255, 0.1);
+}
+
+.sales-chart .recharts-bar-rectangle path {
+  fill: var(--color-secondary);
+}
+
+.sales-chart .recharts-cartesian-axis-tick text {
+  fill: var(--color-text);
+  font-size: 0.82rem;
+}
+
+.sales-chart .recharts-tooltip-wrapper {
+  outline: none;
+}

@@ -3,6 +3,7 @@ import DashboardTemplate from "../components/templates/DashboardTemplate";
 import DashboardHeader from "../components/molecules/DashboardHeader";
 import StatCard from "../components/atoms/StatCard";
 import SalesChart from "../components/organisms/SalesChart";
+import "../styles/pages/VentasMesPage.css";
 
 const VentasMesPage = () => {
   const { data, loading, error } = useDashboardData();
@@ -12,17 +13,22 @@ const VentasMesPage = () => {
 
   return (
     <DashboardTemplate>
-      <DashboardHeader title="ventas del Mes" subtitle="resumen mensual" />
-      <div>
-        <StatCard title="Ventas Totales Mes" value={"$" + data.ventasMes} />
-        <StatCard title="Cantidad Ventas Mes" value={data.cantidadVentasMes} />
-        <StatCard
-          title="Promedio Mensual"
-          value={"$" + data.promedioVentasMes}
-        />
-      </div>
+      <section className="ventas-page ventas-page--mes">
+        <DashboardHeader title="ventas del Mes" subtitle="resumen mensual" />
+        <div className="ventas-page__stats">
+          <StatCard title="Ventas Totales Mes" value={"$" + data.ventasMes} />
+          <StatCard
+            title="Cantidad Ventas Mes"
+            value={data.cantidadVentasMes}
+          />
+          <StatCard
+            title="Promedio Mensual"
+            value={"$" + data.promedioVentasMes}
+          />
+        </div>
 
-      <SalesChart ventasHoy={data.ventasHoy} ventasMes={data.ventasMes} />
+        <SalesChart ventasHoy={data.ventasHoy} ventasMes={data.ventasMes} />
+      </section>
     </DashboardTemplate>
   );
 };
