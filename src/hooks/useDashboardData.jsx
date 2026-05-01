@@ -39,8 +39,3 @@ const useDashboardData = () => {
 };
 
 export default useDashboardData;
-
-//  status: 404,
-//    url: 'http://localhost:9000/api/data/api/v1/dashboard',
-//    method: 'GET',
-//    response: 'PRO FEATURE ONLY'
