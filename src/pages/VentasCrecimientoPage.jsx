@@ -1,7 +1,7 @@
 import useDashboardData from "../hooks/useDashboardData";
 import DashboardTemplate from "../components/templates/DashboardTemplate";
 import DashboardHeader from "../components/molecules/DashboardHeader";
-import StatCard from "../components/organisms/StatCard";
+import StatCard from "../components/atoms/StatCard";
 
 const VentasCrecimientoPage = () => {
   const { data, loading, error } = useDashboardData();

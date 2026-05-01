@@ -2,8 +2,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import ProtectedRoute from "../routes/ProtectedRoute";
 import Admin from "../pages/Admin";
+import VentasHoyPage from "../pages/VentasHoyPage";
+import VentasMesPage from "../pages/VentasMesPage";
+import ProductosPage from "../pages/ProductosPage";
 import Analyst from "../pages/Analyst";
 import NotFound from "../pages/NotFound";
+import VentasCrecimientoPage from "../pages/VentasCrecimientoPage";
+import SucursalPage from "../pages/SucursalPage";
 
 const AppRoutes = () => {
   return (
@@ -12,6 +17,51 @@ const AppRoutes = () => {
         <Route path="/" element={<Login />} />
 
         <Route path="*" element={<NotFound />} />
+
+        <Route
+          path="/ventasHoy"
+          element={
+            <ProtectedRoute>
+              <VentasHoyPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/ventasMes"
+          element={
+            <ProtectedRoute>
+              <VentasMesPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/productos"
+          element={
+            <ProtectedRoute>
+              <ProductosPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/ventasCrecimiento"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <VentasCrecimientoPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/sucursal"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <SucursalPage />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/admin"

@@ -1,5 +1,5 @@
 export const auth0Config = {
-  domain: "${DOMAIN]",
+  domain: "${DOMAIN}",
   clientId: "${CLIENT_ID}",
   audience: "${AUDIENCE}",
   scope: "${SCOPE}",
