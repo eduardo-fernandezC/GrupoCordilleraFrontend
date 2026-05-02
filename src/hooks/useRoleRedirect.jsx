@@ -16,7 +16,7 @@ const useRoleRedirect = () => {
       } else if (roles.includes("ANALISTA")) {
         navigate("/analista");
       } else {
-        navigate("/unauthorized"); // crear en un futuro
+        navigate("/unauthorized");
       }
     }
   }, [isAuthenticated, user, isLoading, navigate]);

@@ -12,7 +12,7 @@ const LogoutButton = () => {
     });
   };
 
-  return <Button text="cerrar sesion" onClick={handleLogout} className="" />;
+  return <Button text="CERRAR SESION" onClick={handleLogout} className="" />;
 };
 
 export default LogoutButton;
