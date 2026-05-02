@@ -23,6 +23,3 @@ const ProtectedRoute = ({ children, role }) => {
 };
 
 export default ProtectedRoute;
-
-// replace es para evitar que el usuario pueda volver a la pagina protegida
-// usando el boton de atras del navegador despues de ser redirigido.

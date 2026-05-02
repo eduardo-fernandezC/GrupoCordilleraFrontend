@@ -9,6 +9,7 @@ import Analyst from "../pages/Analyst";
 import NotFound from "../pages/NotFound";
 import VentasCrecimientoPage from "../pages/VentasCrecimientoPage";
 import SucursalPage from "../pages/SucursalPage";
+import Unauthorized from "../pages/Unauthorized";
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,8 @@ const AppRoutes = () => {
         <Route path="/" element={<Login />} />
 
         <Route path="*" element={<NotFound />} />
+
+        <Route path="/unauthorized" element={<Unauthorized />}></Route>
 
         <Route
           path="/ventasHoy"

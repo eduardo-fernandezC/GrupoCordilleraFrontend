@@ -15,7 +15,7 @@ const LoginButton = () => {
   };
 
   return (
-    <Button text="iniciar sesion" onClick={handleLogin} className=""></Button>
+    <Button text="INICIAR SESION" onClick={handleLogin} className=""></Button>
   );
 };
 
