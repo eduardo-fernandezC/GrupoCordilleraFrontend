@@ -2,9 +2,17 @@ import "../../styles/components/atoms/Loader.css";
 
 const Loader = () => {
   return (
-    <div className="d-flex flex-column align-items-center mt-4">
-      <div className="loader"></div>
-    </div>
+    <main
+      className="loader-page"
+      role="status"
+      aria-live="polite"
+      aria-label="Cargando contenido"
+    >
+      <div className="loader-shell">
+        <div className="loader" aria-hidden="true"></div>
+        <p className="loader__text">Cargando...</p>
+      </div>
+    </main>
   );
 };
 
