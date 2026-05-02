@@ -3,11 +3,12 @@ import DashboardTemplate from "../components/templates/DashboardTemplate";
 import DashboardHeader from "../components/molecules/DashboardHeader";
 import ProductChart from "../components/organisms/ProductChart";
 import "../styles/pages/ProductosPage.css";
+import { Loader } from "../components/atoms/Loader";
 
 const ProductosPage = () => {
   const { data, loading, error } = useDashboardData();
 
-  if (loading) return <h1>Cargando...</h1>;
+  if (loading) return <Loader />;
   if (error) return <h1>{error}</h1>;
 
   return (

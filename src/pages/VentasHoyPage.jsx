@@ -4,11 +4,12 @@ import DashboardHeader from "../components/molecules/DashboardHeader";
 import StatCard from "../components/atoms/StatCard";
 import SalesChart from "../components/organisms/SalesChart";
 import "../styles/pages/VentasHoyPage.css";
+import { Loader } from "../components/atoms/Loader";
 
 const VentasHoyPage = () => {
   const { data, loading, error } = useDashboardData();
 
-  if (loading) return <h1>Cargando...</h1>; // en el futuro crear loaders
+  if (loading) return <Loader />;
   if (error) return <h1>{error}</h1>;
 
   return (

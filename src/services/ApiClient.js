@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const ApiClient = axios.create({
-  baseURL: "http://localhost:9000/api/dashboard/api/v1/",
+  baseURL: "${BASE_URL}",
   headers: {
     "Content-Type": "application/json",
   },
