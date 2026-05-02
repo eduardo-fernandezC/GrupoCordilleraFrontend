@@ -1,12 +1,13 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import { getRoles } from "../auth/Roles";
+import Loader from "../components/atoms/Loader";
 
 const ProtectedRoute = ({ children, role }) => {
   const { isAuthenticated, user, isLoading } = useAuth0();
 
   if (isLoading) {
-    return <h1>Cargando...</h1>;
+    return <Loader />;
   }
 
   if (!isAuthenticated) {
