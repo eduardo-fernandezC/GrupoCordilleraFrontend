@@ -17,6 +17,10 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
   return (
     <nav className="site-navbar" aria-label="Navegación principal">
       <Link to="/" className="site-navbar__brand">
@@ -62,8 +66,8 @@ const Navbar = () => {
       <button
         type="button"
         className="site-navbar__toggle"
-        onClick={() => setMenuOpen(!menuOpen)}
-        aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+        onClick={toggleMenu}
+        aria-label={menuOpen ? "Cerrar menu" : "Abrir menu"}
         aria-expanded={menuOpen}
         aria-controls="mobile-navigation"
       >
@@ -76,14 +80,14 @@ const Navbar = () => {
           <button
             type="button"
             className="site-navbar__backdrop"
-            aria-label="Cerrar menú"
+            aria-label="Cerrar menu"
             onClick={handleClick}
           />
 
           <div className="site-navbar__mobile-panel" id="mobile-navigation">
             <div className="site-navbar__mobile-header">
-              <span className="site-navbar__mobile-kicker">Navegación</span>
-              <span className="site-navbar__mobile-title">Menú</span>
+              <span className="site-navbar__mobile-kicker">Navegacion</span>
+              <span className="site-navbar__mobile-title">Menu</span>
             </div>
 
             <div className="site-navbar__mobile-links">
