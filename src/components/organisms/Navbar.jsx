@@ -13,6 +13,10 @@ const Navbar = () => {
   const roles = getRoles(user);
   const isAdmin = roles.includes("ADMIN");
 
+  const handleClick = () => {
+    setMenuOpen(false);
+  };
+
   return (
     <nav className="site-navbar" aria-label="Navegación principal">
       <Link to="/" className="site-navbar__brand">
@@ -73,7 +77,7 @@ const Navbar = () => {
             type="button"
             className="site-navbar__backdrop"
             aria-label="Cerrar menú"
-            onClick={() => setMenuOpen(false)}
+            onClick={handleClick}
           />
 
           <div className="site-navbar__mobile-panel" id="mobile-navigation">
@@ -86,7 +90,7 @@ const Navbar = () => {
               <Link
                 to="/ventasHoy"
                 className="site-navbar__link"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleClick}
               >
                 Ventas de Hoy
               </Link>
@@ -94,7 +98,7 @@ const Navbar = () => {
               <Link
                 to="/ventasMes"
                 className="site-navbar__link"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleClick}
               >
                 Ventas del Mes
               </Link>
@@ -102,7 +106,7 @@ const Navbar = () => {
               <Link
                 to="/productos"
                 className="site-navbar__link"
-                onClick={() => setMenuOpen(false)}
+                onClick={handleClick}
               >
                 Productos
               </Link>
@@ -112,7 +116,7 @@ const Navbar = () => {
                   <Link
                     to="/ventasCrecimiento"
                     className="site-navbar__link site-navbar__link--accent"
-                    onClick={() => setMenuOpen(false)}
+                    onClick={handleClick}
                   >
                     Crecimiento
                   </Link>
@@ -120,7 +124,7 @@ const Navbar = () => {
                   <Link
                     to="/sucursal"
                     className="site-navbar__link site-navbar__link--accent"
-                    onClick={() => setMenuOpen(false)}
+                    onClick={handleClick}
                   >
                     Sucursal
                   </Link>
