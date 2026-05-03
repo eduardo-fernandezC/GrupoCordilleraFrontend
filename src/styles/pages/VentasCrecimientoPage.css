@@ -12,7 +12,15 @@
 }
 
 .ventas-page__stats--single {
-  max-width: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 440px;
+  margin-inline: auto;
+}
+
+.ventas-page__stats--single .stat-card {
+  width: min(100%, 440px);
 }
 
 .ventas-page h1 {

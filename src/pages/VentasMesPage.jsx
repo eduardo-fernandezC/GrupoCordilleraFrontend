@@ -1,5 +1,5 @@
 import useDashboardData from "../hooks/useDashboardData";
-import DashboardTemplate from "../components/templates/DashboardTemplate";
+import LandingTemplate from "../components/templates/LandingTemplate";
 import DashboardHeader from "../components/molecules/DashboardHeader";
 import StatCard from "../components/atoms/StatCard";
 import SalesChart from "../components/organisms/SalesChart";
@@ -16,7 +16,7 @@ const VentasMesPage = () => {
     return <ErrorMessage message={`Error al cargar Dashboard de ${title}`} />;
 
   return (
-    <DashboardTemplate>
+    <LandingTemplate>
       <section className="ventas-page ventas-page--mes">
         <DashboardHeader title={title} subtitle="resumen mensual" />
         <div className="ventas-page__stats">
@@ -33,7 +33,7 @@ const VentasMesPage = () => {
 
         <SalesChart ventasHoy={data.ventasHoy} ventasMes={data.ventasMes} />
       </section>
-    </DashboardTemplate>
+    </LandingTemplate>
   );
 };
 
