@@ -1,5 +1,6 @@
 .site-navbar {
 	position: relative;
+	z-index: 1000;
 	width: 100%;
 	margin: 1rem 0 0 0;
 	padding: 1rem 1.1rem;
@@ -94,6 +95,8 @@
 }
 
 .site-navbar__toggle {
+	position: relative;
+	z-index: 1301;
 	display: none;
 	align-items: center;
 	justify-content: center;
@@ -128,7 +131,7 @@
 .site-navbar__backdrop {
 	position: fixed;
 	inset: 0;
-	z-index: 20;
+	z-index: 1100;
 	border: 0;
 	padding: 0;
 	background: rgba(2, 16, 36, 0.45);
@@ -142,7 +145,7 @@
 	position: absolute;
 	top: calc(100% + 0.75rem);
 	right: 0;
-	z-index: 30;
+	z-index: 1200;
 	width: min(22rem, calc(100vw - 2rem));
 	padding: 1rem;
 	border: 1px solid rgba(193, 232, 255, 0.18);
