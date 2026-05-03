@@ -20,8 +20,6 @@ const useDashboardData = () => {
           },
         });
 
-        console.log("ACCES TOKEN", token);
-
         const dashboardData = await getDashboardData(token);
 
         setData(dashboardData);

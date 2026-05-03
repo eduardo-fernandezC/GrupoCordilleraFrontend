@@ -32,7 +32,9 @@
 
 .product-stat-card__quantity {
 	display: inline-flex;
-	align-self: flex-start;
+	align-self: center;
+	justify-content: center;
+	text-align: center;
 	padding: 0.55rem 0.9rem;
 	border-radius: 999px;
 	background: rgba(193, 232, 255, 0.1);
