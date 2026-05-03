@@ -19,7 +19,7 @@ const BranchChart = ({ sucursales }) => {
             <XAxis dataKey="sucursal" stroke="#fff" />
             <YAxis stroke="#fff" />
             <Tooltip />
-            <Bar dataKey="totalVendido" />
+            <Bar dataKey="totalVendido" fill="#5483b3" />
           </BarChart>
         </ResponsiveContainer>
       </div>
