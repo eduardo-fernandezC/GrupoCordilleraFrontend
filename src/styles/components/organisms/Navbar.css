@@ -115,6 +115,14 @@
 	  color 160ms ease;
 }
 
+/* Blur icon only when menu is open (class toggled) */
+.logout-modal-open .site-navbar__toggle svg,
+body.logout-modal-open .site-navbar__toggle svg {
+	filter: blur(2px);
+	opacity: 0.95;
+	transition: filter 180ms ease, opacity 180ms ease;
+}
+
 .site-navbar__toggle:hover,
 .site-navbar__toggle:focus-visible {
 	transform: translateY(-1px);
