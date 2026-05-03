@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { getRoles } from "../auth/Roles";
 import Loader from "../components/atoms/Loader";
 
-const ProtectedRoute = ({ children, role }) => {
+const ProtectedRoute = ({ children, role, unauthorizedOnly = false }) => {
   const { isAuthenticated, user, isLoading } = useAuth0();
 
   if (isLoading) {
@@ -15,6 +15,14 @@ const ProtectedRoute = ({ children, role }) => {
   }
 
   const roles = getRoles(user);
+
+  // solo permite entrar a /unauthorized si el usuario no tiene el rol requerido
+  if (unauthorizedOnly) {
+    if (roles.includes("ADMIN") || roles.includes("ANALISTA")) {
+      return <Navigate to="/" replace />;
+    }
+    return children;
+  }
 
   if (role && !roles.includes(role)) {
     return <Navigate to="/unauthorized" replace />; // redirige a una pagina de acceso denegado si el usuario no tiene el rol requerido

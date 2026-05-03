@@ -19,7 +19,14 @@ const AppRoutes = () => {
 
         <Route path="*" element={<NotFound />} />
 
-        <Route path="/unauthorized" element={<Unauthorized />}></Route>
+        <Route
+          path="/unauthorized"
+          element={
+            <ProtectedRoute unauthorizedOnly={true}>
+              <Unauthorized />
+            </ProtectedRoute>
+          }
+        ></Route>
 
         <Route
           path="/ventasHoy"
