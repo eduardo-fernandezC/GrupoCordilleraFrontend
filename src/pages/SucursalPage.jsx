@@ -1,5 +1,5 @@
 import useDashboardData from "../hooks/useDashboardData";
-import DashboardTemplate from "../components/templates/DashboardTemplate";
+import LandingTemplate from "../components/templates/LandingTemplate";
 import DashboardHeader from "../components/molecules/DashboardHeader";
 import BranchChart from "../components/organisms/BranchChart";
 import "../styles/pages/SucursalPage.css";
@@ -15,12 +15,12 @@ const SucursalPage = () => {
     return <ErrorMessage message={`Error al cargar Dashboard de ${title}`} />;
 
   return (
-    <DashboardTemplate>
+    <LandingTemplate>
       <section className="page-content page-content--sucursal">
         <DashboardHeader title={title} subtitle="rendimiento por sucursal" />
         <BranchChart sucursales={data.mejorVendedorPorSucursal} />
       </section>
-    </DashboardTemplate>
+    </LandingTemplate>
   );
 };
 
