@@ -10,6 +10,7 @@ import NotFound from "../pages/NotFound";
 import VentasCrecimientoPage from "../pages/VentasCrecimientoPage";
 import SucursalPage from "../pages/SucursalPage";
 import Unauthorized from "../pages/Unauthorized";
+import AdminProductsPage from "../pages/AdminProductsPage";
 
 const AppRoutes = () => {
   return (
@@ -81,6 +82,16 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/AdminProductos"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <AdminProductsPage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/analista"
           element={
