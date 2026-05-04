@@ -1,6 +1,8 @@
+// LogoutButton.jsx
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Button from "../atoms/Button";
+import ConfirmModal from "../organisms/ConfirmModal";
 import { getRoles } from "../../auth/Roles";
 import "../../styles/components/molecules/LogoutButton.css";
 
@@ -31,12 +33,7 @@ const LogoutButton = () => {
     };
   }, [isModalOpen]);
 
-  const handleOpenModal = () => {
-    if (hasAssignedRole) {
-      setIsModalOpen(true);
-      return;
-    }
-
+  const executeLogout = () => {
     logout({
       logoutParams: {
         returnTo: window.location.origin,
@@ -45,15 +42,18 @@ const LogoutButton = () => {
     });
   };
 
+  const handleOpenModal = () => {
+    if (hasAssignedRole) {
+      setIsModalOpen(true);
+      return;
+    }
+
+    executeLogout();
+  };
+
   const handleConfirmLogout = () => {
     setIsModalOpen(false);
-
-    logout({
-      logoutParams: {
-        returnTo: window.location.origin,
-      },
-      federated: true,
-    });
+    executeLogout();
   };
 
   const handleCancel = () => {
@@ -64,54 +64,17 @@ const LogoutButton = () => {
     <>
       <Button text="CERRAR SESION" onClick={handleOpenModal} />
 
-      {isModalOpen && (
-        <div
-          className="logout-modal"
-          role="presentation"
-          onClick={handleCancel}
-        >
-          <div
-            className="logout-modal__dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="logout-modal-title"
-            aria-describedby="logout-modal-description"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="logout-modal__header">
-              <div className="logout-modal__badge" aria-hidden="true">
-                !
-              </div>
-              <div>
-                <p className="logout-modal__eyebrow">Confirmacion</p>
-                <h3 id="logout-modal-title" className="logout-modal__title">
-                  Cerrar sesion
-                </h3>
-              </div>
-            </div>
-
-            <p id="logout-modal-description" className="logout-modal__text">
-              Vas a salir de tu sesion actual. Si continuas, volveras al inicio.
-            </p>
-
-            <div className="logout-modal__actions">
-              <button
-                type="button"
-                className="logout-modal__button logout-modal__button--secondary"
-                onClick={handleCancel}
-              >
-                Cancelar
-              </button>
-
-              <Button
-                text="Si, salir"
-                onClick={handleConfirmLogout}
-                className="logout-modal__button logout-modal__button--danger"
-              />
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmModal
+        isOpen={isModalOpen}
+        title="Cerrar sesion"
+        description="Vas a salir de tu sesion actual. Si continuas, volveras al inicio."
+        eyebrow="Confirmacion"
+        badgeSymbol="!"
+        confirmText="Si, salir"
+        cancelText="Cancelar"
+        onCancel={handleCancel}
+        onConfirm={handleConfirmLogout}
+      />
     </>
   );
 };
