@@ -1,4 +1,5 @@
 import Button from "../atoms/Button";
+import "../../styles/components/molecules/ModalActions.css";
 
 const ModalActions = ({ onCancel, onConfirm }) => {
   return (

@@ -1,6 +1,7 @@
 import ModalOverlay from "../atoms/ModalOverlay";
 import ModalBadge from "../atoms/ModalBadge";
 import ModalActions from "../molecules/ModalActions";
+import "../../styles/components/organisms/ConfirmModal.css";
 
 const ConfirmModal = ({ isOpen, title, description, onCancel, onConfirm }) => {
   if (!isOpen) return null;
