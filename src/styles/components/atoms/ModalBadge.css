@@ -1,0 +1,13 @@
+.logout-modal__badge {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.8rem;
+  background: linear-gradient(135deg, rgba(255, 183, 3, 0.22), rgba(255, 140, 0, 0.08));
+  border: 1px solid rgba(255, 183, 3, 0.2);
+  color: #fff1c9;
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(2,16,36,0.18);
+}
