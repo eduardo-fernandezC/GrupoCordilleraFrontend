@@ -3,6 +3,10 @@ import { ErrorMessage } from "../../components/atoms/ErrorMessage";
 import { Text } from "../../components/atoms/Text";
 import { LandingTemplate } from "../../components/templates/LandingTemplate";
 import Button from "../../components/atoms/Button";
+import ProductTable from "../../components/organisms/ProductTable";
+import DeleteProductModal from "../../components/organisms/DeleteProductModal";
+import { useProducts } from "../../hooks/useProducts";
+import { useState, useMemo } from "react";
 
 const emptyForm = {
   nombre: "",
@@ -63,19 +67,39 @@ const AdminProductsPage = () => {
 
   return (
     <LandingTemplate>
-      <header>
-        <div>
-          <Text variant="h1">Administrar Productos</Text>
-          <Text variant="p">Crea, edita y elimina productos</Text>
-        </div>
-        <div>
-          <Text variant="strong">{totalProducts}</Text>
-          <Button Text="Crear Producto" onClick={handleCreate} />
-        </div>
-      </header>
+      <section>
+        <header>
+          <div>
+            <Text variant="h1">Administrar Productos</Text>
+            <Text variant="p">Crea, edita y elimina productos</Text>
+          </div>
+          <div>
+            <Text variant="strong">{totalProducts}</Text>
+            <Button Text="Crear Producto" onClick={handleCreate} />
+          </div>
+        </header>
 
-      {actionMessage && <div role="status">{actionMessage}</div>}
-      <ProductTable />
+        {actionMessage && <div role="status">{actionMessage}</div>}
+
+        <ProductTable
+          products={products}
+          onEdit={handleEdit}
+          onDelete={setProductToDelete}
+        />
+
+        <ProductTable
+          isOpen={isFormOpen}
+          products={editingProduct || emptyForm}
+          onClose={() => setIsFormOpen(false)}
+          onSave={handleSave}
+        />
+
+        <DeleteProductModal
+          product={productToDelete}
+          onCancel={() => setProductToDelete(null)}
+          onConfirm={handleDelete}
+        />
+      </section>
     </LandingTemplate>
   );
 };
