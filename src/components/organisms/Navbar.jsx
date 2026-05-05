@@ -56,7 +56,13 @@ const Navbar = () => {
             >
               Sucursal
             </Link>
-            <Link to="/AdminProductos">Crud Productos</Link>
+            <Link
+              to="/AdminProductos"
+              className="site-navbar__link site-navbar__link--accent"
+              onClick={handleClick}
+            >
+              Crud Productos
+            </Link>
           </>
         )}
 
@@ -124,6 +130,14 @@ const Navbar = () => {
                     onClick={handleClick}
                   >
                     Crecimiento
+                  </Link>
+
+                  <Link
+                    to="/AdminProductos"
+                    className="site-navbar__link site-navbar__link--accent"
+                    onClick={handleClick}
+                  >
+                    Crud Productos
                   </Link>
 
                   <Link
