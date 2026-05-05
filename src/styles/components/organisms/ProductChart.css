@@ -20,6 +20,17 @@
 	gap: 1.5rem;
 }
 
+.product-chart__empty-state {
+	margin: 0;
+	width: 100%;
+	padding: 1rem 1.15rem;
+	border-radius: 1rem;
+	border: 1px solid rgba(193, 232, 255, 0.12);
+	background: rgba(193, 232, 255, 0.05);
+	color: rgba(232, 243, 255, 0.9);
+	text-align: center;
+}
+
 .product-chart .recharts-pie-sector path {
 	stroke: var(--color-bg);
 	stroke-width: 2px;

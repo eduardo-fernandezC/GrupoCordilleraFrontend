@@ -10,7 +10,7 @@ import NotFound from "../pages/NotFound";
 import VentasCrecimientoPage from "../pages/VentasCrecimientoPage";
 import SucursalPage from "../pages/SucursalPage";
 import Unauthorized from "../pages/Unauthorized";
-import AdminProductsPage from "../pages/AdminProductsPage";
+import AdminProductsPage from "../pages/admin/AdminProductsPage";
 
 const AppRoutes = () => {
   return (

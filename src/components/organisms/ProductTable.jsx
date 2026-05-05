@@ -1,17 +1,18 @@
 import ErrorMessage from "../atoms/ErrorMessage";
 import ProductRowActions from "../molecules/ProductRowActions";
+import "../../styles/components/organisms/ProductTable.css";
 
 const ProductTable = ({ products, onEdit, onDelete }) => {
   if (!products.length)
     return <ErrorMessage message="No hay productos cargados aun." />;
 
   return (
-    <table>
+    <table className="product-table">
       <thead>
         <tr>
           <th>ID</th>
           <th>Nombre</th>
-          <th>Categoria</th>
+          <th>Categoría</th>
           <th>Precio</th>
           <th>Stock</th>
           <th>Acciones</th>
@@ -23,7 +24,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
             <td>{product.idProducto}</td>
             <td>{product.nombre}</td>
             <td>{product.categoria}</td>
-            <td>{product.precio}</td>
+            <td>${parseFloat(product.precio).toFixed(2)}</td>
             <td>{product.stock}</td>
             <td>
               <ProductRowActions
