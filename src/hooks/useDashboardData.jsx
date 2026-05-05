@@ -8,11 +8,20 @@ const useDashboardData = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { getAccessTokenSilently, isAuthenticated, isLoading } = useAuth0();
 
   useEffect(() => {
-    const fetchDahboard = async () => {
-      if (!isAuthenticated) return;
+    const fetchDashboard = async () => {
+      if (isLoading) {
+        return;
+      }
+
+      if (!isAuthenticated) {
+        setError("Debes iniciar sesión para ver el dashboard");
+        setLoading(false);
+        return;
+      }
+
       try {
         const token = await getAccessTokenSilently({
           authorizationParams: {
@@ -21,17 +30,21 @@ const useDashboardData = () => {
         });
 
         const dashboardData = await getDashboardData(token);
-
         setData(dashboardData);
-      } catch (err) {
-        setError("Error cargando dashboard");
-        console.error(err);
+      } catch (exception) {
+        const message =
+          exception?.response?.data?.message ||
+          exception?.response?.data?.error ||
+          exception?.message ||
+          "Error cargando dashboard";
+
+        setError(message);
       } finally {
         setLoading(false);
       }
     };
-    fetchDahboard();
-  }, [getAccessTokenSilently, isAuthenticated]);
+    fetchDashboard();
+  }, [getAccessTokenSilently, isAuthenticated, isLoading]);
 
   return { data, loading, error };
 };

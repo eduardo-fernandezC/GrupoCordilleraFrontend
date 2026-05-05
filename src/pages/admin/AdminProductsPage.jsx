@@ -1,0 +1,263 @@
+import Loader from "../../components/atoms/Loader";
+import ErrorMessage from "../../components/atoms/ErrorMessage";
+import LandingTemplate from "../../components/templates/LandingTemplate";
+import Button from "../../components/atoms/Button";
+import ProductTable from "../../components/organisms/ProductTable";
+import DeleteProductModal from "../../components/organisms/DeleteProductModal";
+import useProducts from "../../hooks/useProducts";
+import { useState, useMemo } from "react";
+import "../../styles/pages/AdminProductsPage.css";
+
+const emptyForm = {
+  nombre: "",
+  categoria: "",
+  precio: "",
+  stock: "",
+};
+
+const AdminProductsPage = () => {
+  const {
+    products,
+    loading,
+    error,
+    createProduct,
+    updateProduct,
+    deleteProduct,
+  } = useProducts();
+
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [productToDelete, setProductToDelete] = useState(null);
+  const [actionMessage, setActionMessage] = useState("");
+  const [formErrors, setFormErrors] = useState({});
+
+  const totalProducts = useMemo(() => products.length, [products]);
+
+  const handleCreate = () => {
+    setEditingProduct(null);
+    setFormErrors({});
+    setIsFormOpen(true);
+  };
+
+  const handleEdit = (product) => {
+    setEditingProduct(product);
+    setFormErrors({});
+    setIsFormOpen(true);
+  };
+
+  const handleSave = async (payload) => {
+    try {
+      if (editingProduct) {
+        await updateProduct(editingProduct.idProducto, payload);
+        setActionMessage("Producto actualizado correctamente.");
+      } else {
+        await createProduct(payload);
+        setActionMessage("Producto creado correctamente.");
+      }
+      setIsFormOpen(false);
+      setEditingProduct(null);
+      setFormErrors({});
+      setTimeout(() => setActionMessage(""), 3000);
+    } catch (err) {
+      setFormErrors({ general: err.message || "Error al guardar" });
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!productToDelete) return;
+    try {
+      await deleteProduct(productToDelete.idProducto);
+      setActionMessage("Producto eliminado correctamente.");
+      setProductToDelete(null);
+      setTimeout(() => setActionMessage(""), 3000);
+    } catch (err) {
+      setActionMessage(`Error al eliminar: ${err.message}`);
+    }
+  };
+
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage message={error} />;
+
+  return (
+    <LandingTemplate>
+      <section className="admin-products-page">
+        {/* Hero Section */}
+        <div className="admin-products-page__hero">
+          <div>
+            <p className="admin-products-page__eyebrow">Gestión</p>
+            <h1>Administrar Productos</h1>
+            <p className="admin-products-page__intro">
+              Crea, edita y elimina productos del catálogo
+            </p>
+          </div>
+          <div className="admin-products-page__hero-actions">
+            <div className="admin-products-page__summary-card">
+              <span className="admin-products-page__summary-label">Total</span>
+              <span className="admin-products-page__summary-value">
+                {totalProducts}
+              </span>
+            </div>
+            <Button text="Crear Producto" onClick={handleCreate} />
+          </div>
+        </div>
+
+        {/* Action Message */}
+        {actionMessage && (
+          <div className="admin-products-page__message" role="status">
+            {actionMessage}
+          </div>
+        )}
+
+        {/* Table Section */}
+        <div className="admin-products-page__table-card">
+          <div className="admin-products-page__table-header">
+            <h2>Productos</h2>
+          </div>
+
+          {products.length > 0 ? (
+            <div className="admin-products-page__table-wrap">
+              <ProductTable
+                products={products}
+                onEdit={handleEdit}
+                onDelete={setProductToDelete}
+              />
+            </div>
+          ) : (
+            <p className="admin-products-page__empty-state">
+              No hay productos disponibles
+            </p>
+          )}
+        </div>
+
+        {/* Form Modal */}
+        {isFormOpen && (
+          <div className="admin-products-page__modal">
+            <div className="admin-products-page__dialog">
+              <div className="admin-products-page__dialog-header">
+                <p className="admin-products-page__dialog-eyebrow">
+                  {editingProduct ? "Editar" : "Crear"}
+                </p>
+                <h2>{editingProduct ? "Editar Producto" : "Nuevo Producto"}</h2>
+              </div>
+
+              <FormSection
+                product={editingProduct || emptyForm}
+                errors={formErrors}
+                onSave={handleSave}
+                onCancel={() => {
+                  setIsFormOpen(false);
+                  setEditingProduct(null);
+                  setFormErrors({});
+                }}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Delete Modal */}
+        <DeleteProductModal
+          product={productToDelete}
+          onCancel={() => setProductToDelete(null)}
+          onConfirm={handleDelete}
+        />
+      </section>
+    </LandingTemplate>
+  );
+};
+
+// Form Component
+const FormSection = ({ product, errors, onSave, onCancel }) => {
+  const [formData, setFormData] = useState(product);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave(formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="admin-products-page__form">
+      {errors.general && (
+        <p className="admin-products-page__form-error">{errors.general}</p>
+      )}
+
+      <div className="admin-products-page__field">
+        <span>Nombre</span>
+        <input
+          type="text"
+          name="nombre"
+          value={formData.nombre}
+          onChange={handleChange}
+          placeholder="Nombre del producto"
+          required
+        />
+        {errors.nombre && (
+          <p className="admin-products-page__form-error">{errors.nombre}</p>
+        )}
+      </div>
+
+      <div className="admin-products-page__field">
+        <span>Categoría</span>
+        <input
+          type="text"
+          name="categoria"
+          value={formData.categoria}
+          onChange={handleChange}
+          placeholder="Categoría"
+          required
+        />
+        {errors.categoria && (
+          <p className="admin-products-page__form-error">{errors.categoria}</p>
+        )}
+      </div>
+
+      <div className="admin-products-page__field">
+        <span>Precio</span>
+        <input
+          type="number"
+          name="precio"
+          value={formData.precio}
+          onChange={handleChange}
+          placeholder="0.00"
+          step="0.01"
+          required
+        />
+        {errors.precio && (
+          <p className="admin-products-page__form-error">{errors.precio}</p>
+        )}
+      </div>
+
+      <div className="admin-products-page__field">
+        <span>Stock</span>
+        <input
+          type="number"
+          name="stock"
+          value={formData.stock}
+          onChange={handleChange}
+          placeholder="0"
+          required
+        />
+        {errors.stock && (
+          <p className="admin-products-page__form-error">{errors.stock}</p>
+        )}
+      </div>
+
+      <div className="admin-products-page__form-actions">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="admin-products-page__action-button admin-products-page__action-button--secondary"
+        >
+          Cancelar
+        </button>
+        <Button text="Guardar" type="submit" />
+      </div>
+    </form>
+  );
+};
+
+export default AdminProductsPage;

@@ -3,7 +3,17 @@ import ModalBadge from "../atoms/ModalBadge";
 import ModalActions from "../molecules/ModalActions";
 import "../../styles/components/organisms/ConfirmModal.css";
 
-const ConfirmModal = ({ isOpen, title, description, onCancel, onConfirm }) => {
+const ConfirmModal = ({
+  isOpen,
+  title,
+  description,
+  onCancel,
+  onConfirm,
+  eyebrow = "Confirmacion",
+  badgeSymbol = "!",
+  cancelLabel,
+  confirmLabel,
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -15,17 +25,22 @@ const ConfirmModal = ({ isOpen, title, description, onCancel, onConfirm }) => {
         onClick={(event) => event.stopPropagation()}
       >
         <div className="logout-modal__header">
-          <ModalBadge />
+          <ModalBadge symbol={badgeSymbol} />
 
           <div>
-            <p className="logout-modal__eyebrow">Confirmacion</p>
+            <p className="logout-modal__eyebrow">{eyebrow}</p>
             <h3 className="logout-modal__title">{title}</h3>
           </div>
         </div>
 
         <p className="logout-modal__text">{description}</p>
 
-        <ModalActions onCancel={onCancel} onConfirm={onConfirm} />
+        <ModalActions
+          onCancel={onCancel}
+          onConfirm={onConfirm}
+          cancelLabel={cancelLabel}
+          confirmLabel={confirmLabel}
+        />
       </div>
     </ModalOverlay>
   );

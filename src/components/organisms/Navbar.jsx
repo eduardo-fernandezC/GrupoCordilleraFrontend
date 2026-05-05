@@ -56,6 +56,7 @@ const Navbar = () => {
             >
               Sucursal
             </Link>
+            <Link to="/AdminProductos">Crud Productos</Link>
           </>
         )}
 
