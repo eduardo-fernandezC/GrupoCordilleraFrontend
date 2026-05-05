@@ -12,7 +12,11 @@ const useDashboardData = () => {
 
   useEffect(() => {
     const fetchDahboard = async () => {
-      if (!isAuthenticated) return;
+      if (!isAuthenticated) {
+        setLoading(false);
+        return;
+      }
+
       try {
         const token = await getAccessTokenSilently({
           authorizationParams: {
@@ -23,9 +27,8 @@ const useDashboardData = () => {
         const dashboardData = await getDashboardData(token);
 
         setData(dashboardData);
-      } catch (err) {
+      } catch {
         setError("Error cargando dashboard");
-        console.error(err);
       } finally {
         setLoading(false);
       }

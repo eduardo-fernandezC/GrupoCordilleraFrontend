@@ -1,17 +1,6 @@
 import AppRoutes from "./app/AppRoutes";
-import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
-  // obtener token y mostrarlo en consola
-  const accessToken = useAuth0().getAccessTokenSilently();
-  accessToken
-    .then((token) => {
-      console.log("Access Token:", token);
-    })
-    .catch((error) => {
-      console.error("Error getting access token:", error);
-    });
-
   return <AppRoutes />;
 }
 
