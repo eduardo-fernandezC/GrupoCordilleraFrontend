@@ -229,6 +229,48 @@ body.logout-modal-open .site-navbar__toggle svg {
 	}
 }
 
+/* NavLink active state styles */
+.nav-link {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.7rem 0.95rem;
+	border-radius: 999px;
+	border: 1px solid transparent;
+	background: rgba(193, 232, 255, 0.05);
+	color: var(--color-text);
+	text-decoration: none;
+	font-weight: 600;
+	transition:
+	  transform 160ms ease,
+	  border-color 160ms ease,
+	  background-color 160ms ease,
+	  color 160ms ease,
+	  box-shadow 160ms ease;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+	transform: translateY(-1px);
+	border-color: rgba(193, 232, 255, 0.24);
+	background: rgba(84, 131, 179, 0.26);
+	color: #ffffff;
+	box-shadow: 0 10px 18px rgba(2, 16, 36, 0.16);
+}
+
+.nav-link.active {
+	background: rgba(255, 183, 3, 0.24);
+	border-color: rgba(255, 183, 3, 0.4);
+	color: #fff3c4;
+	box-shadow: 0 0 0 3px rgba(255, 183, 3, 0.1);
+}
+
+.nav-link.active:hover,
+.nav-link.active:focus-visible {
+	background: rgba(255, 183, 3, 0.32);
+	border-color: rgba(255, 183, 3, 0.5);
+	color: #fffde7;
+}
+
 @media (max-width: 768px) {
 	.site-navbar {
 		padding: 0.95rem 0.95rem;
