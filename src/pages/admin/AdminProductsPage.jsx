@@ -8,6 +8,8 @@ import useProducts from "../../hooks/useProducts";
 import { useState } from "react";
 import "../../styles/pages/AdminProductsPage.css";
 import FormSection from "../../components/organisms/FormSection";
+import NotificationContainer from "../../components/atoms/Notification";
+import { notifySuccess, notifyError } from "../../services/notificationService";
 
 const emptyForm = {
   nombre: "",
@@ -29,7 +31,6 @@ const AdminProductsPage = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [productToDelete, setProductToDelete] = useState(null);
-  const [actionMessage, setActionMessage] = useState("");
   const [formErrors, setFormErrors] = useState({});
 
   // const totalProducts = useMemo(() => products.length, [products]); // realmente no es necesario usarlo aqui
@@ -51,15 +52,14 @@ const AdminProductsPage = () => {
     try {
       if (editingProduct) {
         await updateProduct(editingProduct.idProducto, payload);
-        setActionMessage("Producto actualizado correctamente.");
+        notifySuccess("Producto actualizado correctamente.");
       } else {
         await createProduct(payload);
-        setActionMessage("Producto creado correctamente.");
+        notifySuccess("Producto creado correctamente.");
       }
       setIsFormOpen(false);
       setEditingProduct(null);
       setFormErrors({});
-      setTimeout(() => setActionMessage(""), 3000);
     } catch (err) {
       setFormErrors({ general: err.message || "Error al guardar" });
     }
@@ -69,11 +69,10 @@ const AdminProductsPage = () => {
     if (!productToDelete) return;
     try {
       await deleteProduct(productToDelete.idProducto);
-      setActionMessage("Producto eliminado correctamente.");
+      notifySuccess("Producto eliminado correctamente.");
       setProductToDelete(null);
-      setTimeout(() => setActionMessage(""), 3000);
     } catch (err) {
-      setActionMessage(`Error al eliminar: ${err.message}`);
+      notifyError(`Error al eliminar: ${err.message}`);
     }
   };
 
@@ -102,13 +101,6 @@ const AdminProductsPage = () => {
             <Button text="Crear Producto" onClick={handleCreate} />
           </div>
         </div>
-
-        {/* Action Message */}
-        {actionMessage && (
-          <div className="admin-products-page__message" role="status">
-            {actionMessage}
-          </div>
-        )}
 
         {/* Table Section */}
         <div className="admin-products-page__table-card">
@@ -162,6 +154,7 @@ const AdminProductsPage = () => {
           onCancel={() => setProductToDelete(null)}
           onConfirm={handleDelete}
         />
+        <NotificationContainer />
       </section>
     </LandingTemplate>
   );
