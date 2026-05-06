@@ -1,5 +1,5 @@
 import AppRoutes from "./app/AppRoutes";
-import { NotificationContainer } from "./components/atoms/Notification";
+import NotificationContainer from "./components/atoms/Notification";
 
 function App() {
   return (
