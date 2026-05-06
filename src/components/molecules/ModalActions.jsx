@@ -9,13 +9,13 @@ const ModalActions = ({
 }) => {
   return (
     <div className="logout-modal__actions">
-      <button
+      <Button
         type="button"
         className="logout-modal__button logout-modal__button--secondary"
         onClick={onCancel}
       >
         {cancelLabel}
-      </button>
+      </Button>
 
       <Button
         text={confirmLabel}
