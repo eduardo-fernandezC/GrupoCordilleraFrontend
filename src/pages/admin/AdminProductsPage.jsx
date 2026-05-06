@@ -5,7 +5,7 @@ import Button from "../../components/atoms/Button";
 import ProductTable from "../../components/organisms/ProductTable";
 import DeleteProductModal from "../../components/organisms/DeleteProductModal";
 import useProducts from "../../hooks/useProducts";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import "../../styles/pages/AdminProductsPage.css";
 import FormSection from "../../components/organisms/FormSection";
 
@@ -32,7 +32,8 @@ const AdminProductsPage = () => {
   const [actionMessage, setActionMessage] = useState("");
   const [formErrors, setFormErrors] = useState({});
 
-  const totalProducts = useMemo(() => products.length, [products]);
+  // const totalProducts = useMemo(() => products.length, [products]); // realmente no es necesario usarlo aqui
+  const totalProducts = products.length;
 
   const handleCreate = () => {
     setEditingProduct(null);
