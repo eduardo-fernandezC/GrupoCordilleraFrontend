@@ -1,9 +1,10 @@
 import LandingTemplate from "../components/templates/LandingTemplate";
+import Text from "../components/atoms/Text";
 
 const Admin = () => {
   return (
     <LandingTemplate>
-      <h1>Admin</h1>
+      <Text variant="h1">Admin</Text>
     </LandingTemplate>
   );
 };

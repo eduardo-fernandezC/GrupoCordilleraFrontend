@@ -1,6 +1,7 @@
 import ModalOverlay from "../atoms/ModalOverlay";
 import ModalBadge from "../atoms/ModalBadge";
 import ModalActions from "../molecules/ModalActions";
+import Text from "../atoms/Text";
 import "../../styles/components/organisms/ConfirmModal.css";
 
 const ConfirmModal = ({
@@ -28,12 +29,12 @@ const ConfirmModal = ({
           <ModalBadge symbol={badgeSymbol} />
 
           <div>
-            <p className="logout-modal__eyebrow">{eyebrow}</p>
-            <h3 className="logout-modal__title">{title}</h3>
+            <Text variant="p" className="logout-modal__eyebrow">{eyebrow}</Text>
+            <Text variant="h3" className="logout-modal__title">{title}</Text>
           </div>
         </div>
 
-        <p className="logout-modal__text">{description}</p>
+        <Text variant="p" className="logout-modal__text">{description}</Text>
 
         <ModalActions
           onCancel={onCancel}

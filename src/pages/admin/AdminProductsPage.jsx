@@ -9,6 +9,7 @@ import { useState } from "react";
 import "../../styles/pages/AdminProductsPage.css";
 import FormSection from "../../components/organisms/FormSection";
 import { notifySuccess, notifyError } from "../../services/notificationService";
+import Text from "../../components/atoms/Text";
 
 const emptyForm = {
   nombre: "",
@@ -84,18 +85,20 @@ const AdminProductsPage = () => {
         {/* Hero Section */}
         <div className="admin-products-page__hero">
           <div>
-            <p className="admin-products-page__eyebrow">Gestión</p>
-            <h1>Administrar Productos</h1>
-            <p className="admin-products-page__intro">
+            <Text variant="p" className="admin-products-page__eyebrow">
+              Gestión
+            </Text>
+            <Text variant="h1">Administrar Productos</Text>
+            <Text variant="p" className="admin-products-page__intro">
               Crea, edita y elimina productos del catálogo
-            </p>
+            </Text>
           </div>
           <div className="admin-products-page__hero-actions">
             <div className="admin-products-page__summary-card">
-              <span className="admin-products-page__summary-label">Total</span>
-              <span className="admin-products-page__summary-value">
+              <Text variant="span" className="admin-products-page__summary-label">Total</Text>
+              <Text variant="span" className="admin-products-page__summary-value">
                 {totalProducts}
-              </span>
+              </Text>
             </div>
             <Button text="Crear Producto" onClick={handleCreate} />
           </div>
@@ -104,7 +107,7 @@ const AdminProductsPage = () => {
         {/* Table Section */}
         <div className="admin-products-page__table-card">
           <div className="admin-products-page__table-header">
-            <h2>Productos</h2>
+            <Text variant="h2">Productos</Text>
           </div>
 
           {products.length > 0 ? (
@@ -116,9 +119,9 @@ const AdminProductsPage = () => {
               />
             </div>
           ) : (
-            <p className="admin-products-page__empty-state">
+            <Text variant="p" className="admin-products-page__empty-state">
               No hay productos disponibles
-            </p>
+            </Text>
           )}
         </div>
 
@@ -126,11 +129,11 @@ const AdminProductsPage = () => {
         {isFormOpen && (
           <div className="admin-products-page__modal">
             <div className="admin-products-page__dialog">
-              <div className="admin-products-page__dialog-header">
-                <p className="admin-products-page__dialog-eyebrow">
+                <div className="admin-products-page__dialog-header">
+                <Text variant="p" className="admin-products-page__dialog-eyebrow">
                   {editingProduct ? "Editar" : "Crear"}
-                </p>
-                <h2>{editingProduct ? "Editar Producto" : "Nuevo Producto"}</h2>
+                </Text>
+                <Text variant="h2">{editingProduct ? "Editar Producto" : "Nuevo Producto"}</Text>
               </div>
 
               <FormSection

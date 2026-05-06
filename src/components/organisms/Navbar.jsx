@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import Text from "../atoms/Text";
 import { getRoles } from "../../auth/Roles";
 import "../../styles/components/organisms/Navbar.css";
 import LogoutButton from "../molecules/LogoutButton.jsx";
@@ -23,46 +24,77 @@ const Navbar = () => {
 
   return (
     <nav className="site-navbar" aria-label="Navegación principal">
-      <Link to="/" className="site-navbar__brand">
-        <span className="site-navbar__brand-mark" aria-hidden="true">
+      <NavLink to="/" className="site-navbar__brand">
+        <Text
+          variant="span"
+          className="site-navbar__brand-mark"
+          aria-hidden="true"
+        >
           GC
-        </span>
-        <span>Grupo Cordillera</span>
-      </Link>
+        </Text>
+        <Text variant="span">Grupo Cordillera</Text>
+      </NavLink>
 
       {/* menu escritorio */}
       <div className="site-navbar__links site-navbar__desktop">
-        <Link to="/ventasHoy" className="site-navbar__link">
+        <NavLink
+          to="/ventasHoy"
+          className={({ isActive }) =>
+            isActive ? "nav-link active" : "site-navbar__link"
+          }
+        >
           Ventas de Hoy
-        </Link>
-        <Link to="/ventasMes" className="site-navbar__link">
+        </NavLink>
+        <NavLink
+          to="/ventasMes"
+          className={({ isActive }) =>
+            isActive ? "nav-link active" : "site-navbar__link"
+          }
+        >
           Ventas del Mes
-        </Link>
-        <Link to="/productos" className="site-navbar__link">
+        </NavLink>
+        <NavLink
+          to="/productos"
+          className={({ isActive }) =>
+            isActive ? "nav-link active" : "site-navbar__link"
+          }
+        >
           Productos
-        </Link>
+        </NavLink>
 
         {isAuthenticated && isAdmin && (
           <>
-            <Link
+            <NavLink
               to="/ventasCrecimiento"
-              className="site-navbar__link site-navbar__link--accent"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "site-navbar__link site-navbar__link--accent"
+              }
             >
               Crecimiento
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/sucursal"
-              className="site-navbar__link site-navbar__link--accent"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "site-navbar__link site-navbar__link--accent"
+              }
             >
               Sucursal
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/AdminProductos"
-              className="site-navbar__link site-navbar__link--accent"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "site-navbar__link site-navbar__link--accent"
+              }
               onClick={handleClick}
             >
               Crud Productos
-            </Link>
+            </NavLink>
           </>
         )}
 
@@ -93,60 +125,82 @@ const Navbar = () => {
 
           <div className="site-navbar__mobile-panel" id="mobile-navigation">
             <div className="site-navbar__mobile-header">
-              <span className="site-navbar__mobile-kicker">Navegacion</span>
-              <span className="site-navbar__mobile-title">Menu</span>
+              <Text variant="span" className="site-navbar__mobile-kicker">
+                Navegacion
+              </Text>
+              <Text variant="span" className="site-navbar__mobile-title">
+                Menu
+              </Text>
             </div>
 
             <div className="site-navbar__mobile-links">
-              <Link
+              <NavLink
                 to="/ventasHoy"
-                className="site-navbar__link"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "site-navbar__link"
+                }
                 onClick={handleClick}
               >
                 Ventas de Hoy
-              </Link>
+              </NavLink>
 
-              <Link
+              <NavLink
                 to="/ventasMes"
-                className="site-navbar__link"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "site-navbar__link"
+                }
                 onClick={handleClick}
               >
                 Ventas del Mes
-              </Link>
+              </NavLink>
 
-              <Link
+              <NavLink
                 to="/productos"
-                className="site-navbar__link"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "site-navbar__link"
+                }
                 onClick={handleClick}
               >
                 Productos
-              </Link>
+              </NavLink>
 
               {isAuthenticated && isAdmin && (
                 <>
-                  <Link
+                  <NavLink
                     to="/ventasCrecimiento"
-                    className="site-navbar__link site-navbar__link--accent"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "nav-link active"
+                        : "site-navbar__link site-navbar__link--accent"
+                    }
                     onClick={handleClick}
                   >
                     Crecimiento
-                  </Link>
+                  </NavLink>
 
-                  <Link
+                  <NavLink
                     to="/AdminProductos"
-                    className="site-navbar__link site-navbar__link--accent"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "nav-link active"
+                        : "site-navbar__link site-navbar__link--accent"
+                    }
                     onClick={handleClick}
                   >
                     Crud Productos
-                  </Link>
+                  </NavLink>
 
-                  <Link
+                  <NavLink
                     to="/sucursal"
-                    className="site-navbar__link site-navbar__link--accent"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "nav-link active"
+                        : "site-navbar__link site-navbar__link--accent"
+                    }
                     onClick={handleClick}
                   >
                     Sucursal
-                  </Link>
+                  </NavLink>
                 </>
               )}
             </div>

@@ -1,9 +1,10 @@
 import LandingTemplate from "../components/templates/LandingTemplate";
+import Text from "../components/atoms/Text";
 
 const Analyst = () => {
   return (
     <LandingTemplate>
-      <h1>Analista</h1>
+      <Text variant="h1">Analista</Text>
     </LandingTemplate>
   );
 };

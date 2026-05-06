@@ -7,6 +7,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import Text from "../atoms/Text";
 import "../../styles/components/organisms/SalesChart.css";
 
 const SalesChart = ({ ventasHoy, ventasMes }) => {
@@ -17,7 +18,7 @@ const SalesChart = ({ ventasHoy, ventasMes }) => {
 
   return (
     <section className="sales-chart">
-      <h2 className="sales-chart__title">Comparativa de Ventas</h2>
+      <Text variant="h2" className="sales-chart__title">Comparativa de Ventas</Text>
 
       <div className="sales-chart__container">
         <ResponsiveContainer width="100%" height={320}>
