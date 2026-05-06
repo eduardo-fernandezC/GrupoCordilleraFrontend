@@ -17,7 +17,7 @@ const useDashboardData = () => {
       }
 
       if (!isAuthenticated) {
-        setError("Debes iniciar sesión para ver el dashboard");
+        setError("Debes iniciar sesion para ver el dashboard");
         setLoading(false);
         return;
       }
