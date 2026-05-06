@@ -17,7 +17,7 @@ const VentasCrecimientoPage = () => {
   return (
     <LandingTemplate>
       <section className="ventas-page ventas-page--crecimiento">
-        <DashboardHeader title={title} subtitle="Inidcador de crecimiento" />
+        <DashboardHeader title={title} subtitle="Indicador de crecimiento" />
         <div className="ventas-page__stats ventas-page__stats--single">
           <StatCard title="Crecimiento" value={data.crecimientoVentas + "%"} />
         </div>
