@@ -1,4 +1,5 @@
 import LogoutButton from "../components/molecules/LogoutButton";
+import Text from "../components/atoms/Text";
 import "../styles/pages/Unauthorized.css";
 
 const Unauthorized = () => {
@@ -6,12 +7,12 @@ const Unauthorized = () => {
     <main className="unauthorized-page">
       <section className="unauthorized-card">
         <div className="unauthorized-card__status">403</div>
-        <h1>Acceso no autorizado</h1>
-        <p>
+        <Text variant="h1">Acceso no autorizado</Text>
+        <Text variant="p">
           No tienes permisos suficientes para acceder al Dashboard de{" "}
           <strong>Grupo Cordillera</strong>.
-        </p>
-        <p>Cierra sesion e intentalo mas tarde.</p>
+        </Text>
+        <Text variant="p">Cierra sesion e intentalo mas tarde.</Text>
         <div className="unauthorized-card__actions">
           <LogoutButton />
         </div>

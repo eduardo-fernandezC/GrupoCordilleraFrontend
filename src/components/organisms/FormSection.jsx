@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../atoms/Button";
+import Text from "../atoms/Text";
 
 // Form Component
 const FormSection = ({ product, errors, onSave, onCancel }) => {
@@ -18,11 +19,13 @@ const FormSection = ({ product, errors, onSave, onCancel }) => {
   return (
     <form onSubmit={handleSubmit} className="admin-products-page__form">
       {errors.general && (
-        <p className="admin-products-page__form-error">{errors.general}</p>
+        <Text variant="p" className="admin-products-page__form-error">
+          {errors.general}
+        </Text>
       )}
 
       <div className="admin-products-page__field">
-        <span>Nombre</span>
+        <Text variant="span">Nombre</Text>
         <input
           type="text"
           name="nombre"
@@ -32,12 +35,14 @@ const FormSection = ({ product, errors, onSave, onCancel }) => {
           required
         />
         {errors.nombre && (
-          <p className="admin-products-page__form-error">{errors.nombre}</p>
+          <Text variant="p" className="admin-products-page__form-error">
+            {errors.nombre}
+          </Text>
         )}
       </div>
 
       <div className="admin-products-page__field">
-        <span>Categoría</span>
+        <Text variant="span">Categoría</Text>
         <input
           type="text"
           name="categoria"
@@ -47,12 +52,14 @@ const FormSection = ({ product, errors, onSave, onCancel }) => {
           required
         />
         {errors.categoria && (
-          <p className="admin-products-page__form-error">{errors.categoria}</p>
+          <Text variant="p" className="admin-products-page__form-error">
+            {errors.categoria}
+          </Text>
         )}
       </div>
 
       <div className="admin-products-page__field">
-        <span>Precio</span>
+        <Text variant="span">Precio</Text>
         <input
           type="number"
           name="precio"
@@ -63,12 +70,14 @@ const FormSection = ({ product, errors, onSave, onCancel }) => {
           required
         />
         {errors.precio && (
-          <p className="admin-products-page__form-error">{errors.precio}</p>
+          <Text variant="p" className="admin-products-page__form-error">
+            {errors.precio}
+          </Text>
         )}
       </div>
 
       <div className="admin-products-page__field">
-        <span>Stock</span>
+        <Text variant="span">Stock</Text>
         <input
           type="number"
           name="stock"
@@ -78,7 +87,9 @@ const FormSection = ({ product, errors, onSave, onCancel }) => {
           required
         />
         {errors.stock && (
-          <p className="admin-products-page__form-error">{errors.stock}</p>
+          <Text variant="p" className="admin-products-page__form-error">
+            {errors.stock}
+          </Text>
         )}
       </div>
 

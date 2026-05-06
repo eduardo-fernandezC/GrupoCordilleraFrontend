@@ -1,4 +1,5 @@
 import "../../styles/components/atoms/Loader.css";
+import Text from "./Text";
 
 const Loader = () => {
   return (
@@ -10,7 +11,7 @@ const Loader = () => {
     >
       <div className="loader-shell">
         <div className="loader" aria-hidden="true"></div>
-        <p className="loader__text">Cargando...</p>
+        <Text variant="p" className="loader__text">Cargando...</Text>
       </div>
     </main>
   );

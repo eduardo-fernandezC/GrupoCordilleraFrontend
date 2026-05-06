@@ -1,4 +1,5 @@
 import ProductStatCard from "../atoms/ProductStatCard";
+import Text from "../atoms/Text";
 import "../../styles/components/organisms/ProductChart.css";
 
 const ProductChart = ({ productoMasVendido, productoMenosVendido }) => {
@@ -6,7 +7,7 @@ const ProductChart = ({ productoMasVendido, productoMenosVendido }) => {
 
   return (
     <section className="product-chart">
-      <h2 className="product-chart__title">Productos Destacados</h2>
+      <Text variant="h2" className="product-chart__title">Productos Destacados</Text>
 
       <div className="product-chart__container">
         {productoMasVendido ? (
@@ -40,9 +41,9 @@ const ProductChart = ({ productoMasVendido, productoMenosVendido }) => {
         ) : null}
 
         {!hasAnyData ? (
-          <p className="product-chart__empty-state">
+          <Text variant="p" className="product-chart__empty-state">
             No hay productos destacados disponibles en este momento.
-          </p>
+          </Text>
         ) : null}
       </div>
     </section>

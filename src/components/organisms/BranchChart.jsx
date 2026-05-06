@@ -6,12 +6,13 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import Text from "../atoms/Text";
 import "../../styles/components/organisms/BranchChart.css";
 
 const BranchChart = ({ sucursales }) => {
   return (
     <section className="branch-chart">
-      <h2 className="branch-chart__title">Rendimineto Sucursal</h2>
+      <Text variant="h2" className="branch-chart__title">Rendimineto Sucursal</Text>
 
       <div className="branch-chart__container">
         <ResponsiveContainer width="100%" height={300}>

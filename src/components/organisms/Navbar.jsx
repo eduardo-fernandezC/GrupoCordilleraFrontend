@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import Text from "../atoms/Text";
 import { getRoles } from "../../auth/Roles";
 import "../../styles/components/organisms/Navbar.css";
 import LogoutButton from "../molecules/LogoutButton.jsx";
@@ -24,10 +25,14 @@ const Navbar = () => {
   return (
     <nav className="site-navbar" aria-label="Navegación principal">
       <NavLink to="/" className="site-navbar__brand">
-        <span className="site-navbar__brand-mark" aria-hidden="true">
+        <Text
+          variant="span"
+          className="site-navbar__brand-mark"
+          aria-hidden="true"
+        >
           GC
-        </span>
-        <span>Grupo Cordillera</span>
+        </Text>
+        <Text variant="span">Grupo Cordillera</Text>
       </NavLink>
 
       {/* menu escritorio */}
@@ -120,8 +125,12 @@ const Navbar = () => {
 
           <div className="site-navbar__mobile-panel" id="mobile-navigation">
             <div className="site-navbar__mobile-header">
-              <span className="site-navbar__mobile-kicker">Navegacion</span>
-              <span className="site-navbar__mobile-title">Menu</span>
+              <Text variant="span" className="site-navbar__mobile-kicker">
+                Navegacion
+              </Text>
+              <Text variant="span" className="site-navbar__mobile-title">
+                Menu
+              </Text>
             </div>
 
             <div className="site-navbar__mobile-links">
