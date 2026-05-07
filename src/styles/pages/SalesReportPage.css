@@ -13,7 +13,7 @@
 
 .sales-report-page__layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(290px, 0.8fr);
+  grid-template-columns: 1fr;
   gap: 1rem;
   align-items: start;
 }
@@ -117,18 +117,9 @@
 }
 
 .sales-report-page__detail-panel {
+  display: none;
   position: sticky;
   top: 1rem;
-}
-
-.sales-report-page__detail-card,
-.sales-report-page__detail-empty {
-  display: grid;
-  gap: 0.65rem;
-  padding: 1rem;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(193, 232, 255, 0.08);
 }
 
 .sales-report-page__detail-total {

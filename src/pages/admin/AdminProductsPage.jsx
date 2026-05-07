@@ -95,8 +95,16 @@ const AdminProductsPage = () => {
           </div>
           <div className="admin-products-page__hero-actions">
             <div className="admin-products-page__summary-card">
-              <Text variant="span" className="admin-products-page__summary-label">Total</Text>
-              <Text variant="span" className="admin-products-page__summary-value">
+              <Text
+                variant="span"
+                className="admin-products-page__summary-label"
+              >
+                Total
+              </Text>
+              <Text
+                variant="span"
+                className="admin-products-page__summary-value"
+              >
                 {totalProducts}
               </Text>
             </div>
@@ -129,11 +137,16 @@ const AdminProductsPage = () => {
         {isFormOpen && (
           <div className="admin-products-page__modal">
             <div className="admin-products-page__dialog">
-                <div className="admin-products-page__dialog-header">
-                <Text variant="p" className="admin-products-page__dialog-eyebrow">
+              <div className="admin-products-page__dialog-header">
+                <Text
+                  variant="p"
+                  className="admin-products-page__dialog-eyebrow"
+                >
                   {editingProduct ? "Editar" : "Crear"}
                 </Text>
-                <Text variant="h2">{editingProduct ? "Editar Producto" : "Nuevo Producto"}</Text>
+                <Text variant="h2">
+                  {editingProduct ? "Editar Producto" : "Nuevo Producto"}
+                </Text>
               </div>
 
               <FormSection
