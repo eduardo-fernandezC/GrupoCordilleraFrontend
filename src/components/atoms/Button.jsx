@@ -6,9 +6,15 @@ const Button = ({
   onClick,
   className = "",
   type = "button",
+  ...rest
 }) => {
   return (
-    <button type={type} onClick={onClick} className={`button ${className}`}>
+    <button
+      type={type}
+      onClick={onClick}
+      className={`button ${className}`}
+      {...rest}
+    >
       {children || text}
     </button>
   );

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import ProtectedRoute from "../routes/ProtectedRoute";
-import Admin from "../pages/Admin";
+import Admin from "../pages/admin/Admin";
 import VentasHoyPage from "../pages/VentasHoyPage";
 import VentasMesPage from "../pages/VentasMesPage";
 import ProductosPage from "../pages/ProductosPage";
@@ -11,6 +11,7 @@ import VentasCrecimientoPage from "../pages/VentasCrecimientoPage";
 import SucursalPage from "../pages/SucursalPage";
 import Unauthorized from "../pages/Unauthorized";
 import AdminProductsPage from "../pages/admin/AdminProductsPage";
+import SalesReportPage from "../pages/admin/SalesReportPage";
 
 const AppRoutes = () => {
   return (
@@ -84,7 +85,16 @@ const AppRoutes = () => {
         />
 
         <Route
-          path="/AdminProductos"
+          path="/adminVentas"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <SalesReportPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/adminProductos"
           element={
             <ProtectedRoute role="ADMIN">
               <AdminProductsPage />
