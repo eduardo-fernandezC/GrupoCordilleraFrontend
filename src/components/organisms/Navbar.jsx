@@ -85,7 +85,17 @@ const Navbar = () => {
               Sucursal
             </NavLink>
             <NavLink
-              to="/AdminProductos"
+              to="/adminVentas"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "site-navbar__link site-navbar__link--accent"
+              }
+            >
+              Reporte de Ventas
+            </NavLink>
+            <NavLink
+              to="/adminProductos"
               className={({ isActive }) =>
                 isActive
                   ? "nav-link active"
@@ -176,6 +186,18 @@ const Navbar = () => {
                     onClick={handleClick}
                   >
                     Crecimiento
+                  </NavLink>
+
+                  <NavLink
+                    to="/adminVentas"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "nav-link active"
+                        : "site-navbar__link site-navbar__link--accent"
+                    }
+                    onClick={handleClick}
+                  >
+                    Reporte de Ventas
                   </NavLink>
 
                   <NavLink
