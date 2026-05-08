@@ -8,7 +8,7 @@ import useProducts from "../../hooks/useProducts";
 import { useState } from "react";
 import "../../styles/pages/AdminProductsPage.css";
 import FormSection from "../../components/organisms/FormSection";
-import { notifySuccess, notifyError } from "../../services/notificationService";
+import { notifySuccess, notifyError } from "../../services/NotificationService.js";
 import Text from "../../components/atoms/Text";
 
 const emptyForm = {
