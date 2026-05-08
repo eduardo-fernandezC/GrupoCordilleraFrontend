@@ -4,7 +4,6 @@ dist
 .gitignore
 Dockerfile
 README.md
-.env
 *.log
 .vscode
 .idea
