@@ -19,8 +19,6 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<Login />} />
 
-        <Route path="*" element={<NotFound />} />
-
         <Route
           path="/unauthorized"
           element={
@@ -110,6 +108,8 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

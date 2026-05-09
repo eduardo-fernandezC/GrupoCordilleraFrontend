@@ -1,21 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  buildVentasFromDetalles,
-  getDetalleVentas,
-  getVentaDetalle,
-} from "../services/salesReportService";
+import { buildVentasReport, getVentas } from "../services/salesReportService";
 import { auth0Config } from "../auth/authConfig";
 
 const useSalesReport = () => {
-  const [detalleVentas, setDetalleVentas] = useState([]);
+  const [ventasRaw, setVentasRaw] = useState([]);
   const [selectedVentaId, setSelectedVentaId] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [ventaDetalle, setVentaDetalle] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [detailLoading, setDetailLoading] = useState(false);
   const [error, setError] = useState("");
-  const [detailError, setDetailError] = useState("");
+
   const {
     getAccessTokenSilently,
     isAuthenticated,
@@ -26,9 +19,7 @@ const useSalesReport = () => {
     let active = true;
 
     const loadVentas = async () => {
-      if (isAuthLoading) {
-        return;
-      }
+      if (isAuthLoading) return;
 
       if (!isAuthenticated) {
         if (active) {
@@ -46,21 +37,17 @@ const useSalesReport = () => {
         });
 
         setLoading(true);
-        const data = await getDetalleVentas(token);
+        setError("");
 
-        if (!active) {
-          return;
-        }
+        const data = await getVentas(token);
 
-        setDetalleVentas(Array.isArray(data) ? data : []);
+        if (!active) return;
 
-        if (Array.isArray(data) && data.length > 0) {
-          setSelectedVentaId((currentValue) => currentValue ?? 1);
-        }
+        setVentasRaw(Array.isArray(data) ? data : []);
+
+        setSelectedVentaId(null);
       } catch (exception) {
-        if (!active) {
-          return;
-        }
+        if (!active) return;
 
         setError(
           exception?.response?.data?.message ||
@@ -81,83 +68,24 @@ const useSalesReport = () => {
     };
   }, [getAccessTokenSilently, isAuthenticated, isAuthLoading]);
 
-  const ventas = useMemo(
-    () => buildVentasFromDetalles(detalleVentas),
-    [detalleVentas],
-  );
-
-  useEffect(() => {
-    if (!selectedVentaId) {
-      return;
-    }
-
-    let active = true;
-
-    const loadVentaDetalle = async () => {
-      try {
-        setDetailLoading(true);
-        setDetailError("");
-
-        const token = await getAccessTokenSilently({
-          authorizationParams: {
-            audience: auth0Config.audience,
-          },
-        });
-
-        const data = await getVentaDetalle(selectedVentaId, token);
-
-        if (active) {
-          setVentaDetalle(data);
-        }
-      } catch (exception) {
-        if (active) {
-          setDetailError(
-            exception?.response?.data?.message ||
-              exception?.message ||
-              "No fue posible cargar el detalle de la venta",
-          );
-          setVentaDetalle(null);
-        }
-      } finally {
-        if (active) {
-          setDetailLoading(false);
-        }
-      }
-    };
-
-    loadVentaDetalle();
-
-    return () => {
-      active = false;
-    };
-  }, [getAccessTokenSilently, selectedVentaId]);
+  const ventas = useMemo(() => buildVentasReport(ventasRaw), [ventasRaw]);
 
   const selectedVenta = useMemo(
     () => ventas.find((venta) => venta.idVenta === selectedVentaId) || null,
-    [selectedVentaId, ventas],
+    [ventas, selectedVentaId],
   );
 
   const handleSelectVenta = (idVenta) => {
-    setSelectedVentaId(idVenta);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
+    setSelectedVentaId((current) => (current === idVenta ? null : idVenta));
   };
 
   return {
     ventas,
     selectedVenta,
     selectedVentaId,
-    ventaDetalle,
-    isModalOpen,
     loading,
-    detailLoading,
     error,
-    detailError,
     handleSelectVenta,
-    closeModal,
   };
 };
 

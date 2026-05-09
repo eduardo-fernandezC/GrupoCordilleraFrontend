@@ -15,14 +15,18 @@ const SalesReportList = ({ ventas, selectedVentaId, onSelectVenta }) => {
         return (
           <article
             key={venta.idVenta}
-            className={`sales-report-card${isSelected ? " sales-report-card--selected" : ""}`}
+            className={`sales-report-card${
+              isSelected ? " sales-report-card--selected" : ""
+            }`}
             role="listitem"
           >
             <div className="sales-report-card__header">
               <div>
                 <Text variant="p" className="sales-report-card__eyebrow">
-                  Venta {venta.idVenta}
+                  Venta #{venta.idVenta}
                 </Text>
+
+                <Text variant="p">Fecha: {venta.fecha}</Text>
               </div>
 
               <Text variant="span" className="sales-report-card__total">
@@ -32,7 +36,7 @@ const SalesReportList = ({ ventas, selectedVentaId, onSelectVenta }) => {
 
             <div className="sales-report-card__actions">
               <Button
-                text={isSelected ? "Detalle abierto" : "Ver detalle"}
+                text={isSelected ? "Ocultar detalle" : "Ver detalle"}
                 onClick={() => onSelectVenta(venta.idVenta)}
                 className={
                   isSelected
@@ -41,6 +45,20 @@ const SalesReportList = ({ ventas, selectedVentaId, onSelectVenta }) => {
                 }
               />
             </div>
+
+            {isSelected && (
+              <div className="sales-report-card__detail">
+                <div className="sales-report-card__summary">
+                  <Text variant="p">Sucursal: {venta.sucursal.nombre}</Text>
+
+                  <Text variant="p">Empleado: {venta.empleado.nombre}</Text>
+
+                  <Text variant="p">
+                    Total venta: {formatCurrency(venta.total)}
+                  </Text>
+                </div>
+              </div>
+            )}
           </article>
         );
       })}

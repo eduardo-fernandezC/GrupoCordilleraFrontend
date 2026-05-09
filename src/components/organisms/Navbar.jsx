@@ -59,7 +59,7 @@ const Navbar = () => {
             isActive ? "nav-link active" : "site-navbar__link"
           }
         >
-          Productos
+          Estadisticas Productos
         </NavLink>
 
         {isAuthenticated && isAdmin && (
@@ -103,7 +103,7 @@ const Navbar = () => {
               }
               onClick={handleClick}
             >
-              Crud Productos
+              Productos
             </NavLink>
           </>
         )}
@@ -171,7 +171,7 @@ const Navbar = () => {
                 }
                 onClick={handleClick}
               >
-                Productos
+                Estadisticas Productos
               </NavLink>
 
               {isAuthenticated && isAdmin && (
@@ -209,7 +209,7 @@ const Navbar = () => {
                     }
                     onClick={handleClick}
                   >
-                    Crud Productos
+                    Productos
                   </NavLink>
 
                   <NavLink
