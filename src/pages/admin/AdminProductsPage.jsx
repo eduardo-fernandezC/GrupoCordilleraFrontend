@@ -8,7 +8,10 @@ import useProducts from "../../hooks/useProducts";
 import { useState } from "react";
 import "../../styles/pages/AdminProductsPage.css";
 import FormSection from "../../components/organisms/FormSection";
-import { notifySuccess, notifyError } from "../../services/NotificationService.js";
+import {
+  notifySuccess,
+  notifyError,
+} from "../../services/NotificationService.js";
 import Text from "../../components/atoms/Text";
 
 const emptyForm = {
@@ -17,6 +20,8 @@ const emptyForm = {
   precio: "",
   stock: "",
 };
+
+const isIntegerString = (value) => /^\d+$/.test(String(value ?? "").trim());
 
 const AdminProductsPage = () => {
   const {
@@ -33,7 +38,6 @@ const AdminProductsPage = () => {
   const [productToDelete, setProductToDelete] = useState(null);
   const [formErrors, setFormErrors] = useState({});
 
-  // const totalProducts = useMemo(() => products.length, [products]); // realmente no es necesario usarlo aqui
   const totalProducts = products.length;
 
   const handleCreate = () => {
@@ -48,15 +52,72 @@ const AdminProductsPage = () => {
     setIsFormOpen(true);
   };
 
+  const validateProductForm = (payload, originalProduct = null) => {
+    const errors = {};
+
+    if (!payload.nombre || !payload.nombre.trim()) {
+      errors.nombre = "El nombre es obligatorio.";
+    }
+
+    if (!payload.categoria || !payload.categoria.trim()) {
+      errors.categoria = "La categoria es obligatoria.";
+    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(payload.categoria)) {
+      errors.categoria = "La categoria solo puede contener letras y espacios.";
+    }
+
+    if (
+      payload.precio === undefined ||
+      payload.precio === null ||
+      Number(payload.precio) <= 0
+    ) {
+      errors.precio = "El precio debe ser mayor a 0.";
+    }
+
+    if (!isIntegerString(payload.stock)) {
+      errors.stock = "El stock debe ser un numero entero.";
+    } else if (Number(payload.stock) < 0) {
+      errors.stock = "El stock no puede ser negativo.";
+    }
+
+    if (originalProduct) {
+      const noChanges =
+        (payload.nombre || "").trim() === (originalProduct.nombre || "") &&
+        (payload.categoria || "").trim() ===
+          (originalProduct.categoria || "") &&
+        Number(payload.precio) === Number(originalProduct.precio) &&
+        Number(payload.stock) === Number(originalProduct.stock);
+
+      if (noChanges) {
+        errors.general = "No se detectaron cambios para guardar.";
+      }
+    }
+
+    return errors;
+  };
+
   const handleSave = async (payload) => {
+    const validationErrors = validateProductForm(payload, editingProduct);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setFormErrors(validationErrors);
+      return;
+    }
+
     try {
+      const normalizedPayload = {
+        ...payload,
+        precio: Number(payload.precio),
+        stock: Number(payload.stock),
+      };
+
       if (editingProduct) {
-        await updateProduct(editingProduct.idProducto, payload);
+        await updateProduct(editingProduct.idProducto, normalizedPayload);
         notifySuccess("Producto actualizado correctamente.");
       } else {
-        await createProduct(payload);
+        await createProduct(normalizedPayload);
         notifySuccess("Producto creado correctamente.");
       }
+
       setIsFormOpen(false);
       setEditingProduct(null);
       setFormErrors({});

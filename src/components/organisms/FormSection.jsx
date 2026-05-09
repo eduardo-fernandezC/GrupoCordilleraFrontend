@@ -6,9 +6,26 @@ import Text from "../atoms/Text";
 const FormSection = ({ product, errors, onSave, onCancel }) => {
   const [formData, setFormData] = useState(product);
 
+  const sanitizeIntegerInput = (value) => value.replace(/\D/g, "");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "precio" || name === "stock") {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: sanitizeIntegerInput(value),
+      }));
+      return;
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleNumericKeyDown = (e) => {
+    if (e.key === "." || e.key === ",") {
+      e.preventDefault();
+    }
   };
 
   const handleSubmit = (e) => {
@@ -61,12 +78,14 @@ const FormSection = ({ product, errors, onSave, onCancel }) => {
       <div className="admin-products-page__field">
         <Text variant="span">Precio</Text>
         <input
-          type="number"
+          type="text"
           name="precio"
           value={formData.precio}
           onChange={handleChange}
-          placeholder="0.00"
-          step="0.01"
+          onKeyDown={handleNumericKeyDown}
+          inputMode="numeric"
+          pattern="[0-9]*"
+          placeholder="0"
           required
         />
         {errors.precio && (
@@ -79,10 +98,13 @@ const FormSection = ({ product, errors, onSave, onCancel }) => {
       <div className="admin-products-page__field">
         <Text variant="span">Stock</Text>
         <input
-          type="number"
+          type="text"
           name="stock"
           value={formData.stock}
           onChange={handleChange}
+          onKeyDown={handleNumericKeyDown}
+          inputMode="numeric"
+          pattern="[0-9]*"
           placeholder="0"
           required
         />
