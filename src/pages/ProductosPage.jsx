@@ -8,7 +8,7 @@ import ErrorMessage from "../components/atoms/ErrorMessage";
 
 const ProductosPage = () => {
   const { data, loading, error } = useDashboardData();
-  const title = "Productos";
+  const title = "Estadisticas Productos";
 
   if (loading) return <Loader />;
   if (error)
