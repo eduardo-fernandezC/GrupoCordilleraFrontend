@@ -23,7 +23,7 @@ const useSalesReport = () => {
 
       if (!isAuthenticated) {
         if (active) {
-          setError("Debes iniciar sesión para ver las ventas");
+          setError("Debes iniciar sesion para ver las ventas");
           setLoading(false);
         }
         return;
@@ -43,7 +43,9 @@ const useSalesReport = () => {
 
         if (!active) return;
 
-        setVentasRaw(data);
+        setVentasRaw(Array.isArray(data) ? data : []);
+
+        setSelectedVentaId(null);
       } catch (exception) {
         if (!active) return;
 
@@ -72,14 +74,6 @@ const useSalesReport = () => {
     () => ventas.find((venta) => venta.idVenta === selectedVentaId) || null,
     [ventas, selectedVentaId],
   );
-
-  useEffect(() => {
-    if (ventas.length > 0 && selectedVentaId === null) {
-      Promise.resolve().then(() => {
-        setSelectedVentaId(ventas[0].idVenta);
-      });
-    }
-  }, [ventas, selectedVentaId]);
 
   const handleSelectVenta = (idVenta) => {
     setSelectedVentaId((current) => (current === idVenta ? null : idVenta));
