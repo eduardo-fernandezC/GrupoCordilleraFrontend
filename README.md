@@ -17,22 +17,6 @@ npm run dev
 
 El servidor de desarrollo de Vite se ejecuta por defecto en `http://localhost:5173`.
 
-## Producción
-
-Generar build optimizado:
-
-```bash
-npm run build
-```
-
-Previsualizar el build localmente:
-
-```bash
-npm run preview
-```
-
-También existe un `Dockerfile` en el repositorio para crear una imagen de producción.
-
 ## Configuración (variables de entorno)
 
 El proyecto utiliza variables de entorno con prefijo `VITE_`. Puedes definirlas en un archivo `.env` en la raíz del proyecto. Variables importantes:
