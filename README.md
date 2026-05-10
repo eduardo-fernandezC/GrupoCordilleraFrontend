@@ -1,16 +1,47 @@
-# React + Vite
+# Grupo Cordillera — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interfaz web construida con React + Vite para visualizar y administrar la información operativa del sistema: ventas, productos, sucursales, reportes y usuarios.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js 18 o superior
+- npm (o yarn)
+- Backend (APIs) disponibles o configuradas mediante variables de entorno
 
-## React Compiler
+## Instalación y ejecución (desarrollo)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+El servidor de desarrollo de Vite se ejecuta por defecto en `http://localhost:5173`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Configuración (variables de entorno)
+
+El proyecto utiliza variables de entorno con prefijo `VITE_`. Puedes definirlas en un archivo `.env` en la raíz del proyecto. Variables importantes:
+
+- `VITE_DOMAIN` — Dominio de Auth0
+- `VITE_CLIENT_ID` — Client ID de Auth0
+- `VITE_AUDIENCE` — Audience (API) para Auth0
+- `VITE_SCOPE` — Scopes (ej. `openid profile email`)
+- `VITE_DASHBOARD_URL` — URL base del servicio de dashboard
+- `VITE_DATA_URL` — URL base del servicio de datos
+- `VITE_DASHBOARD_ENDPOINT` — Endpoint para dashboard (p. ej. `/dashboard`)
+- `VITE_ROLES_ENDPOINT` — Endpoint para roles
+
+## Funcionalidades principales
+
+- Autenticación y autorización con Auth0.
+- Visualización de dashboards y gráficos de ventas.
+- Gestión y visualización de productos, sucursales y reportes.
+- Notificaciones y manejo de errores en UI.
+- Rutas protegidas según roles.
+
+## Notas
+
+- El frontend consume APIs configuradas mediante `VITE_DASHBOARD_URL` y `VITE_DATA_URL`.
+- Para cambiar el puerto de desarrollo, configura `PORT` antes de ejecutar `npm run dev` o ajusta la configuración de Vite.
+- El proyecto usa Vite + React; los scripts disponibles en `package.json` son `dev`, `build`, `preview` y `lint`.
+
+Si quieres, puedo añadir una sección con comandos Docker o un ejemplo de despliegue Nginx.
