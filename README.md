@@ -43,5 +43,3 @@ El proyecto utiliza variables de entorno con prefijo `VITE_`. Puedes definirlas 
 - El frontend consume APIs configuradas mediante `VITE_DASHBOARD_URL` y `VITE_DATA_URL`.
 - Para cambiar el puerto de desarrollo, configura `PORT` antes de ejecutar `npm run dev` o ajusta la configuración de Vite.
 - El proyecto usa Vite + React; los scripts disponibles en `package.json` son `dev`, `build`, `preview` y `lint`.
-
-Si quieres, puedo añadir una sección con comandos Docker o un ejemplo de despliegue Nginx.
