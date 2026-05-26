@@ -5,14 +5,14 @@ Interfaz web construida con React + Vite para visualizar y administrar la inform
 ## Requisitos
 
 - Node.js 18 o superior
-- npm (o yarn)
+- pnpm 11 o superior
 - Backend (APIs) disponibles o configuradas mediante variables de entorno
 
 ## Instalación y ejecución (desarrollo)
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 El servidor de desarrollo de Vite se ejecuta por defecto en `http://localhost:5173`.
@@ -41,5 +41,5 @@ El proyecto utiliza variables de entorno con prefijo `VITE_`. Puedes definirlas 
 ## Notas
 
 - El frontend consume APIs configuradas mediante `VITE_DASHBOARD_URL` y `VITE_DATA_URL`.
-- Para cambiar el puerto de desarrollo, configura `PORT` antes de ejecutar `npm run dev` o ajusta la configuración de Vite.
+- Para cambiar el puerto de desarrollo, configura `PORT` antes de ejecutar `pnpm dev` o ajusta la configuración de Vite.
 - El proyecto usa Vite + React; los scripts disponibles en `package.json` son `dev`, `build`, `preview` y `lint`.
