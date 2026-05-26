@@ -105,6 +105,17 @@ const Navbar = () => {
             >
               Productos
             </NavLink>
+            <NavLink
+              to="/adminUsuarios"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "site-navbar__link site-navbar__link--accent"
+              }
+              onClick={handleClick}
+            >
+              Usuarios
+            </NavLink>
           </>
         )}
 
@@ -222,6 +233,17 @@ const Navbar = () => {
                     onClick={handleClick}
                   >
                     Sucursal
+                  </NavLink>
+                  <NavLink
+                    to="/admin/users"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "nav-link active"
+                        : "site-navbar__link site-navbar__link--accent"
+                    }
+                    onClick={handleClick}
+                  >
+                    Usuarios
                   </NavLink>
                 </>
               )}
