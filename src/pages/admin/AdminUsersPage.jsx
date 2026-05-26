@@ -4,7 +4,6 @@ import LandingTemplate from "../../components/templates/LandingTemplate";
 import Text from "../../components/atoms/Text";
 import UserTable from "../../components/organisms/UserTable";
 import useUsers from "../../hooks/useUsers";
-import "../../styles/pages/AdminUsersPage.css";
 
 const AdminUsersPage = () => {
   const { users, loading, error } = useUsers();

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { auth0Config } from "../auth/authConfig";
 
-import { getUsers } from "../services/userService";
+import { getUsers } from "../services/UserService";
 
 const normalizeUsers = (value) =>
   Array.isArray(value) ? value : [];

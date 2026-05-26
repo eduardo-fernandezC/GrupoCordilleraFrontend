@@ -1,7 +1,5 @@
 import ErrorMessage from "../atoms/ErrorMessage";
 
-import "../../styles/components/organisms/UserTable.css";
-
 const UserTable = ({ users }) => {
   if (!users.length) {
     return (
@@ -14,7 +12,6 @@ const UserTable = ({ users }) => {
       <thead>
         <tr>
           <th>Email</th>
-          <th>Nombre</th>
           <th>Nickname</th>
           <th>Logins</th>
         </tr>
@@ -23,7 +20,6 @@ const UserTable = ({ users }) => {
         {users.map((user) => (
           <tr key={user.user_id}>
             <td>{user.email}</td>
-            <td>{user.name}</td>
             <td>{user.nickname}</td>
             <td>{user.logins_count}</td>
           </tr>
