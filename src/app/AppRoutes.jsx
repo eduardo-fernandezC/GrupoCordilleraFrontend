@@ -12,6 +12,7 @@ import SucursalPage from "../pages/SucursalPage";
 import Unauthorized from "../pages/Unauthorized";
 import AdminProductsPage from "../pages/admin/AdminProductsPage";
 import SalesReportPage from "../pages/admin/SalesReportPage";
+import AdminUsersPage from "../pages/admin/AdminUsersPage";
 
 const AppRoutes = () => {
   return (
@@ -96,6 +97,15 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute role="ADMIN">
               <AdminProductsPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/adminUsuarios"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <AdminUsersPage />
             </ProtectedRoute>
           }
         />
