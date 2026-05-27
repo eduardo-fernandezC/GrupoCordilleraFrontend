@@ -13,6 +13,7 @@ const UserTable = ({ users }) => {
         <tr>
           <th>Email</th>
           <th>Nickname</th>
+          <th>Roles</th>
           <th>Logins</th>
         </tr>
       </thead>
@@ -21,6 +22,7 @@ const UserTable = ({ users }) => {
           <tr key={user.user_id}>
             <td>{user.email}</td>
             <td>{user.nickname}</td>
+            <td>{user.roles.join(", ")}</td>
             <td>{user.logins_count}</td>
           </tr>
 
