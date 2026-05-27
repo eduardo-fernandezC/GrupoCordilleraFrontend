@@ -13,6 +13,18 @@ export const getUsers = async (token) => {
     "",
     buildAuthConfig(token),
   );
+  return response.data;
+};
 
+// Crea usuario
+export const createUser = async (
+  token,
+  user
+) => {
+  const response = await AuthApi.post(
+    "",
+    user,
+    buildAuthConfig(token),
+  );
   return response.data;
 };
