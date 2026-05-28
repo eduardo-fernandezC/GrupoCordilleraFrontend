@@ -1,18 +1,18 @@
-.product-table {
+.crud-table {
   width: 100%;
   border-collapse: collapse;
   min-width: 42rem;
 }
 
-.product-table th,
-.product-table td {
+.crud-table th,
+.crud-table td {
   padding: 0.9rem 1rem;
   text-align: left;
   border-bottom: 1px solid rgba(193, 232, 255, 0.08);
   color: rgba(232, 243, 255, 0.92);
 }
 
-.product-table th {
+.crud-table th {
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -21,14 +21,14 @@
   font-weight: 700;
 }
 
-.product-table tbody tr:hover {
+.crud-table tbody tr:hover {
   background: rgba(193, 232, 255, 0.05);
 }
 
-.product-table tr:last-child td {
+.crud-table tr:last-child td {
   border-bottom: 0;
 }
 
-.product-table td {
+.crud-table td {
   font-size: 0.95rem;
 }
