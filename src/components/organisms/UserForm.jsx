@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "../atoms/Button";
 import Text from "../atoms/Text";
 import "../../styles/components/organisms/UserForm.css";
+import { PASSWORD_PATTERN } from "../../validations/regex";
 
 const initialState = {
   name: "",
@@ -67,6 +68,8 @@ const UserForm = ({ user, errors, onSave, onCancel }) => {
           onChange={handleChange}
           placeholder="correo@ejemplo.com"
           autoComplete="email"
+          pattern="^[^\\s@]+@(?:[A-Za-z-]+\\.)+[A-Za-z]{2,}$"
+          title="El dominio del correo no puede contener números."
           required
         />
         {errors.email && (
@@ -87,6 +90,8 @@ const UserForm = ({ user, errors, onSave, onCancel }) => {
             isEditing ? "Dejar en blanco para conservar" : "Contraseña"
           }
           autoComplete="new-password"
+          pattern={PASSWORD_PATTERN}
+          title="La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un caracter especial."
           required={!isEditing}
         />
         {errors.password && (
