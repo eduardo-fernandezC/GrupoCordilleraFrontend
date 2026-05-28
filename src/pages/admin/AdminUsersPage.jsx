@@ -13,15 +13,13 @@ import {
   notifySuccess,
 } from "../../services/NotificationService.js";
 import "../../styles/pages/AdminUsersPage.css";
+import { validateUserForm } from "../../validations/user.validation.js";
 
 const emptyForm = {
   name: "",
   email: "",
   password: "",
 };
-
-const isEmailValid = (value) =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value ?? "").trim());
 
 const AdminUsersPage = () => {
   const { users, loading, error, createUser, updateUser, deleteUser } =
@@ -44,37 +42,6 @@ const AdminUsersPage = () => {
     setEditingUser(user);
     setFormErrors({});
     setIsFormOpen(true);
-  };
-
-  const validateUserForm = (payload, originalUser = null) => {
-    const errors = {};
-
-    if (!payload.name || !payload.name.trim()) {
-      errors.name = "El nombre es obligatorio.";
-    }
-
-    if (!payload.email || !payload.email.trim()) {
-      errors.email = "El correo es obligatorio.";
-    } else if (!isEmailValid(payload.email)) {
-      errors.email = "El correo no tiene un formato valido.";
-    }
-
-    if (!originalUser && (!payload.password || !payload.password.trim())) {
-      errors.password = "La contraseña es obligatoria.";
-    }
-
-    if (originalUser) {
-      const noChanges =
-        (payload.name || "").trim() === (originalUser.name || "") &&
-        (payload.email || "").trim() === (originalUser.email || "") &&
-        !(payload.password || "").trim();
-
-      if (noChanges) {
-        errors.general = "No se detectaron cambios para guardar.";
-      }
-    }
-
-    return errors;
   };
 
   const handleSave = async (payload) => {

@@ -13,6 +13,7 @@ import {
   notifyError,
 } from "../../services/NotificationService.js";
 import Text from "../../components/atoms/Text";
+import { validateProductForm } from "../../validations/product.validation.js";
 
 const emptyForm = {
   nombre: "",
@@ -20,8 +21,6 @@ const emptyForm = {
   precio: "",
   stock: "",
 };
-
-const isIntegerString = (value) => /^\d+$/.test(String(value ?? "").trim());
 
 const AdminProductsPage = () => {
   const {
@@ -50,49 +49,6 @@ const AdminProductsPage = () => {
     setEditingProduct(product);
     setFormErrors({});
     setIsFormOpen(true);
-  };
-
-  const validateProductForm = (payload, originalProduct = null) => {
-    const errors = {};
-
-    if (!payload.nombre || !payload.nombre.trim()) {
-      errors.nombre = "El nombre es obligatorio.";
-    }
-
-    if (!payload.categoria || !payload.categoria.trim()) {
-      errors.categoria = "La categoria es obligatoria.";
-    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(payload.categoria)) {
-      errors.categoria = "La categoria solo puede contener letras y espacios.";
-    }
-
-    if (
-      payload.precio === undefined ||
-      payload.precio === null ||
-      Number(payload.precio) <= 0
-    ) {
-      errors.precio = "El precio debe ser mayor a 0.";
-    }
-
-    if (!isIntegerString(payload.stock)) {
-      errors.stock = "El stock debe ser un numero entero.";
-    } else if (Number(payload.stock) < 0) {
-      errors.stock = "El stock no puede ser negativo.";
-    }
-
-    if (originalProduct) {
-      const noChanges =
-        (payload.nombre || "").trim() === (originalProduct.nombre || "") &&
-        (payload.categoria || "").trim() ===
-          (originalProduct.categoria || "") &&
-        Number(payload.precio) === Number(originalProduct.precio) &&
-        Number(payload.stock) === Number(originalProduct.stock);
-
-      if (noChanges) {
-        errors.general = "No se detectaron cambios para guardar.";
-      }
-    }
-
-    return errors;
   };
 
   const handleSave = async (payload) => {
