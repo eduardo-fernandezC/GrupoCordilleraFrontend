@@ -1,13 +1,13 @@
 import ErrorMessage from "../atoms/ErrorMessage";
-import ProductRowActions from "../molecules/ProductRowActions";
-import "../../styles/components/organisms/ProductTable.css";
+import RowActions from "../molecules/RowActions";
+import "../../styles/components/organisms/CrudTable.css";
 
 const ProductTable = ({ products, onEdit, onDelete }) => {
   if (!products.length)
     return <ErrorMessage message="No hay productos cargados aun." />;
 
   return (
-    <table className="product-table">
+    <table className="crud-table">
       <thead>
         <tr>
           <th>ID</th>
@@ -27,7 +27,7 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
             <td>${parseFloat(product.precio).toFixed(2)}</td>
             <td>{product.stock}</td>
             <td>
-              <ProductRowActions
+              <RowActions
                 onEdit={() => onEdit(product)}
                 onDelete={() => onDelete(product)}
               />
