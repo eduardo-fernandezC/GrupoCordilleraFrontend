@@ -29,3 +29,12 @@ export const deleteUser = async (token, userId) => {
   const response = await AuthApi.delete(`/${userId}`, buildAuthConfig(token));
   return response.data;
 };
+
+export const searchUsers = async (token, username) => {
+  const response = await AuthApi.get(
+    `/search?username=${encodeURIComponent(username)}`,
+    buildAuthConfig(token),
+  );
+
+  return response.data;
+};

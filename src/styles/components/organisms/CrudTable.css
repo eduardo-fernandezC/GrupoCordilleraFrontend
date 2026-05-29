@@ -32,3 +32,28 @@
 .crud-table td {
   font-size: 0.95rem;
 }
+
+.user-id-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-id {
+  font-family: monospace;
+  letter-spacing: 0.02em;
+}
+
+.id-toggle-btn {
+  background: transparent;
+  border: none;
+  color: rgba(232, 243, 255, 0.9);
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+.id-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.02);
+}

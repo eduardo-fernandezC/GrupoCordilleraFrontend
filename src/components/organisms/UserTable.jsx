@@ -1,8 +1,21 @@
+import { useState } from "react";
 import RowActions from "../molecules/RowActions";
 import "../../styles/components/organisms/CrudTable.css";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const UserTable = ({ users, onEdit, onDelete }) => {
   if (!users.length) return null;
+
+  const [visibleIds, setVisibleIds] = useState(new Set()); // new Set es para evitar duplicados y facilitar la eliminación de ids
+
+  const toggleIdVisibility = (id) => {
+    setVisibleIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   return (
     <table className="crud-table">
@@ -16,20 +29,43 @@ const UserTable = ({ users, onEdit, onDelete }) => {
         </tr>
       </thead>
       <tbody>
-        {users.map((user) => (
-          <tr key={user.user_id ?? user.email}>
-            <td>{user.user_id ?? "-"}</td>
-            <td>{user.email}</td>
-            <td>{user.name}</td>
-            <td>{user.roles?.length ? user.roles.join(", ") : "Sin roles"}</td>
-            <td>
-              <RowActions
-                onEdit={() => onEdit(user)}
-                onDelete={() => onDelete(user)}
-              />
-            </td>
-          </tr>
-        ))}
+        {users.map((user) => {
+          const id = user.user_id ?? null;
+          const isVisible = id ? visibleIds.has(id) : false;
+
+          return (
+            <tr key={id ?? user.email}>
+              <td className="user-id-cell">
+                {id ? (
+                  <>
+                    <span className="user-id">{isVisible ? id : "••••••"}</span>
+                    <button
+                      type="button"
+                      className="id-toggle-btn"
+                      onClick={() => toggleIdVisibility(id)}
+                      aria-label={isVisible ? "Ocultar id" : "Mostrar id"}
+                    >
+                      {isVisible ? <FiEyeOff /> : <FiEye />}
+                    </button>
+                  </>
+                ) : (
+                  "-"
+                )}
+              </td>
+              <td>{user.email}</td>
+              <td>{user.name}</td>
+              <td>
+                {user.roles?.length ? user.roles.join(", ") : "Sin roles"}
+              </td>
+              <td>
+                <RowActions
+                  onEdit={() => onEdit(user)}
+                  onDelete={() => onDelete(user)}
+                />
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
