@@ -67,16 +67,20 @@ const useUsers = () => {
   );
 
   useEffect(() => {
-    queueMicrotask(() => {
-      void loadUsers(debouncedSearchQuery);
-    });
+    void loadUsers(debouncedSearchQuery);
   }, [debouncedSearchQuery, loadUsers]);
 
   const createUser = useCallback(
     async (user) => {
       const token = await getAuthenticatedToken();
 
-      const createdUser = normalizeUser(await createUserRequest(token, user));
+      const createdUser = normalizeUser(
+        await createUserRequest(token, user)
+      );
+
+        await new Promise((resolve) =>
+          setTimeout(resolve, 1200)
+      );
 
       await loadUsers(searchQuery);
 
@@ -93,6 +97,10 @@ const useUsers = () => {
         await updateUserRequest(token, userId, user),
       );
 
+      await new Promise((resolve) =>
+        setTimeout(resolve, 1200)
+      );
+
       await loadUsers(searchQuery);
 
       return updatedUser ?? { user_id: userId, ...user };
@@ -105,6 +113,10 @@ const useUsers = () => {
       const token = await getAuthenticatedToken();
 
       await deleteUserRequest(token, userId);
+
+      await new Promise((resolve) =>
+        setTimeout(resolve, 1200)
+      );
 
       await loadUsers(searchQuery);
     },
