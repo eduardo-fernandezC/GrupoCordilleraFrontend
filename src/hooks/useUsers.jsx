@@ -2,21 +2,27 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useCallback, useEffect, useState } from "react";
 
 import { auth0Config } from "../auth/authConfig";
+import useDebounce from "./useDebounce";
 
 import {
   getUsers,
   createUser as createUserRequest,
   deleteUser as deleteUserRequest,
   updateUser as updateUserRequest,
+  searchUsers,
 } from "../services/UserService";
 
 const normalizeUsers = (value) => (Array.isArray(value) ? value : []);
+const normalizeUser = (value) =>
+  value && typeof value === "object" && !Array.isArray(value) ? value : null;
 
 const useUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const debouncedSearchQuery = useDebounce(searchQuery, 700);
 
   const getAuthenticatedToken = useCallback(async () => {
     return getAccessTokenSilently({
@@ -26,58 +32,72 @@ const useUsers = () => {
     });
   }, [getAccessTokenSilently]);
 
-  const loadUsers = useCallback(async () => {
-    if (!isAuthenticated) {
-      setUsers([]);
-      setLoading(false);
-      return [];
-    }
+  const loadUsers = useCallback(
+    async (query = "") => {
+      if (!isAuthenticated) {
+        setUsers([]);
+        setLoading(false);
+        return [];
+      }
 
-    setLoading(true);
-    setError(null);
+      setLoading(true);
+      setError(null);
 
-    try {
-      const token = await getAuthenticatedToken();
+      try {
+        const token = await getAuthenticatedToken();
+        const normalizedQuery = query.trim();
 
-      const data = await getUsers(token);
+        const data = normalizedQuery
+          ? await searchUsers(token, normalizedQuery)
+          : await getUsers(token);
 
-      const normalizedUsers = normalizeUsers(data);
+        const normalizedUsers = normalizeUsers(data);
 
-      setUsers(normalizedUsers);
+        setUsers(normalizedUsers);
 
-      return normalizedUsers;
-    } catch {
-      setError("Error cargando usuarios");
-      return [];
-    } finally {
-      setLoading(false);
-    }
-  }, [getAuthenticatedToken, isAuthenticated]);
+        return normalizedUsers;
+      } catch {
+        setError("Error cargando usuarios");
+        return [];
+      } finally {
+        setLoading(false);
+      }
+    },
+    [getAuthenticatedToken, isAuthenticated],
+  );
 
   useEffect(() => {
     queueMicrotask(() => {
-      void loadUsers();
+      void loadUsers(debouncedSearchQuery);
     });
-  }, [loadUsers]);
+  }, [debouncedSearchQuery, loadUsers]);
 
   const createUser = useCallback(
     async (user) => {
       const token = await getAuthenticatedToken();
 
-      await createUserRequest(token, user);
-      await loadUsers();
+      const createdUser = normalizeUser(await createUserRequest(token, user));
+
+      await loadUsers(searchQuery);
+
+      return createdUser ?? user;
     },
-    [getAuthenticatedToken, loadUsers],
+    [getAuthenticatedToken, loadUsers, searchQuery],
   );
 
   const updateUser = useCallback(
     async (userId, user) => {
       const token = await getAuthenticatedToken();
 
-      await updateUserRequest(token, userId, user);
-      await loadUsers();
+      const updatedUser = normalizeUser(
+        await updateUserRequest(token, userId, user),
+      );
+
+      await loadUsers(searchQuery);
+
+      return updatedUser ?? { user_id: userId, ...user };
     },
-    [getAuthenticatedToken, loadUsers],
+    [getAuthenticatedToken, loadUsers, searchQuery],
   );
 
   const deleteUser = useCallback(
@@ -85,15 +105,18 @@ const useUsers = () => {
       const token = await getAuthenticatedToken();
 
       await deleteUserRequest(token, userId);
-      await loadUsers();
+
+      await loadUsers(searchQuery);
     },
-    [getAuthenticatedToken, loadUsers],
+    [getAuthenticatedToken, loadUsers, searchQuery],
   );
 
   return {
     users,
     loading,
     error,
+    searchQuery,
+    setSearchQuery,
     loadUsers,
     createUser,
     updateUser,

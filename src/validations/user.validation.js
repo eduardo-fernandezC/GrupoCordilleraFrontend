@@ -18,7 +18,6 @@ export const validateUserForm = (payload, originalUser = null) => {
   } else if (!isEmailValid(email)) {
     errors.email = "El correo no tiene un formato valido.";
   } else {
-    // bloquear correos con partes numericas como: 1111111@111.cl
     const parts = String(email).split("@");
     const local = parts[0] || "";
     const domainLabel = (parts[1] || "").split(".")[0] || "";

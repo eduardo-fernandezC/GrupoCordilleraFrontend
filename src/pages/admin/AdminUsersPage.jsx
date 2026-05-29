@@ -22,8 +22,16 @@ const emptyForm = {
 };
 
 const AdminUsersPage = () => {
-  const { users, loading, error, createUser, updateUser, deleteUser } =
-    useUsers();
+  const {
+    users,
+    loading,
+    error,
+    createUser,
+    updateUser,
+    deleteUser,
+    searchQuery,
+    setSearchQuery,
+  } = useUsers();
 
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
@@ -31,6 +39,7 @@ const AdminUsersPage = () => {
   const [formErrors, setFormErrors] = useState({});
 
   const totalUsers = users.length;
+  const hasSearch = searchQuery.trim().length > 0;
 
   const handleCreate = () => {
     setEditingUser(null);
@@ -127,6 +136,16 @@ const AdminUsersPage = () => {
         <div className="admin-users-page__table-card">
           <div className="admin-users-page__table-header">
             <Text variant="h2">Usuarios</Text>
+            <div className="admin-users-page__search-wrap">
+              <input
+                type="search"
+                className="admin-users-page__search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Buscar por nombre o correo"
+                aria-label="Buscar usuarios"
+              />
+            </div>
           </div>
 
           {users.length > 0 ? (
@@ -139,7 +158,9 @@ const AdminUsersPage = () => {
             </div>
           ) : (
             <Text variant="p" className="admin-users-page__empty-state">
-              No hay usuarios registrados
+              {hasSearch
+                ? "No se encontraron usuarios con ese criterio"
+                : "No hay usuarios registrados"}
             </Text>
           )}
         </div>
