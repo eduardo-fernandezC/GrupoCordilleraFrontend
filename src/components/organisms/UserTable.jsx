@@ -6,7 +6,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 const UserTable = ({ users, onEdit, onDelete }) => {
   if (!users.length) return null;
 
-  const [visibleIds, setVisibleIds] = useState(new Set()); // new Set es para evitar duplicados y facilitar la eliminación de ids
+  const [visibleIds, setVisibleIds] = useState(new Set()); // new Set es para evitar duplicados y facilitar la eliminacion de ids
 
   const toggleIdVisibility = (id) => {
     setVisibleIds((prev) => {
@@ -38,7 +38,8 @@ const UserTable = ({ users, onEdit, onDelete }) => {
               <td className="user-id-cell">
                 {id ? (
                   <>
-                    <span className="user-id">{isVisible ? id : "••••••"}</span>
+                    {isVisible && <span className="user-id">{id}</span>}
+
                     <button
                       type="button"
                       className="id-toggle-btn"
