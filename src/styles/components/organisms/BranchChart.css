@@ -1,9 +1,11 @@
+/* Contenedor del grafico. */
 .branch-chart {
 	display: flex;
 	flex-direction: column;
 	gap: 0.75rem;
 }
 
+/* Titulo del grafico. */
 .branch-chart__title {
 	margin: 0;
 	font-size: 1.05rem;
@@ -12,12 +14,14 @@
 	letter-spacing: 0.06em;
 }
 
+/* Area del grafico. */
 .branch-chart__container {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
+/* Estilos de Recharts. */
 .branch-chart .recharts-cartesian-grid line {
 	stroke: rgba(193, 232, 255, 0.1);
 }

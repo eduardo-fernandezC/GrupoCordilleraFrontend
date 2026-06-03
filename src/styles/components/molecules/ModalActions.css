@@ -1,13 +1,11 @@
+/* Contenedor de acciones del modal. */
 .logout-modal__actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.65rem;
 }
 
-.logout-modal__button {
-  width: 100%;
-}
-
+/* Boton secundario del modal. */
 .logout-modal__button--secondary {
   display: inline-flex;
   align-items: center;
@@ -22,12 +20,14 @@
   transition: transform 160ms ease, background 160ms ease;
 }
 
+/* Estado activo del boton secundario. */
 .logout-modal__button--secondary:hover,
 .logout-modal__button--secondary:focus-visible {
   transform: translateY(-2px);
   background: rgba(193, 232, 255, 0.08);
 }
 
+/* Boton principal de confirmacion. */
 .logout-modal__button--danger {
   display: inline-flex;
   align-items: center;
@@ -35,14 +35,14 @@
   min-height: 2.7rem;
   padding: 0.62rem 0.9rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, #ffb703, #7da0ca);
+  background: var(--color-accent);
   color: #021024;
   font-weight: 800;
-  box-shadow: 0 10px 26px rgba(0,0,0,0.16);
 }
 
+/* Una sola columna en pantallas pequenas. */
 @media (max-width: 480px) {
-  .logout-modal__actions { 
-    grid-template-columns: 1fr; 
+  .logout-modal__actions {
+    grid-template-columns: 1fr;
   }
 }

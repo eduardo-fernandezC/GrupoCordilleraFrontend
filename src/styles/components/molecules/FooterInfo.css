@@ -1,3 +1,4 @@
+/* Distribucion del pie. */
 .site-footer__info {
 	display: flex;
 	flex-wrap: wrap;
@@ -6,12 +7,14 @@
 	gap: 0.5rem 1rem;
 }
 
+/* Titulo del pie. */
 .site-footer__title {
 	color: var(--color-text);
 	font-weight: 700;
 	letter-spacing: 0.02em;
 }
 
+/* Metadata secundaria. */
 .site-footer__meta {
 	color: var(--color-secondary);
 	font-size: 0.95rem;

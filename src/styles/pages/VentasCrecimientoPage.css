@@ -1,3 +1,4 @@
+/* Contenedor de crecimiento de ventas. */
 .ventas-page {
   display: flex;
   flex-direction: column;
@@ -5,12 +6,14 @@
   padding: clamp(1.2rem, 2vw, 1.8rem);
 }
 
+/* Resumen de ventas. */
 .ventas-page__stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 0.85rem;
 }
 
+/* Estado de una sola tarjeta. */
 .ventas-page__stats--single {
   display: flex;
   justify-content: center;
@@ -34,6 +37,7 @@
   color: rgba(193, 232, 255, 0.88);
 }
 
+/* Ajustes en pantallas pequenas. */
 @media (max-width: 680px) {
   .ventas-page {
     gap: 1rem;

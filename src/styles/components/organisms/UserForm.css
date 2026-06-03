@@ -1,9 +1,11 @@
+/* Formulario de usuarios. */
 .admin-users-page__form {
   display: grid;
   gap: 0.95rem;
   margin-top: 1rem;
 }
 
+/* Campo individual. */
 .admin-users-page__field {
   display: grid;
   gap: 0.4rem;
@@ -34,11 +36,13 @@
   outline-offset: 1px;
 }
 
+/* Mensaje de error del formulario. */
 .admin-users-page__form-error {
   margin: 0;
   color: #ffb4b4;
 }
 
+/* Acciones del formulario. */
 .admin-users-page__form-actions {
   display: flex;
   justify-content: flex-end;

@@ -1,3 +1,4 @@
+/* Encabezado del dashboard. */
 .dashboard-header {
   display: flex;
   flex-direction: column;
@@ -9,6 +10,7 @@
   text-align: center;
 }
 
+/* Titulo principal. */
 .dashboard-title {
   margin: 0;
   font-size: 2.5rem;
@@ -18,6 +20,7 @@
   line-height: 1.1;
 }
 
+/* Subtitulo breve. */
 .dashboard-subtitle {
   font-weight: bold;
 }
