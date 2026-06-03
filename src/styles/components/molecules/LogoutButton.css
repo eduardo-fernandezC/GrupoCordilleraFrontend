@@ -1,6 +1,1 @@
-/* Estilos del módulo LogoutButton distribuidos en componentes individuales:
- * - ModalOverlay.css (atoms)
- * - ModalBadge.css (atoms)
- * - ModalActions.css (molecules)
- * - ConfirmModal.css (organisms)
- */
+/* Los estilos de LogoutButton viven en los modulos del modal. */

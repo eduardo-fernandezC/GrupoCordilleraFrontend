@@ -1,28 +1,27 @@
+/* Contenedor de acceso denegado. */
 .unauthorized-page {
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 1.5rem;
-	background:
-		radial-gradient(circle at top, rgba(84, 131, 179, 0.2), transparent 34%),
-		linear-gradient(180deg, #03111f 0%, var(--color-bg) 100%);
+	background: var(--color-bg);
 }
 
+/* Tarjeta principal. */
 .unauthorized-card {
 	width: min(560px, 100%);
 	padding: 2rem;
 	border: 1px solid var(--color-border);
 	border-radius: 1.5rem;
 	background: rgba(5, 38, 89, 0.78);
-	box-shadow: 0 24px 60px rgba(2, 16, 36, 0.42);
-	backdrop-filter: blur(12px);
 	text-align: center;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
+/* Estado visual. */
 .unauthorized-card__status {
 	display: inline-flex;
 	align-items: center;
@@ -58,6 +57,7 @@
 	min-width: 12rem;
 }
 
+/* Acciones centradas. */
 .unauthorized-card__actions {
 	margin-top: 1.5rem;
 	width: 100%;

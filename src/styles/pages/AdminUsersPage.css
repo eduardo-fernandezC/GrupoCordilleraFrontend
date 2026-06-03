@@ -1,3 +1,4 @@
+/* Vista principal de usuarios. */
 .admin-users-page {
   display: flex;
   flex-direction: column;
@@ -5,6 +6,7 @@
   padding: clamp(1.2rem, 2vw, 1.8rem);
 }
 
+/* Encabezado de la pagina. */
 .admin-users-page__hero {
   display: flex;
   align-items: flex-end;
@@ -12,11 +14,8 @@
   gap: 1rem;
   padding: 1.2rem 1.3rem;
   border-radius: 1.35rem;
-  background:
-    radial-gradient(circle at top left, rgba(255, 183, 3, 0.18), transparent 36%),
-    linear-gradient(135deg, rgba(7, 45, 98, 0.96), rgba(4, 22, 44, 0.96));
+  background: rgba(5, 38, 89, 0.94);
   border: 1px solid rgba(193, 232, 255, 0.08);
-  box-shadow: 0 18px 42px rgba(2, 16, 36, 0.24);
 }
 
 .admin-users-page__eyebrow {
@@ -77,7 +76,6 @@
   border-radius: 1.25rem;
   background: rgba(4, 22, 44, 0.9);
   border: 1px solid rgba(193, 232, 255, 0.08);
-  box-shadow: 0 18px 40px rgba(2, 16, 36, 0.18);
 }
 
 .admin-users-page__table-header {
@@ -137,7 +135,6 @@
   place-items: center;
   padding: 1rem;
   background: rgba(2, 10, 22, 0.72);
-  backdrop-filter: blur(10px);
 }
 
 .admin-users-page__dialog {
@@ -146,9 +143,8 @@
   overflow: auto;
   padding: 1.25rem;
   border-radius: 1.35rem;
-  background: linear-gradient(180deg, rgba(7, 45, 98, 0.96), rgba(4, 22, 44, 0.96));
+  background: rgba(4, 22, 44, 0.96);
   border: 1px solid rgba(193, 232, 255, 0.08);
-  box-shadow: 0 18px 42px rgba(2, 16, 36, 0.5);
 }
 
 .admin-users-page__dialog-header h2 {
