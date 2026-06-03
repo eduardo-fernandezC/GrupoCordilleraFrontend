@@ -13,6 +13,7 @@ import Unauthorized from "../pages/Unauthorized";
 import AdminProductsPage from "../pages/admin/AdminProductsPage";
 import SalesReportPage from "../pages/admin/SalesReportPage";
 import AdminUsersPage from "../pages/admin/AdminUsersPage";
+import ReportesPage from "../pages/admin/ReportesPage";
 
 const AppRoutes = () => {
   return (

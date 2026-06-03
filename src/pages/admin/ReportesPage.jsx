@@ -8,13 +8,13 @@ import Loader from "../../components/atoms/Loader";
 import ErrorMessage from "../../components/atoms/ErrorMessage";
 
 import { auth0Config } from "../../auth/authConfig";
-import { downloadReportPdf } from "../../services/reportsService";
+import { downloadReportPdf } from "../../services/ReportService";
 import {
   notifyError,
   notifySuccess,
 } from "../../services/NotificationService.js";
 
-import "../../styles/pages/ReportesPage.css";
+import "../../styles/pages/ReportPage.css";
 
 const REPORTS = [
   {
@@ -22,7 +22,7 @@ const REPORTS = [
     title: "Reporte Ejecutivo",
     description:
       "Resumen gerencial con ventas totales, cantidad de ventas, producto más vendido y mejor sucursal.",
-    endpoint: "/api/v1/reports/executive/pdf",
+    endpoint: "reports/executive/pdf",
     filename: "reporte-ejecutivo.pdf",
     buttonLabel: "Descargar Ejecutivo",
   },
@@ -31,7 +31,7 @@ const REPORTS = [
     title: "Reporte de Productos",
     description:
       "Listado de productos con stock, precio, categoría y resumen del inventario.",
-    endpoint: "/api/v1/reports/products/pdf",
+    endpoint: "reports/products/pdf",
     filename: "reporte-productos.pdf",
     buttonLabel: "Descargar Productos",
   },
@@ -40,7 +40,7 @@ const REPORTS = [
     title: "Reporte de Ventas",
     description:
       "Detalle de ventas con fecha, sucursal, vendedor y total de cada venta.",
-    endpoint: "/api/v1/reports/sales/pdf",
+    endpoint: "reports/sales/pdf",
     filename: "reporte-ventas.pdf",
     buttonLabel: "Descargar Ventas",
   },
@@ -49,7 +49,7 @@ const REPORTS = [
     title: "Reporte General",
     description:
       "Documento consolidado con reporte ejecutivo, productos y ventas en un solo PDF.",
-    endpoint: "/api/v1/reports/full/pdf",
+    endpoint: "reports/full/pdf",
     filename: "reporte-general.pdf",
     buttonLabel: "Descargar Todo",
   },
