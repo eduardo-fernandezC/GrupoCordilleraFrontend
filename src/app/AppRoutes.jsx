@@ -118,7 +118,14 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
-
+        <Route
+          path="/adminReportes"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <ReportesPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
