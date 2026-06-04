@@ -116,6 +116,16 @@ const Navbar = () => {
             >
               Usuarios
             </NavLink>
+            <NavLink
+              to="/adminReportes"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "site-navbar__link site-navbar__link--accent"
+              }
+            >
+              Reportes
+            </NavLink>
           </>
         )}
 
@@ -187,6 +197,17 @@ const Navbar = () => {
 
               {isAuthenticated && isAdmin && (
                 <>
+                  <NavLink
+                    to="/adminReportes"
+                    className={({ isActive }) =>
+                      isActive
+                        ? "nav-link active"
+                        : "site-navbar__link site-navbar__link--accent"
+                    }
+                    onClick={handleClick}
+                  >
+                    Reportes
+                  </NavLink>
                   <NavLink
                     to="/ventasCrecimiento"
                     className={({ isActive }) =>
