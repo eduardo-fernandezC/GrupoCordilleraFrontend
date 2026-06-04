@@ -37,6 +37,18 @@ const Navbar = () => {
 
       {/* menu escritorio */}
       <div className="site-navbar__links site-navbar__desktop">
+        {isAuthenticated && isAdmin && (
+          <NavLink
+            to="/adminReportes"
+            className={({ isActive }) =>
+              isActive
+                ? "nav-link active"
+                : "site-navbar__link site-navbar__link--accent"
+            }
+          >
+            Reportes
+          </NavLink>
+        )}
         <NavLink
           to="/ventasHoy"
           className={({ isActive }) =>
