@@ -55,9 +55,7 @@ const UserTable = ({ users, onEdit, onDelete }) => {
               </td>
               <td>{user.email}</td>
               <td>{user.name}</td>
-              <td>
-                {user.roles?.length ? user.roles.join(", ") : "Sin roles"}
-              </td>
+              <td>{user.roles?.length ? user.roles.join(", ") : ""}</td>
               <td>
                 <RowActions
                   onEdit={() => onEdit(user)}
