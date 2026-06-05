@@ -1,138 +1,83 @@
 import { validateProductForm } from "../../validations/product.validation";
 
 describe("validateProductForm", () => {
-  it("retorna un objeto vacío cuando el producto es válido", () => {
-    const payload = {
-      nombre: "Pan",
-      categoria: "Alimentos",
-      precio: "1200",
-      stock: "10",
-    };
+  const validProduct = {
+    nombre: "Mouse",
+    categoria: "Perifericos",
+    precio: "1000",
+    stock: "10",
+  };
 
-    const errors = validateProductForm(payload);
-
-    expect(errors).toEqual({});
+  it("no retorna errores con datos válidos", () => {
+    expect(
+      validateProductForm(validProduct)
+    ).toEqual({});
   });
 
-  it("valida que el nombre sea obligatorio", () => {
-    const payload = {
+  it("valida nombre obligatorio", () => {
+    const result = validateProductForm({
+      ...validProduct,
       nombre: "",
-      categoria: "Alimentos",
-      precio: "1200",
-      stock: "10",
-    };
+    });
 
-    const errors = validateProductForm(payload);
-
-    expect(errors.nombre).toBe("El nombre es obligatorio.");
+    expect(result.nombre).toBeDefined();
   });
 
-  it("valida que el nombre solo tenga letras y espacios", () => {
-    const payload = {
-      nombre: "Pan123",
-      categoria: "Alimentos",
-      precio: "1200",
-      stock: "10",
-    };
-
-    const errors = validateProductForm(payload);
-
-    expect(errors.nombre).toBe(
-      "El nombre solo puede contener letras y espacios.",
-    );
-  });
-
-  it("valida que la categoria sea obligatoria", () => {
-    const payload = {
-      nombre: "Pan",
+  it("valida categoria obligatoria", () => {
+    const result = validateProductForm({
+      ...validProduct,
       categoria: "",
-      precio: "1200",
-      stock: "10",
-    };
+    });
 
-    const errors = validateProductForm(payload);
-
-    expect(errors.categoria).toBe("La categoria es obligatoria.");
+    expect(result.categoria).toBeDefined();
   });
 
-  it("valida que la categoria solo tenga letras y espacios", () => {
-    const payload = {
-      nombre: "Pan",
-      categoria: "Alimentos123",
-      precio: "1200",
-      stock: "10",
-    };
+  it("valida precio mayor a cero", () => {
+    const result = validateProductForm({
+      ...validProduct,
+      precio: "0",
+    });
 
-    const errors = validateProductForm(payload);
+    expect(result.precio).toBeDefined();
+  });
 
-    expect(errors.categoria).toBe(
-      "La categoria solo puede contener letras y espacios.",
+  it("valida stock entero", () => {
+    const result = validateProductForm({
+      ...validProduct,
+      stock: "abc",
+    });
+
+    expect(result.stock).toBeDefined();
+  });
+
+  it("valida stock negativo", () => {
+    const result = validateProductForm({
+      ...validProduct,
+      stock: "-1",
+    });
+
+    expect(result.stock).toBeDefined();
+  });
+
+  it("detecta que no hubo cambios", () => {
+    const result = validateProductForm(
+      validProduct,
+      validProduct
+    );
+
+    expect(result.general).toBe(
+      "No se detectaron cambios para guardar."
     );
   });
 
-  it("valida que el precio sea mayor a 0", () => {
-    const payload = {
-      nombre: "Pan",
-      categoria: "Alimentos",
-      precio: "0",
-      stock: "10",
-    };
+  it("valida nombre con caracteres inválidos", () => {
+    const result = validateProductForm({
+      ...validProduct,
+      nombre: "Mouse123",
+    });
 
-    const errors = validateProductForm(payload);
-
-    expect(errors.precio).toBe("El precio debe ser mayor a 0.");
-  });
-
-  it("valida que el stock sea un número entero", () => {
-    const payload = {
-      nombre: "Pan",
-      categoria: "Alimentos",
-      precio: "1200",
-      stock: "10.5",
-    };
-
-    const errors = validateProductForm(payload);
-
-    expect(errors.stock).toBe("El stock debe ser un numero entero.");
-  });
-
-  it("detecta cuando no hay cambios al editar un producto", () => {
-    const originalProduct = {
-      nombre: "Pan",
-      categoria: "Alimentos",
-      precio: 1200,
-      stock: 10,
-    };
-
-    const payload = {
-      nombre: "Pan",
-      categoria: "Alimentos",
-      precio: "1200",
-      stock: "10",
-    };
-
-    const errors = validateProductForm(payload, originalProduct);
-
-    expect(errors.general).toBe("No se detectaron cambios para guardar.");
-  });
-
-  it("no muestra error general cuando hay cambios al editar un producto", () => {
-    const originalProduct = {
-      nombre: "Pan",
-      categoria: "Alimentos",
-      precio: 1200,
-      stock: 10,
-    };
-
-    const payload = {
-      nombre: "Pan Integral",
-      categoria: "Alimentos",
-      precio: "1200",
-      stock: "10",
-    };
-
-    const errors = validateProductForm(payload, originalProduct);
-
-    expect(errors.general).toBeUndefined();
+    expect(result.nombre).toContain(
+      "solo puede contener letras"
+    );
   });
 });

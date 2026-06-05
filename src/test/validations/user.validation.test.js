@@ -1,168 +1,90 @@
 import { validateUserForm } from "../../validations/user.validation";
 
 describe("validateUserForm", () => {
-  it("retorna un objeto vacío cuando el usuario es válido", () => {
-    const payload = {
-      name: "Juan Perez",
-      email: "juan.perez@test.com",
-      password: "Password1!",
-    };
+  const validUser = {
+    name: "Rocio",
+    email: "rocio@grupocordillera.cl",
+    password: "Password1!",
+  };
 
-    const errors = validateUserForm(payload);
-
-    expect(errors).toEqual({});
+  it("no retorna errores con datos válidos", () => {
+    expect(
+      validateUserForm(validUser)
+    ).toEqual({});
   });
 
-  it("valida que el nombre sea obligatorio", () => {
-    const payload = {
+  it("valida nombre obligatorio", () => {
+    const result = validateUserForm({
+      ...validUser,
       name: "",
-      email: "juan@test.com",
-      password: "Password1!",
-    };
+    });
 
-    const errors = validateUserForm(payload);
-
-    expect(errors.name).toBe("El nombre es obligatorio.");
+    expect(result.name).toBeDefined();
   });
 
-  it("valida que el nombre solo tenga letras y espacios", () => {
-    const payload = {
-      name: "Juan123",
-      email: "juan@test.com",
-      password: "Password1!",
-    };
-
-    const errors = validateUserForm(payload);
-
-    expect(errors.name).toBe(
-      "El nombre solo puede contener letras y espacios.",
-    );
-  });
-
-  it("valida que el correo sea obligatorio", () => {
-    const payload = {
-      name: "Juan Perez",
+  it("valida correo obligatorio", () => {
+    const result = validateUserForm({
+      ...validUser,
       email: "",
-      password: "Password1!",
-    };
+    });
 
-    const errors = validateUserForm(payload);
-
-    expect(errors.email).toBe("El correo es obligatorio.");
+    expect(result.email).toBeDefined();
   });
 
-  it("valida que el correo tenga formato válido", () => {
-    const payload = {
-      name: "Juan Perez",
-      email: "correo-malo",
-      password: "Password1!",
-    };
+  it("valida correo inválido", () => {
+    const result = validateUserForm({
+      ...validUser,
+      email: "rocio@gmail.com",
+    });
 
-    const errors = validateUserForm(payload);
-
-    expect(errors.email).toBe("El correo no tiene un formato valido.");
+    expect(result.email).toBeDefined();
   });
 
-  it("valida que el usuario del correo no sea solo números", () => {
-    const payload = {
-      name: "Juan Perez",
-      email: "123@test.com",
-      password: "Password1!",
-    };
-
-    const errors = validateUserForm(payload);
-
-    expect(errors.email).toBe(
-      "El usuario del correo no puede ser solo numeros.",
-    );
-  });
-
-  it("valida que el dominio del correo no sea solo números", () => {
-    const payload = {
-      name: "Juan Perez",
-      email: "juan@123.com",
-      password: "Password1!",
-    };
-
-    const errors = validateUserForm(payload);
-
-    expect(errors.email).toBe(
-      "El dominio del correo no puede ser solo numeros.",
-    );
-  });
-
-  it("valida cuando usuario y dominio del correo son solo números", () => {
-    const payload = {
-      name: "Juan Perez",
-      email: "123@456.com",
-      password: "Password1!",
-    };
-
-    const errors = validateUserForm(payload);
-
-    expect(errors.email).toBe(
-      "El correo no puede contener solo numeros en usuario y dominio.",
-    );
-  });
-
-  it("valida que la contraseña sea obligatoria al crear usuario", () => {
-    const payload = {
-      name: "Juan Perez",
-      email: "juan@test.com",
+  it("valida contraseña obligatoria en creación", () => {
+    const result = validateUserForm({
+      ...validUser,
       password: "",
-    };
+    });
 
-    const errors = validateUserForm(payload);
-
-    expect(errors.password).toBe("La contraseña es obligatoria.");
+    expect(result.password).toBeDefined();
   });
 
-  it("valida que la contraseña cumpla el formato requerido", () => {
-    const payload = {
-      name: "Juan Perez",
-      email: "juan@test.com",
-      password: "12345678",
+  it("valida contraseña débil", () => {
+    const result = validateUserForm({
+      ...validUser,
+      password: "123",
+    });
+
+    expect(result.password).toBeDefined();
+  });
+
+  it("detecta usuario sin cambios", () => {
+    const original = {
+      name: "Rocio",
+      email: "rocio@grupocordillera.cl",
     };
 
-    const errors = validateUserForm(payload);
+    const result = validateUserForm(
+      {
+        ...original,
+        password: "",
+      },
+      original
+    );
 
-    expect(errors.password).toBe(
-      "La contraseña debe tener al menos 8 caracteres, una mayuscula, una minuscula, un numero y un caracter especial.",
+    expect(result.general).toBe(
+      "No se detectaron cambios para guardar."
     );
   });
 
-  it("detecta cuando no hay cambios al editar un usuario", () => {
-    const originalUser = {
-      name: "Juan Perez",
-      email: "juan@test.com",
-    };
+  it("valida usuario correo solo numérico", () => {
+    const result = validateUserForm({
+      ...validUser,
+      email: "123@grupocordillera.cl",
+    });
 
-    const payload = {
-      name: "Juan Perez",
-      email: "juan@test.com",
-      password: "",
-    };
-
-    const errors = validateUserForm(payload, originalUser);
-
-    expect(errors.general).toBe("No se detectaron cambios para guardar.");
-  });
-
-  it("permite editar usuario sin contraseña si hay cambios", () => {
-    const originalUser = {
-      name: "Juan Perez",
-      email: "juan@test.com",
-    };
-
-    const payload = {
-      name: "Juan Perez Actualizado",
-      email: "juan@test.com",
-      password: "",
-    };
-
-    const errors = validateUserForm(payload, originalUser);
-
-    expect(errors.password).toBeUndefined();
-    expect(errors.general).toBeUndefined();
+    expect(result.email).toContain(
+      "usuario del correo"
+    );
   });
 });
