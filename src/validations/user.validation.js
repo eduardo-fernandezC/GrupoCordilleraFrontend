@@ -16,7 +16,7 @@ export const validateUserForm = (payload, originalUser = null) => {
   if (!email) {
     errors.email = "El correo es obligatorio.";
   } else if (!isEmailValid(email)) {
-    errors.email = "El correo no tiene un formato valido.";
+    errors.email = "correo invalido";
   } else {
     const parts = String(email).split("@");
     const local = parts[0] || "";
