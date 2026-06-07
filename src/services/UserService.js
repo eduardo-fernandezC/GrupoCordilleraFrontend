@@ -6,8 +6,14 @@ const buildAuthConfig = (token) => ({
   },
 });
 
-export const getUsers = async (token) => {
-  const response = await AuthApi.get("", buildAuthConfig(token));
+export const getUsers = async (token, page = 0, limit = 10) => {
+  const response = await AuthApi.get("", {
+    ...buildAuthConfig(token),
+    params: {
+      page,
+      limit,
+    },
+  });
   return response.data;
 };
 

@@ -197,3 +197,23 @@
     width: 100%;
   }
 }
+
+.pagination{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  margin-top:20px;
+}
+
+.pagination button{
+  padding:8px 14px;
+  border:none;
+  cursor:pointer;
+  border-radius:8px;
+}
+
+.pagination button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}

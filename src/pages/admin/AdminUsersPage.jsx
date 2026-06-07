@@ -26,9 +26,15 @@ const AdminUsersPage = () => {
     users,
     loading,
     error,
+
+    page,
+    setPage,
+    totalPages,
+
     createUser,
     updateUser,
     deleteUser,
+
     searchQuery,
     setSearchQuery,
   } = useUsers();
@@ -164,6 +170,47 @@ const AdminUsersPage = () => {
             </Text>
           )}
         </div>
+        {/* esto despues lo desglozo!!!!!!! */}
+        {users.length > 0 ? (
+          <>
+            <div className="admin-users-page__table-wrap">
+              <UserTable
+                users={users}
+                onEdit={handleEdit}
+                onDelete={setUserToDelete}
+              />
+            </div>
+
+            {!hasSearch && (
+              <div className="pagination">
+                <button
+                  disabled={page === 0}
+                  onClick={() => setPage((prev) => prev - 1)}
+                >
+                  ←
+                </button>
+
+                <span>
+                  Página {page + 1} de {totalPages}
+                </span>
+
+                <button
+                  disabled={page >= totalPages - 1}
+                  onClick={() => setPage((prev) => prev + 1)}
+                >
+                  →
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <Text variant="p" className="admin-users-page__empty-state">
+            {hasSearch
+              ? "No se encontraron usuarios con ese criterio"
+              : "No hay usuarios registrados"}
+          </Text>
+        )}
+        {/* hasta aca */}
 
         {isFormOpen && (
           <div className="admin-users-page__modal">
