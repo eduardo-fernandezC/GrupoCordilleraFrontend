@@ -43,10 +43,8 @@ const AdminUsersPage = () => {
   const [editingUser, setEditingUser] = useState(null);
   const [userToDelete, setUserToDelete] = useState(null);
   const [formErrors, setFormErrors] = useState({});
-
   const totalUsers = users.length;
   const hasSearch = searchQuery.trim().length > 0;
-
   const handleCreate = () => {
     setEditingUser(null);
     setFormErrors({});
@@ -70,6 +68,7 @@ const AdminUsersPage = () => {
     try {
       const normalizedPayload = {
         name: payload.name.trim(),
+
         email: payload.email.trim(),
       };
 
@@ -79,20 +78,26 @@ const AdminUsersPage = () => {
 
       if (editingUser) {
         await updateUser(editingUser.user_id, normalizedPayload);
+
         notifySuccess("Usuario actualizado correctamente.");
       } else {
         await createUser({
           ...normalizedPayload,
           password: payload.password,
         });
+
         notifySuccess("Usuario creado correctamente.");
       }
 
       setIsFormOpen(false);
+
       setEditingUser(null);
+
       setFormErrors({});
     } catch (err) {
-      setFormErrors({ general: err.message || "Error al guardar" });
+      setFormErrors({
+        general: err.message || "Error al guardar",
+      });
     }
   };
 
@@ -101,7 +106,9 @@ const AdminUsersPage = () => {
 
     try {
       await deleteUser(userToDelete.user_id);
+
       notifySuccess("Usuario eliminado correctamente.");
+
       setUserToDelete(null);
     } catch (err) {
       notifyError(`Error al eliminar: ${err.message}`);
@@ -120,7 +127,9 @@ const AdminUsersPage = () => {
             <Text variant="p" className="admin-users-page__eyebrow">
               Gestión
             </Text>
+
             <Text variant="h1">Administrar Usuarios</Text>
+
             <Text variant="p" className="admin-users-page__intro">
               Crea, edita y elimina usuarios del sistema
             </Text>
@@ -131,10 +140,12 @@ const AdminUsersPage = () => {
               <Text variant="span" className="admin-users-page__summary-label">
                 Total
               </Text>
+
               <Text variant="span" className="admin-users-page__summary-value">
                 {totalUsers}
               </Text>
             </div>
+
             <Button text="Crear Usuario" onClick={handleCreate} />
           </div>
         </div>
@@ -142,6 +153,7 @@ const AdminUsersPage = () => {
         <div className="admin-users-page__table-card">
           <div className="admin-users-page__table-header">
             <Text variant="h2">Usuarios</Text>
+
             <div className="admin-users-page__search-wrap">
               <input
                 type="search"
@@ -153,15 +165,39 @@ const AdminUsersPage = () => {
               />
             </div>
           </div>
-
+          {/*esto lo puedo desglozar */}
           {users.length > 0 ? (
-            <div className="admin-users-page__table-wrap">
-              <UserTable
-                users={users}
-                onEdit={handleEdit}
-                onDelete={setUserToDelete}
-              />
-            </div>
+            <>
+              <div className="admin-users-page__table-wrap">
+                <UserTable
+                  users={users}
+                  onEdit={handleEdit}
+                  onDelete={setUserToDelete}
+                />
+              </div>
+
+              {!hasSearch && (
+                <div className="pagination">
+                  <button
+                    disabled={page === 0}
+                    onClick={() => setPage((prev) => prev - 1)}
+                  >
+                    ←
+                  </button>
+
+                  <span>
+                    Pagina {page + 1} de {totalPages}
+                  </span>
+
+                  <button
+                    disabled={page >= totalPages - 1}
+                    onClick={() => setPage((prev) => prev + 1)}
+                  >
+                    →
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             <Text variant="p" className="admin-users-page__empty-state">
               {hasSearch
@@ -170,47 +206,7 @@ const AdminUsersPage = () => {
             </Text>
           )}
         </div>
-        {/* esto despues lo desglozo!!!!!!! */}
-        {users.length > 0 ? (
-          <>
-            <div className="admin-users-page__table-wrap">
-              <UserTable
-                users={users}
-                onEdit={handleEdit}
-                onDelete={setUserToDelete}
-              />
-            </div>
-
-            {!hasSearch && (
-              <div className="pagination">
-                <button
-                  disabled={page === 0}
-                  onClick={() => setPage((prev) => prev - 1)}
-                >
-                  ←
-                </button>
-
-                <span>
-                  Página {page + 1} de {totalPages}
-                </span>
-
-                <button
-                  disabled={page >= totalPages - 1}
-                  onClick={() => setPage((prev) => prev + 1)}
-                >
-                  →
-                </button>
-              </div>
-            )}
-          </>
-        ) : (
-          <Text variant="p" className="admin-users-page__empty-state">
-            {hasSearch
-              ? "No se encontraron usuarios con ese criterio"
-              : "No hay usuarios registrados"}
-          </Text>
-        )}
-        {/* hasta aca */}
+        {/*esto lo puedo desglozar */}
 
         {isFormOpen && (
           <div className="admin-users-page__modal">
@@ -219,6 +215,7 @@ const AdminUsersPage = () => {
                 <Text variant="p" className="admin-users-page__dialog-eyebrow">
                   {editingUser ? "Editar" : "Crear"}
                 </Text>
+
                 <Text variant="h2">
                   {editingUser ? "Editar Usuario" : "Nuevo Usuario"}
                 </Text>
@@ -230,7 +227,9 @@ const AdminUsersPage = () => {
                 onSave={handleSave}
                 onCancel={() => {
                   setIsFormOpen(false);
+
                   setEditingUser(null);
+
                   setFormErrors({});
                 }}
               />
