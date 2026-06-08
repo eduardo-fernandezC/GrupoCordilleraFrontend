@@ -36,7 +36,9 @@ describe("useUsers", () => {
       },
     ];
 
-    getUsers.mockResolvedValue(usersMock);
+    getUsers.mockResolvedValue({
+      users: usersMock,
+    });
 
     const { result } = renderHook(() => useUsers());
 
