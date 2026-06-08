@@ -51,7 +51,18 @@ describe("UserService", () => {
 
     const result = await getUsers(token);
 
-    expect(AuthApi.get).toHaveBeenCalledWith("", authConfig);
+    expect(AuthApi.get).toHaveBeenCalledWith(
+      "",
+      expect.objectContaining({
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          page: 0,
+          limit: 10,
+        },
+      }),
+    );
 
     expect(result).toEqual(users);
   });
