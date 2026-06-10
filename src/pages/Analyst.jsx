@@ -24,11 +24,11 @@ const Analyst = () => {
 
           <div className="admin-page__actions">
             <Button
-              text="Ver ventas de hoy"
+              text="Visualizar ventas de hoy"
               onClick={() => navigate("/ventasHoy")}
             />
             <Button
-              text="Ver ventas del mes"
+              text="Visualizar ventas del mes"
               onClick={() => navigate("/ventasMes")}
             />
           </div>
