@@ -256,7 +256,7 @@ const Navbar = () => {
                     Sucursal
                   </NavLink>
                   <NavLink
-                    to="/admin/users"
+                    to="/adminUsuarios"
                     className={({ isActive }) =>
                       isActive
                         ? "nav-link active"
