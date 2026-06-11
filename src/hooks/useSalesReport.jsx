@@ -9,6 +9,10 @@ const useSalesReport = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // nuevos states para paginacion
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
   const {
     getAccessTokenSilently,
     isAuthenticated,
@@ -39,11 +43,12 @@ const useSalesReport = () => {
         setLoading(true);
         setError("");
 
-        const data = await getVentas(token);
+        const data = await getVentas(token, page, 10);
 
         if (!active) return;
 
-        setVentasRaw(Array.isArray(data) ? data : []);
+        setVentasRaw(data.content || []);
+        setTotalPages(data.totalPages || 0);
 
         setSelectedVentaId(null);
       } catch (exception) {
@@ -66,7 +71,7 @@ const useSalesReport = () => {
     return () => {
       active = false;
     };
-  }, [getAccessTokenSilently, isAuthenticated, isAuthLoading]);
+  }, [getAccessTokenSilently, isAuthenticated, isAuthLoading, page]);
 
   const ventas = useMemo(() => buildVentasReport(ventasRaw), [ventasRaw]);
 
@@ -79,12 +84,28 @@ const useSalesReport = () => {
     setSelectedVentaId((current) => (current === idVenta ? null : idVenta));
   };
 
+  const nextPage = () => {
+    if (page < totalPages - 1) {
+      setPage((prev) => prev + 1);
+    }
+  };
+
+  const previousPage = () => {
+    if (page > 0) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
   return {
     ventas,
     selectedVenta,
     selectedVentaId,
     loading,
     error,
+    page,
+    totalPages,
+    nextPage,
+    previousPage,
     handleSelectVenta,
   };
 };

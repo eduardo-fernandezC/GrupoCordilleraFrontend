@@ -7,14 +7,16 @@ const buildAuthHeaders = (token) => ({
   Authorization: `Bearer ${token}`,
 });
 
-export const getVentas = async (token) => {
-  const response = await axios.get(SALES_API_BASE, {
-    headers: buildAuthHeaders(token),
-  });
+export const getVentas = async (token, page = 0, size = 10) => {
+  const response = await axios.get(
+    `${SALES_API_BASE}/dto?page=${page}&size=${size}`, // nuevo endpoint con paginacion
+    {
+      headers: buildAuthHeaders(token),
+    },
+  );
 
-  return Array.isArray(response.data) ? response.data : [];
+  return response.data;
 };
-
 export const buildVentasReport = (ventas) => {
   if (!Array.isArray(ventas)) return [];
 
