@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import Analyst from "../../pages/Analyst";
 
@@ -15,11 +15,15 @@ vi.mock("react-router-dom", async () => {
 });
 
 describe("Analyst", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("renderiza correctamente", () => {
     render(
       <MemoryRouter>
         <Analyst />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText("Analista")).toBeInTheDocument();
@@ -29,13 +33,13 @@ describe("Analyst", () => {
     render(
       <MemoryRouter>
         <Analyst />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     fireEvent.click(
       screen.getByRole("button", {
-        name: /ver ventas de hoy/i,
-      })
+        name: /visualizar ventas de hoy/i,
+      }),
     );
 
     expect(navigateMock).toHaveBeenCalledWith("/ventasHoy");
@@ -45,13 +49,13 @@ describe("Analyst", () => {
     render(
       <MemoryRouter>
         <Analyst />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     fireEvent.click(
       screen.getByRole("button", {
-        name: /ver ventas del mes/i,
-      })
+        name: /visualizar ventas del mes/i,
+      }),
     );
 
     expect(navigateMock).toHaveBeenCalledWith("/ventasMes");
