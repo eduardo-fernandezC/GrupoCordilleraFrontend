@@ -10,8 +10,17 @@ import { formatCurrency } from "../../services/salesReportService";
 import "../../styles/pages/SalesReportPage.css";
 
 const SalesReportPage = () => {
-  const { ventas, selectedVentaId, loading, error, handleSelectVenta } =
-    useSalesReport();
+  const {
+    ventas,
+    selectedVentaId,
+    loading,
+    error,
+    page,
+    totalPages,
+    nextPage,
+    previousPage,
+    handleSelectVenta,
+  } = useSalesReport();
 
   if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error} />;
@@ -63,6 +72,20 @@ const SalesReportPage = () => {
               selectedVentaId={selectedVentaId}
               onSelectVenta={handleSelectVenta}
             />
+
+            <div className="pagination">
+              <button onClick={previousPage} disabled={page === 0}>
+                Anterior
+              </button>
+
+              <span>
+                Pagina {page + 1} de {Math.max(totalPages, 1)}
+              </span>
+
+              <button onClick={nextPage} disabled={page >= totalPages - 1}>
+                Siguiente
+              </button>
+            </div>
           </div>
         </div>
       </section>
