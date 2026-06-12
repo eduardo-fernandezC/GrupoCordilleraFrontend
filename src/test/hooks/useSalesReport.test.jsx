@@ -47,7 +47,10 @@ describe("useSalesReport", () => {
       getAccessTokenSilently: getAccessTokenSilentlyMock,
     });
 
-    getVentasMock.mockResolvedValue([venta]);
+    getVentasMock.mockResolvedValue({
+      content: [venta],
+      totalPages: 1,
+    });
 
     buildVentasReportMock.mockImplementation((ventas) => ventas);
   });
@@ -57,10 +60,17 @@ describe("useSalesReport", () => {
 
     await waitFor(() => expect(result.current.loading).toBe(false));
 
-    expect(getAccessTokenSilentlyMock).toHaveBeenCalled();
-    expect(getVentasMock).toHaveBeenCalledWith("token");
+    expect(getAccessTokenSilentlyMock).toHaveBeenCalledWith({
+      authorizationParams: {
+        audience: "test-audience",
+      },
+    });
+
+    expect(getVentasMock).toHaveBeenCalledWith("token", 0, 10);
 
     expect(result.current.ventas).toEqual([venta]);
+    expect(result.current.totalPages).toBe(1);
+    expect(result.current.page).toBe(0);
     expect(result.current.error).toBe("");
   });
 
@@ -130,7 +140,7 @@ describe("useSalesReport", () => {
     expect(getVentasMock).not.toHaveBeenCalled();
   });
 
-  it("usa arreglo vacío si la respuesta de ventas no es un array", async () => {
+  it("usa arreglo vacío si la respuesta de ventas no trae content", async () => {
     getVentasMock.mockResolvedValue({
       mensaje: "respuesta inválida",
     });
@@ -142,6 +152,7 @@ describe("useSalesReport", () => {
     expect(result.current.ventas).toEqual([]);
     expect(result.current.selectedVenta).toBeNull();
     expect(result.current.selectedVentaId).toBeNull();
+    expect(result.current.totalPages).toBe(0);
   });
 
   it("muestra error desde response.data.message", async () => {
@@ -196,10 +207,14 @@ describe("useSalesReport", () => {
     unmount();
 
     await act(async () => {
-      resolveVentas([venta]);
+      resolveVentas({
+        content: [venta],
+        totalPages: 1,
+      });
+
       await Promise.resolve();
     });
 
-    expect(getVentasMock).toHaveBeenCalled();
+    expect(getVentasMock).toHaveBeenCalledWith("token", 0, 10);
   });
 });

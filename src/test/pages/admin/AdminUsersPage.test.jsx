@@ -10,14 +10,84 @@ import {
   notifyError,
 } from "../../../services/NotificationService";
 
+const { auth0Mock } = vi.hoisted(() => ({
+  auth0Mock: vi.fn(),
+}));
+
+vi.mock("@auth0/auth0-react", () => ({
+  useAuth0: auth0Mock,
+}));
+
+vi.mock("../../../auth/Roles", () => ({
+  getRoles: () => ["ADMIN"],
+}));
+
 vi.mock("../../../hooks/useUsers");
 vi.mock("../../../validations/user.validation");
 vi.mock("../../../services/NotificationService");
+
+vi.mock("../../../components/templates/LandingTemplate", () => ({
+  default: ({ children }) => <div>{children}</div>,
+}));
+
+vi.mock("../../../components/atoms/Loader", () => ({
+  default: () => <div>Loading...</div>,
+}));
+
+vi.mock("../../../components/atoms/ErrorMessage", () => ({
+  default: ({ message }) => <div>{message}</div>,
+}));
+
+vi.mock("../../../components/organisms/UserTable", () => ({
+  default: ({ users, onEdit, onDelete }) => (
+    <div>
+      <span>Tabla Usuarios</span>
+
+      <button onClick={() => onEdit(users[0])}>Editar Usuario</button>
+
+      <button onClick={() => onDelete(users[0])}>Eliminar Usuario</button>
+    </div>
+  ),
+}));
+
+vi.mock("../../../components/organisms/UserForm", () => ({
+  default: ({ onSave, onCancel, errors }) => (
+    <div>
+      {errors?.general && <p>{errors.general}</p>}
+
+      <button
+        onClick={() =>
+          onSave({
+            name: "Pedro",
+            email: "pedro@test.cl",
+            password: "Password123*",
+          })
+        }
+      >
+        Guardar Formulario
+      </button>
+
+      <button onClick={onCancel}>Cancelar Formulario</button>
+    </div>
+  ),
+}));
+
+vi.mock("../../../components/organisms/ConfirmModal", () => ({
+  default: ({ isOpen, onConfirm, onCancel }) =>
+    isOpen ? (
+      <div>
+        <button onClick={onConfirm}>Confirmar Eliminacion</button>
+
+        <button onClick={onCancel}>Cancelar Eliminacion</button>
+      </div>
+    ) : null,
+}));
 
 const mockCreateUser = vi.fn();
 const mockUpdateUser = vi.fn();
 const mockDeleteUser = vi.fn();
 const mockSetSearchQuery = vi.fn();
+const mockSetPage = vi.fn();
 
 const defaultHook = {
   users: [
@@ -25,12 +95,19 @@ const defaultHook = {
       user_id: "1",
       name: "Juan Pérez",
       email: "juan@test.cl",
+      roles: ["ADMIN"],
     },
   ],
   loading: false,
   error: null,
+
+  page: 0,
+  setPage: mockSetPage,
+  totalPages: 1,
+
   searchQuery: "",
   setSearchQuery: mockSetSearchQuery,
+
   createUser: mockCreateUser,
   updateUser: mockUpdateUser,
   deleteUser: mockDeleteUser,
@@ -40,12 +117,20 @@ const renderPage = () =>
   render(
     <MemoryRouter>
       <AdminUsersPage />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 
 describe("AdminUsersPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+
+    auth0Mock.mockReturnValue({
+      isAuthenticated: true,
+      isLoading: false,
+      user: {
+        name: "Admin Test",
+      },
+    });
 
     useUsers.mockReturnValue(defaultHook);
 
@@ -55,18 +140,22 @@ describe("AdminUsersPage", () => {
   it("muestra loader", () => {
     useUsers.mockReturnValue({
       ...defaultHook,
+      users: [],
       loading: true,
+      error: null,
       searchQuery: "",
     });
 
     renderPage();
 
-    expect(screen.getByText("Cargando...")).toBeInTheDocument();
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
 
   it("muestra error", () => {
     useUsers.mockReturnValue({
       ...defaultHook,
+      users: [],
+      loading: false,
       error: "Error usuarios",
       searchQuery: "",
     });
@@ -80,13 +169,12 @@ describe("AdminUsersPage", () => {
     useUsers.mockReturnValue({
       ...defaultHook,
       users: [],
+      searchQuery: "",
     });
 
     renderPage();
 
-    expect(
-      screen.getByText("No hay usuarios registrados")
-    ).toBeInTheDocument();
+    expect(screen.getByText("No hay usuarios registrados")).toBeInTheDocument();
   });
 
   it("muestra mensaje vacío con búsqueda", () => {
@@ -99,7 +187,7 @@ describe("AdminUsersPage", () => {
     renderPage();
 
     expect(
-      screen.getByText("No se encontraron usuarios con ese criterio")
+      screen.getByText("No se encontraron usuarios con ese criterio"),
     ).toBeInTheDocument();
   });
 
@@ -128,36 +216,17 @@ describe("AdminUsersPage", () => {
 
     fireEvent.click(screen.getByText("Crear Usuario"));
 
-    fireEvent.change(
-      screen.getByPlaceholderText("Nombre del usuario"),
-      {
-        target: { value: "Pedro" },
-      }
-    );
-
-    fireEvent.change(
-      screen.getByPlaceholderText("correo@ejemplo.com"),
-      {
-        target: { value: "pedro@test.cl" },
-      }
-    );
-
-    fireEvent.change(
-      screen.getByPlaceholderText("Contraseña"),
-      {
-        target: { value: "Password123*" },
-      }
-    );
-
-    fireEvent.click(screen.getByText(/guardar/i));
+    fireEvent.click(screen.getByText("Guardar Formulario"));
 
     await waitFor(() => {
-      expect(mockCreateUser).toHaveBeenCalled();
+      expect(mockCreateUser).toHaveBeenCalledWith({
+        name: "Pedro",
+        email: "pedro@test.cl",
+        password: "Password123*",
+      });
     });
 
-    expect(notifySuccess).toHaveBeenCalledWith(
-      "Usuario creado correctamente."
-    );
+    expect(notifySuccess).toHaveBeenCalledWith("Usuario creado correctamente.");
   });
 
   it("edita usuario correctamente", async () => {
@@ -165,16 +234,20 @@ describe("AdminUsersPage", () => {
 
     renderPage();
 
-    fireEvent.click(screen.getAllByText(/editar/i)[0]);
+    fireEvent.click(screen.getByText("Editar Usuario"));
 
-    fireEvent.click(screen.getByText(/guardar/i));
+    fireEvent.click(screen.getByText("Guardar Formulario"));
 
     await waitFor(() => {
-      expect(mockUpdateUser).toHaveBeenCalled();
+      expect(mockUpdateUser).toHaveBeenCalledWith("1", {
+        name: "Pedro",
+        email: "pedro@test.cl",
+        password: "Password123*",
+      });
     });
 
     expect(notifySuccess).toHaveBeenCalledWith(
-      "Usuario actualizado correctamente."
+      "Usuario actualizado correctamente.",
     );
   });
 
@@ -187,48 +260,26 @@ describe("AdminUsersPage", () => {
 
     fireEvent.click(screen.getByText("Crear Usuario"));
 
-    fireEvent.click(screen.getByText(/guardar/i));
+    fireEvent.click(screen.getByText("Guardar Formulario"));
 
-    await waitFor(() => {
-      expect(mockCreateUser).not.toHaveBeenCalled();
-    });
+    expect(mockCreateUser).not.toHaveBeenCalled();
+    expect(mockUpdateUser).not.toHaveBeenCalled();
   });
 
   it("maneja error al guardar", async () => {
-    mockCreateUser.mockRejectedValue(
-      new Error("Error al guardar")
-    );
+    mockCreateUser.mockRejectedValue(new Error("Error al guardar"));
 
     renderPage();
 
     fireEvent.click(screen.getByText("Crear Usuario"));
 
-    fireEvent.change(
-      screen.getByPlaceholderText("Nombre del usuario"),
-      {
-        target: { value: "Pedro" },
-      }
-    );
-
-    fireEvent.change(
-      screen.getByPlaceholderText("correo@ejemplo.com"),
-      {
-        target: { value: "pedro@test.cl" },
-      }
-    );
-
-    fireEvent.change(
-      screen.getByPlaceholderText("Contraseña"),
-      {
-        target: { value: "Password123*" },
-      }
-    );
-
-    fireEvent.click(screen.getByText(/guardar/i));
+    fireEvent.click(screen.getByText("Guardar Formulario"));
 
     await waitFor(() => {
       expect(mockCreateUser).toHaveBeenCalled();
     });
+
+    expect(await screen.findByText("Error al guardar")).toBeInTheDocument();
   });
 
   it("elimina usuario correctamente", async () => {
@@ -236,44 +287,32 @@ describe("AdminUsersPage", () => {
 
     renderPage();
 
-    fireEvent.click(screen.getAllByText(/eliminar/i)[0]);
+    fireEvent.click(screen.getByText("Eliminar Usuario"));
 
-    fireEvent.click(
-      screen.getAllByRole("button", {
-        name: /eliminar/i,
-      })[1]
-    );
+    fireEvent.click(screen.getByText("Confirmar Eliminacion"));
 
     await waitFor(() => {
-      expect(mockDeleteUser).toHaveBeenCalled();
+      expect(mockDeleteUser).toHaveBeenCalledWith("1");
     });
 
     expect(notifySuccess).toHaveBeenCalledWith(
-      "Usuario eliminado correctamente."
+      "Usuario eliminado correctamente.",
     );
   });
 
   it("maneja error al eliminar", async () => {
-    mockDeleteUser.mockRejectedValue(
-      new Error("Error delete")
-    );
+    mockDeleteUser.mockRejectedValue(new Error("Error delete"));
 
     renderPage();
 
-    fireEvent.click(screen.getAllByText(/eliminar/i)[0]);
+    fireEvent.click(screen.getByText("Eliminar Usuario"));
 
-    fireEvent.click(
-      screen.getAllByRole("button", {
-        name: /eliminar/i,
-      })[1]
-    );
+    fireEvent.click(screen.getByText("Confirmar Eliminacion"));
 
     await waitFor(() => {
-      expect(mockDeleteUser).toHaveBeenCalled();
+      expect(mockDeleteUser).toHaveBeenCalledWith("1");
     });
 
-    expect(notifyError).toHaveBeenCalledWith(
-      "Error al eliminar: Error delete"
-    );
+    expect(notifyError).toHaveBeenCalledWith("Error al eliminar: Error delete");
   });
 });

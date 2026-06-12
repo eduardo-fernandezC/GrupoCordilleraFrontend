@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import Admin from "../../../pages/admin/Admin";
 
@@ -15,11 +15,15 @@ vi.mock("react-router-dom", async () => {
 });
 
 describe("Admin", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("renderiza correctamente", () => {
     render(
       <MemoryRouter>
         <Admin />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText("Admin")).toBeInTheDocument();
@@ -29,7 +33,7 @@ describe("Admin", () => {
     render(
       <MemoryRouter>
         <Admin />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     fireEvent.click(screen.getByRole("button", { name: /ver ventas/i }));
@@ -41,29 +45,29 @@ describe("Admin", () => {
     render(
       <MemoryRouter>
         <Admin />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     fireEvent.click(
       screen.getByRole("button", {
         name: /administrar productos/i,
-      })
+      }),
     );
 
-    expect(navigateMock).toHaveBeenCalledWith("/AdminProductos");
+    expect(navigateMock).toHaveBeenCalledWith("/adminProductos");
   });
 
   it("navega a reportes", () => {
     render(
       <MemoryRouter>
         <Admin />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     fireEvent.click(
       screen.getByRole("button", {
         name: /ver reportes/i,
-      })
+      }),
     );
 
     expect(navigateMock).toHaveBeenCalledWith("/adminReportes");

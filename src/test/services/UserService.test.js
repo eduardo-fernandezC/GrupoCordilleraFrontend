@@ -107,7 +107,11 @@ describe("UserService", () => {
 
     const result = await updateUser(token, "auth0|123", user);
 
-    expect(AuthApi.patch).toHaveBeenCalledWith("/auth0|123", user, authConfig);
+    expect(AuthApi.patch).toHaveBeenCalledWith(
+      "/auth0%7C123",
+      user,
+      authConfig,
+    );
 
     expect(result).toEqual(updatedUser);
   });
@@ -123,7 +127,7 @@ describe("UserService", () => {
 
     const result = await deleteUser(token, "auth0|123");
 
-    expect(AuthApi.delete).toHaveBeenCalledWith("/auth0|123", authConfig);
+    expect(AuthApi.delete).toHaveBeenCalledWith("/auth0%7C123", authConfig);
 
     expect(result).toEqual(response);
   });
