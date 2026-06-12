@@ -25,40 +25,74 @@ describe("salesReportService", () => {
   it("obtiene ventas con token", async () => {
     const { getVentas } = await importSalesReportService();
 
-    const ventas = [
-      {
-        idVenta: 1,
-        total: 10000,
-      },
-    ];
+    const ventasResponse = {
+      content: [
+        {
+          idVenta: 1,
+          total: 10000,
+        },
+      ],
+      totalPages: 1,
+    };
 
     axios.get.mockResolvedValue({
-      data: ventas,
+      data: ventasResponse,
     });
 
     const result = await getVentas("token-test");
 
-    expect(axios.get).toHaveBeenCalledWith("http://localhost:3000/api/ventas", {
-      headers: {
-        Authorization: "Bearer token-test",
+    expect(axios.get).toHaveBeenCalledWith(
+      "http://localhost:3000/api/ventas/dto?page=0&size=10",
+      {
+        headers: {
+          Authorization: "Bearer token-test",
+        },
       },
-    });
+    );
 
-    expect(result).toEqual(ventas);
+    expect(result).toEqual(ventasResponse);
   });
 
-  it("retorna arreglo vacío si la respuesta no es arreglo", async () => {
+  it("obtiene ventas usando paginación personalizada", async () => {
     const { getVentas } = await importSalesReportService();
 
+    const ventasResponse = {
+      content: [],
+      totalPages: 3,
+    };
+
     axios.get.mockResolvedValue({
-      data: {
-        message: "sin ventas",
+      data: ventasResponse,
+    });
+
+    const result = await getVentas("token-test", 2, 20);
+
+    expect(axios.get).toHaveBeenCalledWith(
+      "http://localhost:3000/api/ventas/dto?page=2&size=20",
+      {
+        headers: {
+          Authorization: "Bearer token-test",
+        },
       },
+    );
+
+    expect(result).toEqual(ventasResponse);
+  });
+
+  it("retorna la respuesta del backend aunque no sea arreglo", async () => {
+    const { getVentas } = await importSalesReportService();
+
+    const response = {
+      message: "sin ventas",
+    };
+
+    axios.get.mockResolvedValue({
+      data: response,
     });
 
     const result = await getVentas("token-test");
 
-    expect(result).toEqual([]);
+    expect(result).toEqual(response);
   });
 
   it("construye el reporte de ventas", async () => {

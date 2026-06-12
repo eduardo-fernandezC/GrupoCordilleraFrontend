@@ -12,6 +12,18 @@ import {
 
 import { validateProductForm } from "../../../validations/product.validation";
 
+const { auth0Mock } = vi.hoisted(() => ({
+  auth0Mock: vi.fn(),
+}));
+
+vi.mock("@auth0/auth0-react", () => ({
+  useAuth0: auth0Mock,
+}));
+
+vi.mock("../../../auth/Roles", () => ({
+  getRoles: () => ["ADMIN"],
+}));
+
 vi.mock("../../../hooks/useProducts");
 vi.mock("../../../services/NotificationService");
 vi.mock("../../../validations/product.validation");
@@ -33,17 +45,9 @@ vi.mock("../../../components/organisms/ProductTable", () => ({
     <div>
       <span>Tabla Productos</span>
 
-      <button
-        onClick={() => onEdit(products[0])}
-      >
-        Editar Producto
-      </button>
+      <button onClick={() => onEdit(products[0])}>Editar Producto</button>
 
-      <button
-        onClick={() => onDelete(products[0])}
-      >
-        Eliminar Producto
-      </button>
+      <button onClick={() => onDelete(products[0])}>Eliminar Producto</button>
     </div>
   ),
 }));
@@ -64,19 +68,19 @@ vi.mock("../../../components/organisms/FormSection", () => ({
         Guardar Formulario
       </button>
 
-      <button onClick={onCancel}>
-        Cancelar Formulario
-      </button>
+      <button onClick={onCancel}>Cancelar Formulario</button>
     </div>
   ),
 }));
 
 vi.mock("../../../components/organisms/DeleteProductModal", () => ({
-  default: ({ product, onConfirm }) =>
+  default: ({ product, onConfirm, onCancel }) =>
     product ? (
-      <button onClick={onConfirm}>
-        Confirmar Eliminacion
-      </button>
+      <div>
+        <button onClick={onConfirm}>Confirmar Eliminacion</button>
+
+        <button onClick={onCancel}>Cancelar Eliminacion</button>
+      </div>
     ) : null,
 }));
 
@@ -88,11 +92,20 @@ describe("AdminProductsPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
+    auth0Mock.mockReturnValue({
+      isAuthenticated: true,
+      isLoading: false,
+      user: {
+        name: "Admin Test",
+      },
+    });
+
     useProducts.mockReturnValue({
       products: [
         {
           idProducto: 1,
           nombre: "Mouse",
+          categoria: "Accesorios",
         },
       ],
       loading: false,
@@ -107,8 +120,12 @@ describe("AdminProductsPage", () => {
 
   it("muestra loader", () => {
     useProducts.mockReturnValue({
-      loading: true,
       products: [],
+      loading: true,
+      error: null,
+      createProduct: createProductMock,
+      updateProduct: updateProductMock,
+      deleteProduct: deleteProductMock,
     });
 
     render(<AdminProductsPage />);
@@ -118,23 +135,24 @@ describe("AdminProductsPage", () => {
 
   it("muestra error", () => {
     useProducts.mockReturnValue({
+      products: [],
       loading: false,
       error: "Error productos",
-      products: [],
+      createProduct: createProductMock,
+      updateProduct: updateProductMock,
+      deleteProduct: deleteProductMock,
     });
 
     render(<AdminProductsPage />);
 
-    expect(
-      screen.getByText("Error productos")
-    ).toBeInTheDocument();
+    expect(screen.getByText("Error productos")).toBeInTheDocument();
   });
 
   it("muestra estado vacío", () => {
     useProducts.mockReturnValue({
+      products: [],
       loading: false,
       error: null,
-      products: [],
       createProduct: createProductMock,
       updateProduct: updateProductMock,
       deleteProduct: deleteProductMock,
@@ -143,59 +161,61 @@ describe("AdminProductsPage", () => {
     render(<AdminProductsPage />);
 
     expect(
-      screen.getByText("No hay productos disponibles")
+      screen.getByText("No hay productos disponibles"),
     ).toBeInTheDocument();
   });
 
   it("abre modal crear producto", () => {
     render(<AdminProductsPage />);
 
-    fireEvent.click(
-      screen.getByText("Crear Producto")
-    );
+    fireEvent.click(screen.getByText("Crear Producto"));
 
-    expect(
-      screen.getByText("Nuevo Producto")
-    ).toBeInTheDocument();
+    expect(screen.getByText("Nuevo Producto")).toBeInTheDocument();
   });
 
   it("crea producto correctamente", async () => {
+    createProductMock.mockResolvedValue({});
+
     render(<AdminProductsPage />);
 
-    fireEvent.click(
-      screen.getByText("Crear Producto")
-    );
+    fireEvent.click(screen.getByText("Crear Producto"));
 
-    fireEvent.click(
-      screen.getByText("Guardar Formulario")
-    );
+    fireEvent.click(screen.getByText("Guardar Formulario"));
 
     await waitFor(() => {
-      expect(createProductMock).toHaveBeenCalled();
+      expect(createProductMock).toHaveBeenCalledWith({
+        nombre: "Producto",
+        categoria: "Categoria",
+        precio: 1000,
+        stock: 5,
+      });
     });
 
     expect(notifySuccess).toHaveBeenCalledWith(
-      "Producto creado correctamente."
+      "Producto creado correctamente.",
     );
   });
 
   it("edita producto correctamente", async () => {
+    updateProductMock.mockResolvedValue({});
+
     render(<AdminProductsPage />);
 
-    fireEvent.click(
-      screen.getByText("Editar Producto")
-    );
+    fireEvent.click(screen.getByText("Editar Producto"));
 
-    fireEvent.click(
-      screen.getByText("Guardar Formulario")
-    );
+    fireEvent.click(screen.getByText("Guardar Formulario"));
 
     await waitFor(() => {
-      expect(updateProductMock).toHaveBeenCalled();
+      expect(updateProductMock).toHaveBeenCalledWith(1, {
+        nombre: "Producto",
+        categoria: "Categoria",
+        precio: 1000,
+        stock: 5,
+      });
     });
 
     expect(notifySuccess).toHaveBeenCalledWith(
-      "Producto actualizado correctamente."
+      "Producto actualizado correctamente.",
     );
   });
 
@@ -206,32 +226,22 @@ describe("AdminProductsPage", () => {
 
     render(<AdminProductsPage />);
 
-    fireEvent.click(
-      screen.getByText("Crear Producto")
-    );
+    fireEvent.click(screen.getByText("Crear Producto"));
 
-    fireEvent.click(
-      screen.getByText("Guardar Formulario")
-    );
+    fireEvent.click(screen.getByText("Guardar Formulario"));
 
     expect(createProductMock).not.toHaveBeenCalled();
     expect(updateProductMock).not.toHaveBeenCalled();
   });
 
   it("maneja error al guardar", async () => {
-    createProductMock.mockRejectedValue(
-      new Error("Error guardar")
-    );
+    createProductMock.mockRejectedValue(new Error("Error guardar"));
 
     render(<AdminProductsPage />);
 
-    fireEvent.click(
-      screen.getByText("Crear Producto")
-    );
+    fireEvent.click(screen.getByText("Crear Producto"));
 
-    fireEvent.click(
-      screen.getByText("Guardar Formulario")
-    );
+    fireEvent.click(screen.getByText("Guardar Formulario"));
 
     await waitFor(() => {
       expect(createProductMock).toHaveBeenCalled();
@@ -239,42 +249,36 @@ describe("AdminProductsPage", () => {
   });
 
   it("elimina producto correctamente", async () => {
+    deleteProductMock.mockResolvedValue({});
+
     render(<AdminProductsPage />);
 
-    fireEvent.click(
-      screen.getByText("Eliminar Producto")
-    );
+    fireEvent.click(screen.getByText("Eliminar Producto"));
 
-    fireEvent.click(
-      screen.getByText("Confirmar Eliminacion")
-    );
+    fireEvent.click(screen.getByText("Confirmar Eliminacion"));
 
     await waitFor(() => {
       expect(deleteProductMock).toHaveBeenCalledWith(1);
     });
 
     expect(notifySuccess).toHaveBeenCalledWith(
-      "Producto eliminado correctamente."
+      "Producto eliminado correctamente.",
     );
   });
 
   it("maneja error al eliminar", async () => {
-    deleteProductMock.mockRejectedValue(
-      new Error("Error delete")
-    );
+    deleteProductMock.mockRejectedValue(new Error("Error delete"));
 
     render(<AdminProductsPage />);
 
-    fireEvent.click(
-      screen.getByText("Eliminar Producto")
-    );
+    fireEvent.click(screen.getByText("Eliminar Producto"));
 
-    fireEvent.click(
-      screen.getByText("Confirmar Eliminacion")
-    );
+    fireEvent.click(screen.getByText("Confirmar Eliminacion"));
 
     await waitFor(() => {
-      expect(notifyError).toHaveBeenCalled();
+      expect(notifyError).toHaveBeenCalledWith(
+        "Error al eliminar: Error delete",
+      );
     });
   });
 });
