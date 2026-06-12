@@ -24,7 +24,7 @@ export const createUser = async (token, user) => {
 
 export const updateUser = async (token, userId, user) => {
   const response = await AuthApi.patch(
-    `/${userId}`,
+    `/${encodeURIComponent(userId)}`,
     user,
     buildAuthConfig(token),
   );
@@ -32,7 +32,10 @@ export const updateUser = async (token, userId, user) => {
 };
 
 export const deleteUser = async (token, userId) => {
-  const response = await AuthApi.delete(`/${userId}`, buildAuthConfig(token));
+  const response = await AuthApi.delete(
+    `/${encodeURIComponent(userId)}`,
+    buildAuthConfig(token),
+  );
   return response.data;
 };
 

@@ -58,6 +58,15 @@ const AppRoutes = () => {
         />
 
         <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <ProductosPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/ventasCrecimiento"
           element={
             <ProtectedRoute role="ADMIN">

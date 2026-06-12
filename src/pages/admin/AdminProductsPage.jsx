@@ -14,6 +14,9 @@ import {
 } from "../../services/NotificationService.js";
 import Text from "../../components/atoms/Text";
 import { validateProductForm } from "../../validations/product.validation.js";
+import { useAuth0 } from "@auth0/auth0-react";
+import { getRoles } from "../../auth/Roles";
+import { Navigate } from "react-router-dom";
 
 const emptyForm = {
   nombre: "",
@@ -23,6 +26,9 @@ const emptyForm = {
 };
 
 const AdminProductsPage = () => {
+  const { isAuthenticated, user, isLoading } = useAuth0();
+  const roles = getRoles(user);
+
   const {
     products,
     loading,
@@ -36,6 +42,22 @@ const AdminProductsPage = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [productToDelete, setProductToDelete] = useState(null);
   const [formErrors, setFormErrors] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (!isAuthenticated || !roles.includes("ADMIN")) {
+    return <Navigate to="/unauthorized" replace />;
+  }
+
+  const filteredProducts = products.filter((product) => {
+    if (!searchQuery.trim()) return true;
+
+    const normalizedQuery = searchQuery.toLowerCase();
+    return [product.nombre, product.categoria]
+      .filter(Boolean)
+      .some((field) => field.toLowerCase().includes(normalizedQuery));
+  });
 
   const totalProducts = products.length;
 
@@ -133,19 +155,31 @@ const AdminProductsPage = () => {
         <div className="admin-products-page__table-card">
           <div className="admin-products-page__table-header">
             <Text variant="h2">Productos</Text>
+            <div className="admin-products-page__search-wrap">
+              <input
+                type="search"
+                className="admin-products-page__search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Buscar por nombre o categoría"
+                aria-label="Buscar productos"
+              />
+            </div>
           </div>
 
-          {products.length > 0 ? (
+          {filteredProducts.length > 0 ? (
             <div className="admin-products-page__table-wrap">
               <ProductTable
-                products={products}
+                products={filteredProducts}
                 onEdit={handleEdit}
                 onDelete={setProductToDelete}
               />
             </div>
           ) : (
             <Text variant="p" className="admin-products-page__empty-state">
-              No hay productos disponibles
+              {products.length > 0
+                ? "No se encontraron productos con ese criterio"
+                : "No hay productos disponibles"}
             </Text>
           )}
         </div>
