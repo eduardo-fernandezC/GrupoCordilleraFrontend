@@ -26,7 +26,7 @@ const Admin = () => {
             <Button text="Ver ventas" onClick={() => navigate("/adminVentas")} />
             <Button
               text="Administrar productos"
-              onClick={() => navigate("/AdminProductos")}
+              onClick={() => navigate("/adminProductos")}
             />
             <Button text="Ver reportes" onClick={() => navigate("/adminReportes")} />
         </div>

@@ -7,7 +7,10 @@ import UserForm from "../../components/organisms/UserForm";
 import Button from "../../components/atoms/Button";
 import ConfirmModal from "../../components/organisms/ConfirmModal";
 import { useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Navigate } from "react-router-dom";
 import useUsers from "../../hooks/useUsers";
+import { getRoles } from "../../auth/Roles";
 import {
   notifyError,
   notifySuccess,
@@ -22,6 +25,9 @@ const emptyForm = {
 };
 
 const AdminUsersPage = () => {
+  const { isAuthenticated, user, isLoading } = useAuth0();
+  const roles = getRoles(user);
+
   const {
     users,
     loading,
@@ -43,6 +49,13 @@ const AdminUsersPage = () => {
   const [editingUser, setEditingUser] = useState(null);
   const [userToDelete, setUserToDelete] = useState(null);
   const [formErrors, setFormErrors] = useState({});
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (!isAuthenticated || !roles.includes("ADMIN")) {
+    return <Navigate to="/unauthorized" replace />;
+  }
+
   const totalUsers = users.length;
   const hasSearch = searchQuery.trim().length > 0;
   const handleCreate = () => {
