@@ -1,27 +1,18 @@
-/* Encabezado del dashboard. */
 .dashboard-header {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 0;
-  margin-bottom: 24px;
-  border-bottom: 2px solid var(--color-border);
   align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
   text-align: center;
 }
 
-/* Titulo principal. */
 .dashboard-title {
   margin: 0;
   font-size: 2.5rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--color-text);
-  line-height: 1.1;
-}
-
-/* Subtitulo breve. */
-.dashboard-subtitle {
   font-weight: bold;
 }
 
+.dashboard-subtitle {
+  font-weight: bold;
+}

@@ -1,54 +1,23 @@
-/* Contenedor de acciones por fila. */
 .row-actions {
   display: flex;
+  gap: 8px;
   flex-wrap: wrap;
-  gap: 0.5rem;
 }
 
-/* Boton base reutilizable en acciones de tabla. */
 .row-actions__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.2rem;
-  padding: 0.48rem 0.85rem;
-  border-radius: 0.7rem;
-  border: 1px solid transparent;
-  font-weight: 700;
-  font-size: 0.85rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
   cursor: pointer;
-  transition: transform 160ms ease, background 160ms ease;
-  white-space: nowrap;
 }
 
-/* Estado hover y presionado del boton base. */
-.row-actions__button:hover {
-  transform: translateY(-1px);
-}
-
-.row-actions__button:active {
-  transform: translateY(0);
-}
-
-/* Variante secundaria. */
 .row-actions__button--secondary {
-  background: rgba(193, 232, 255, 0.05);
-  border-color: rgba(193, 232, 255, 0.12);
+  background: rgba(193, 232, 255, 0.1);
   color: var(--color-accent);
 }
 
-/* Variante de eliminacion. */
 .row-actions__button--danger {
   background: var(--color-accent);
-  color: #021024;
-  font-weight: 800;
-}
-
-/* Ajuste simple para pantallas pequenas. */
-@media (max-width: 480px) {
-  .row-actions__button {
-    min-height: 2rem;
-    padding: 0.4rem 0.7rem;
-    font-size: 0.8rem;
-  }
+  color: var(--color-bg);
 }
