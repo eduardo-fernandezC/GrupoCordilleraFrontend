@@ -1,40 +1,26 @@
-/* Boton principal reutilizable. */
 .button {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	gap: 0.5rem;
-	min-height: 2.75rem;
-	padding: 0.75rem 1rem;
-	border: 1px solid rgba(193, 232, 255, 0.18);
-	border-radius: 999px;
-	background: var(--color-brand);
-	color: var(--color-bg);
-	font-weight: 700;
-	letter-spacing: 0.02em;
-	cursor: pointer;
-	transition: transform 160ms ease, background-color 160ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 12px 16px;
+  border: none;
+  border-radius: 999px;
+
+  background: var(--color-brand);
+  color: var(--color-bg);
+
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-/* Estado hover del boton. */
 .button:hover {
-	transform: translateY(-1px);
-	background: var(--color-secondary);
+  background: var(--color-secondary);
 }
 
-/* Foco visible para teclado. */
-.button:focus-visible {
-	outline: 2px solid var(--color-accent);
-	outline-offset: 3px;
-}
-
-/* Pulsacion del boton. */
-.button:active {
-	transform: translateY(0);
-}
-
-/* Estado deshabilitado. */
 .button:disabled {
-	opacity: 0.62;
-	cursor: not-allowed;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
