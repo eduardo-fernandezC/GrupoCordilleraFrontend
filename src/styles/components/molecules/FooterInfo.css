@@ -1,21 +1,18 @@
-/* Distribucion del pie. */
-.site-footer__info {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: space-between;
-	gap: 0.5rem 1rem;
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  text-align: center;
 }
 
-/* Titulo del pie. */
-.site-footer__title {
-	color: var(--color-text);
-	font-weight: 700;
-	letter-spacing: 0.02em;
+.dashboard-title {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: bold;
 }
 
-/* Metadata secundaria. */
-.site-footer__meta {
-	color: var(--color-secondary);
-	font-size: 0.95rem;
+.dashboard-subtitle {
+  font-weight: bold;
 }
