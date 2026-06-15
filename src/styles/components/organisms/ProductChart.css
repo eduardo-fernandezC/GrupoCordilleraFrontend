@@ -1,9 +1,11 @@
+/* Contenedor del grafico. */
 .product-chart {
 	display: flex;
 	flex-direction: column;
 	gap: 0.75rem;
 }
 
+/* Titulo del grafico. */
 .product-chart__title {
 	margin: 0;
 	font-size: 1.05rem;
@@ -12,6 +14,7 @@
 	letter-spacing: 0.06em;
 }
 
+/* Layout interno del grafico. */
 .product-chart__container {
 	display: flex;
 	flex-wrap: wrap;
@@ -20,6 +23,7 @@
 	gap: 1.5rem;
 }
 
+/* Estado vacio. */
 .product-chart__empty-state {
 	margin: 0;
 	width: 100%;
@@ -31,6 +35,7 @@
 	text-align: center;
 }
 
+/* Ajustes visuales de Recharts. */
 .product-chart .recharts-pie-sector path {
 	stroke: var(--color-bg);
 	stroke-width: 2px;

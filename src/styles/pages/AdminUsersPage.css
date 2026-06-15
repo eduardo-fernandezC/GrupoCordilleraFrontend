@@ -1,0 +1,219 @@
+/* Vista principal de usuarios. */
+.admin-users-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: clamp(1.2rem, 2vw, 1.8rem);
+}
+
+/* Encabezado de la pagina. */
+.admin-users-page__hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.2rem 1.3rem;
+  border-radius: 1.35rem;
+  background: rgba(5, 38, 89, 0.94);
+  border: 1px solid rgba(193, 232, 255, 0.08);
+}
+
+.admin-users-page__eyebrow {
+  margin: 0 0 0.35rem 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(193, 232, 255, 0.72);
+}
+
+.admin-users-page__hero h1 {
+  margin: 0;
+  color: var(--color-text);
+  letter-spacing: 0.01em;
+}
+
+.admin-users-page__intro {
+  margin: 0.45rem 0 0;
+  max-width: 42rem;
+  color: rgba(193, 232, 255, 0.88);
+}
+
+.admin-users-page__hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.admin-users-page__summary-card {
+  min-width: 7rem;
+  padding: 0.8rem 0.95rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.admin-users-page__summary-label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(193, 232, 255, 0.7);
+}
+
+.admin-users-page__summary-value {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.admin-users-page__table-card {
+  padding: 1rem;
+  border-radius: 1.25rem;
+  background: rgba(4, 22, 44, 0.9);
+  border: 1px solid rgba(193, 232, 255, 0.08);
+}
+
+.admin-users-page__table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+
+.admin-users-page__search-wrap {
+  min-width: min(100%, 20rem);
+}
+
+.admin-users-page__search {
+  width: 100%;
+  min-height: 2.8rem;
+  padding: 0.7rem 0.95rem;
+  border-radius: 0.95rem;
+  border: 1px solid rgba(193, 232, 255, 0.12);
+  background: rgba(2, 16, 36, 0.35);
+  color: #ffffff;
+}
+
+.admin-users-page__search::placeholder {
+  color: rgba(193, 232, 255, 0.48);
+}
+
+.admin-users-page__search:focus {
+  outline: 2px solid rgba(255, 183, 3, 0.35);
+  outline-offset: 1px;
+}
+
+.admin-users-page__table-header h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--color-text);
+}
+
+.admin-users-page__empty-state {
+  margin: 0;
+  padding: 1.1rem 0.15rem 0.25rem;
+  color: rgba(193, 232, 255, 0.84);
+}
+
+.admin-users-page__table-wrap {
+  overflow: auto;
+  border-radius: 1rem;
+  border: 1px solid rgba(193, 232, 255, 0.08);
+}
+
+.admin-users-page__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(2, 10, 22, 0.72);
+}
+
+.admin-users-page__dialog {
+  width: min(92vw, 32rem);
+  max-height: calc(100dvh - 2rem);
+  overflow: auto;
+  padding: 1.25rem;
+  border-radius: 1.35rem;
+  background: rgba(4, 22, 44, 0.96);
+  border: 1px solid rgba(193, 232, 255, 0.08);
+}
+
+.admin-users-page__dialog-header h2 {
+  margin: 0;
+  color: #ffffff;
+}
+
+.admin-users-page__dialog-eyebrow {
+  margin: 0 0 0.35rem 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(193, 232, 255, 0.72);
+}
+
+@media (max-width: 720px) {
+  .admin-users-page__hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-users-page__hero-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .admin-users-page__table-card {
+    padding: 0.85rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .admin-users-page {
+    padding: 1rem;
+  }
+
+  .admin-users-page__dialog {
+    width: calc(100vw - 1rem);
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+
+  .admin-users-page__table-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-users-page__search-wrap {
+    width: 100%;
+  }
+}
+
+.pagination{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  margin-top:20px;
+}
+
+.pagination button{
+  padding:8px 14px;
+  border:none;
+  cursor:pointer;
+  border-radius:8px;
+}
+
+.pagination button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}

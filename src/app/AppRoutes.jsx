@@ -12,6 +12,8 @@ import SucursalPage from "../pages/SucursalPage";
 import Unauthorized from "../pages/Unauthorized";
 import AdminProductsPage from "../pages/admin/AdminProductsPage";
 import SalesReportPage from "../pages/admin/SalesReportPage";
+import AdminUsersPage from "../pages/admin/AdminUsersPage";
+import ReportesPage from "../pages/admin/ReportesPage";
 
 const AppRoutes = () => {
   return (
@@ -48,6 +50,15 @@ const AppRoutes = () => {
 
         <Route
           path="/productos"
+          element={
+            <ProtectedRoute>
+              <ProductosPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <ProductosPage />
@@ -101,6 +112,15 @@ const AppRoutes = () => {
         />
 
         <Route
+          path="/adminUsuarios"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <AdminUsersPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/analista"
           element={
             <ProtectedRoute role="ANALISTA">
@@ -108,7 +128,14 @@ const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
-
+        <Route
+          path="/adminReportes"
+          element={
+            <ProtectedRoute role="ADMIN">
+              <ReportesPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

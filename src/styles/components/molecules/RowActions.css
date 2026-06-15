@@ -1,0 +1,23 @@
+.row-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.row-actions__button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.row-actions__button--secondary {
+  background: rgba(193, 232, 255, 0.1);
+  color: var(--color-accent);
+}
+
+.row-actions__button--danger {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}

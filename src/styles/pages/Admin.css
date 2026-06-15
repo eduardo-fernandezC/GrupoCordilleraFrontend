@@ -1,3 +1,4 @@
+/* Contenedor principal de admin. */
 .admin-page {
   display: flex;
   flex-direction: column;
@@ -5,6 +6,7 @@
   padding: clamp(1.2rem, 2vw, 1.8rem);
 }
 
+/* Encabezado de admin. */
 .admin-page__hero {
   display: flex;
   align-items: flex-end;
@@ -12,11 +14,8 @@
   gap: 1rem;
   padding: 1.2rem 1.3rem;
   border-radius: 1.35rem;
-  background:
-    radial-gradient(circle at top left, rgba(255, 183, 3, 0.18), transparent 36%),
-    linear-gradient(135deg, rgba(7, 45, 98, 0.96), rgba(4, 22, 44, 0.96));
+  background: rgba(5, 38, 89, 0.94);
   border: 1px solid rgba(193, 232, 255, 0.08);
-  box-shadow: 0 18px 42px rgba(2, 16, 36, 0.24);
 }
 
 .admin-page__eyebrow {

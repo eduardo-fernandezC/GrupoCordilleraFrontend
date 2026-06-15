@@ -1,3 +1,4 @@
+/* Contenedor general del reporte. */
 .sales-report-page {
   display: flex;
   flex-direction: column;
@@ -5,12 +6,14 @@
   padding: clamp(1.2rem, 2vw, 1.8rem);
 }
 
+/* Resumen de metricas. */
 .sales-report-page__stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 0.85rem;
 }
 
+/* Panel de listado principal. */
 .sales-report-page__layout {
   display: grid;
   grid-template-columns: 1fr;
@@ -18,15 +21,15 @@
   align-items: start;
 }
 
-.sales-report-page__list-panel,
-.sales-report-page__detail-panel {
+/* Tarjeta del listado. */
+.sales-report-page__list-panel {
   padding: 1rem;
   border-radius: 1.25rem;
   background: rgba(4, 22, 44, 0.9);
   border: 1px solid rgba(193, 232, 255, 0.08);
-  box-shadow: 0 18px 40px rgba(2, 16, 36, 0.18);
 }
 
+/* Encabezado de la seccion. */
 .sales-report-page__section-header {
   display: grid;
   gap: 0.35rem;
@@ -44,11 +47,13 @@
   color: rgba(193, 232, 255, 0.82);
 }
 
+/* Lista de reportes. */
 .sales-report-list {
   display: grid;
   gap: 0.85rem;
 }
 
+/* Tarjeta de cada venta. */
 .sales-report-card {
   display: grid;
   gap: 0.75rem;
@@ -58,11 +63,12 @@
   border: 1px solid rgba(193, 232, 255, 0.08);
 }
 
+/* Estado seleccionado. */
 .sales-report-card--selected {
   border-color: rgba(255, 183, 3, 0.28);
-  box-shadow: inset 0 0 0 1px rgba(255, 183, 3, 0.12);
 }
 
+/* Cabecera de la tarjeta. */
 .sales-report-card__header {
   display: flex;
   align-items: flex-start;
@@ -70,6 +76,7 @@
   gap: 1rem;
 }
 
+/* Texto pequeno de contexto. */
 .sales-report-card__eyebrow {
   margin: 0 0 0.2rem;
   font-size: 0.75rem;
@@ -79,12 +86,14 @@
   color: rgba(193, 232, 255, 0.7);
 }
 
+/* Titulo de la venta. */
 .sales-report-card__title {
   margin: 0;
   color: #ffffff;
   font-size: 1rem;
 }
 
+/* Total de la venta. */
 .sales-report-card__total {
   font-size: 1.05rem;
   font-weight: 800;
@@ -92,6 +101,7 @@
   white-space: nowrap;
 }
 
+/* Metadatos de la venta. */
 .sales-report-card__meta {
   display: grid;
   gap: 0.35rem;
@@ -102,6 +112,7 @@
   color: rgba(226, 241, 255, 0.88);
 }
 
+/* Acciones de la tarjeta. */
 .sales-report-card__actions {
   display: flex;
   justify-content: flex-end;
@@ -112,32 +123,11 @@
 }
 
 .sales-report-card__button--active {
-  background: linear-gradient(135deg, #ffb703, #7da0ca);
+  background: var(--color-accent);
   color: #021024;
 }
 
-.sales-report-page__detail-panel {
-  display: none;
-  position: sticky;
-  top: 1rem;
-}
-
-.sales-report-page__detail-total {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #ffffff;
-}
-
-.sales-report-page__action {
-  width: 100%;
-}
-
-.sales-report-page__inline-error {
-  margin: 0;
-  color: #ffb4b4;
-}
-
+/* Detalle de la tarjeta. */
 .sales-report-card__detail {
   display: grid;
   gap: 0.75rem;
@@ -145,6 +135,7 @@
   border-top: 1px solid rgba(193, 232, 255, 0.04);
 }
 
+/* Resumen interno. */
 .sales-report-card__summary {
   display: flex;
   flex-wrap: wrap;
@@ -162,6 +153,7 @@
   color: #ffb4b4;
 }
 
+/* Productos de la venta. */
 .sales-report-card__products {
   display: grid;
   gap: 0.85rem;
@@ -188,22 +180,14 @@
   color: rgba(226, 241, 255, 0.88);
 }
 
+/* Rejilla de datos del producto. */
 .sales-report-product__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 0.5rem 0.75rem;
 }
 
-@media (max-width: 980px) {
-  .sales-report-page__layout {
-    grid-template-columns: 1fr;
-  }
-
-  .sales-report-page__detail-panel {
-    position: static;
-  }
-}
-
+/* Ajustes en pantallas pequenas. */
 @media (max-width: 680px) {
   .sales-report-page {
     gap: 1rem;
@@ -221,4 +205,22 @@
   .sales-report-card__button {
     width: 100%;
   }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }

@@ -23,15 +23,13 @@ const Admin = () => {
           </div>
 
           <div className="admin-page__actions">
-            <Button
-              text="Ver ventas"
-              onClick={() => navigate("/adminVentas")}
-            />
+            <Button text="Ver ventas" onClick={() => navigate("/adminVentas")} />
             <Button
               text="Administrar productos"
-              onClick={() => navigate("/AdminProductos")}
+              onClick={() => navigate("/adminProductos")}
             />
-          </div>
+            <Button text="Ver reportes" onClick={() => navigate("/adminReportes")} />
+        </div>
         </div>
       </section>
     </LandingTemplate>

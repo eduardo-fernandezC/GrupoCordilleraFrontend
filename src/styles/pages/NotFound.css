@@ -1,14 +1,14 @@
+/* Contenedor de la vista 404. */
 .not-found-page {
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 1.5rem;
-	background:
-		radial-gradient(circle at top, rgba(84, 131, 179, 0.16), transparent 34%),
-		linear-gradient(180deg, #03111f 0%, var(--color-bg) 100%);
+	background: var(--color-bg);
 }
 
+/* Contenido centrado. */
 .not-found-page__content {
 	display: flex;
 	flex-direction: column;
@@ -18,14 +18,15 @@
 	text-align: center;
 }
 
+/* Imagen del error. */
 .not-found-page__image {
 	max-width: min(420px, 90vw);
 	width: 100%;
 	height: auto;
 	border-radius: 1rem;
-	box-shadow: 0 18px 45px var(--color-shadow);
 }
 
+/* Enlace para volver. */
 .not-found-page__link {
 	display: inline-flex;
 	align-items: center;
@@ -40,6 +41,7 @@
 	transition: transform 160ms ease, background-color 160ms ease;
 }
 
+/* Hover y foco del enlace. */
 .not-found-page__link:hover,
 .not-found-page__link:focus-visible {
 	transform: translateY(-1px);

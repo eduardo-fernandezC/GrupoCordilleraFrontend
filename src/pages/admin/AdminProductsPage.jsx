@@ -13,6 +13,10 @@ import {
   notifyError,
 } from "../../services/NotificationService.js";
 import Text from "../../components/atoms/Text";
+import { validateProductForm } from "../../validations/product.validation.js";
+import { useAuth0 } from "@auth0/auth0-react";
+import { getRoles } from "../../auth/Roles";
+import { Navigate } from "react-router-dom";
 
 const emptyForm = {
   nombre: "",
@@ -21,9 +25,10 @@ const emptyForm = {
   stock: "",
 };
 
-const isIntegerString = (value) => /^\d+$/.test(String(value ?? "").trim());
-
 const AdminProductsPage = () => {
+  const { isAuthenticated, user, isLoading } = useAuth0();
+  const roles = getRoles(user);
+
   const {
     products,
     loading,
@@ -37,6 +42,22 @@ const AdminProductsPage = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [productToDelete, setProductToDelete] = useState(null);
   const [formErrors, setFormErrors] = useState({});
+  const [searchQuery, setSearchQuery] = useState("");
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (!isAuthenticated || !roles.includes("ADMIN")) {
+    return <Navigate to="/unauthorized" replace />;
+  }
+
+  const filteredProducts = products.filter((product) => {
+    if (!searchQuery.trim()) return true;
+
+    const normalizedQuery = searchQuery.toLowerCase();
+    return [product.nombre, product.categoria]
+      .filter(Boolean)
+      .some((field) => field.toLowerCase().includes(normalizedQuery));
+  });
 
   const totalProducts = products.length;
 
@@ -50,49 +71,6 @@ const AdminProductsPage = () => {
     setEditingProduct(product);
     setFormErrors({});
     setIsFormOpen(true);
-  };
-
-  const validateProductForm = (payload, originalProduct = null) => {
-    const errors = {};
-
-    if (!payload.nombre || !payload.nombre.trim()) {
-      errors.nombre = "El nombre es obligatorio.";
-    }
-
-    if (!payload.categoria || !payload.categoria.trim()) {
-      errors.categoria = "La categoria es obligatoria.";
-    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(payload.categoria)) {
-      errors.categoria = "La categoria solo puede contener letras y espacios.";
-    }
-
-    if (
-      payload.precio === undefined ||
-      payload.precio === null ||
-      Number(payload.precio) <= 0
-    ) {
-      errors.precio = "El precio debe ser mayor a 0.";
-    }
-
-    if (!isIntegerString(payload.stock)) {
-      errors.stock = "El stock debe ser un numero entero.";
-    } else if (Number(payload.stock) < 0) {
-      errors.stock = "El stock no puede ser negativo.";
-    }
-
-    if (originalProduct) {
-      const noChanges =
-        (payload.nombre || "").trim() === (originalProduct.nombre || "") &&
-        (payload.categoria || "").trim() ===
-          (originalProduct.categoria || "") &&
-        Number(payload.precio) === Number(originalProduct.precio) &&
-        Number(payload.stock) === Number(originalProduct.stock);
-
-      if (noChanges) {
-        errors.general = "No se detectaron cambios para guardar.";
-      }
-    }
-
-    return errors;
   };
 
   const handleSave = async (payload) => {
@@ -177,19 +155,31 @@ const AdminProductsPage = () => {
         <div className="admin-products-page__table-card">
           <div className="admin-products-page__table-header">
             <Text variant="h2">Productos</Text>
+            <div className="admin-products-page__search-wrap">
+              <input
+                type="search"
+                className="admin-products-page__search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Buscar por nombre o categoría"
+                aria-label="Buscar productos"
+              />
+            </div>
           </div>
 
-          {products.length > 0 ? (
+          {filteredProducts.length > 0 ? (
             <div className="admin-products-page__table-wrap">
               <ProductTable
-                products={products}
+                products={filteredProducts}
                 onEdit={handleEdit}
                 onDelete={setProductToDelete}
               />
             </div>
           ) : (
             <Text variant="p" className="admin-products-page__empty-state">
-              No hay productos disponibles
+              {products.length > 0
+                ? "No se encontraron productos con ese criterio"
+                : "No hay productos disponibles"}
             </Text>
           )}
         </div>

@@ -1,3 +1,4 @@
+/* Variables globales de color. */
 :root {
 	--color-bg: #021024;
 	--color-surface: #052659;
@@ -9,27 +10,32 @@
 	--color-shadow: rgba(2, 16, 36, 0.45);
 }
 
+/* Desplazamiento suave. */
 html {
 	scroll-behavior: smooth;
 }
 
+/* Base tipografica y de fondo. */
 body {
 	margin: 0;
 	min-width: 320px;
 	min-height: 100vh;
-	background: #021024;
+	background: var(--color-bg);
 	color: #c1e8ff;
 	font-family: "Avenir Next", "Segoe UI", "Trebuchet MS", sans-serif;
 }
 
+/* Box model uniforme. */
 * {
 	box-sizing: border-box;
 }
 
+/* Links con color heredado. */
 a {
 	color: inherit;
 }
 
+/* Controles con tipografia uniforme. */
 button,
 input,
 textarea,
