@@ -174,7 +174,6 @@ const AdminUsersPage = () => {
                 onChange={setSearchQuery}
                 placeholder="Buscar por nombre"
                 ariaLabel="Buscar usuarios"
-                className="admin-users-page__search"
               />
             </div>
           </div>

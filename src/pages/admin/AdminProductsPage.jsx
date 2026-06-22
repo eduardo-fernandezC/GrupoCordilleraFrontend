@@ -162,7 +162,6 @@ const AdminProductsPage = () => {
                 onChange={setSearchQuery}
                 placeholder="Buscar por nombre o categoría"
                 ariaLabel="Buscar productos"
-                className="admin-products-page__search"
               />
             </div>
           </div>
