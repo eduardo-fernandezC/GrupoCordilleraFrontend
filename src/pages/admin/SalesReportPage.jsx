@@ -8,6 +8,7 @@ import SalesReportList from "../../components/organisms/SalesReportList";
 import useSalesReport from "../../hooks/useSalesReport";
 import { formatCurrency } from "../../services/salesReportService";
 import "../../styles/pages/SalesReportPage.css";
+import Button from "../../components/atoms/Button";
 
 const SalesReportPage = () => {
   const {
@@ -74,17 +75,17 @@ const SalesReportPage = () => {
             />
 
             <div className="pagination">
-              <button onClick={previousPage} disabled={page === 0}>
-                Anterior
-              </button>
+              <Button onClick={previousPage} disabled={page === 0}>
+                ←
+              </Button>
 
               <span>
                 Pagina {page + 1} de {Math.max(totalPages, 1)}
               </span>
 
-              <button onClick={nextPage} disabled={page >= totalPages - 1}>
-                Siguiente
-              </button>
+              <Button onClick={nextPage} disabled={page >= totalPages - 1}>
+                →
+              </Button>
             </div>
           </div>
         </div>
