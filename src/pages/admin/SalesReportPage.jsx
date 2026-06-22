@@ -76,7 +76,7 @@ const SalesReportPage = () => {
 
             <div className="pagination">
               <Button onClick={previousPage} disabled={page === 0}>
-                Anterior
+                ←
               </Button>
 
               <span>
@@ -84,7 +84,7 @@ const SalesReportPage = () => {
               </span>
 
               <Button onClick={nextPage} disabled={page >= totalPages - 1}>
-                Siguiente
+                →
               </Button>
             </div>
           </div>
