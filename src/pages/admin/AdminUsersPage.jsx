@@ -17,6 +17,7 @@ import {
 } from "../../services/NotificationService.js";
 import "../../styles/pages/AdminUsersPage.css";
 import { validateUserForm } from "../../validations/user.validation.js";
+import SearchInput from "../../components/atoms/SearchInput";
 
 const emptyForm = {
   name: "",
@@ -168,13 +169,12 @@ const AdminUsersPage = () => {
             <Text variant="h2">Usuarios</Text>
 
             <div className="admin-users-page__search-wrap">
-              <input
-                type="search"
-                className="admin-users-page__search"
+              <SearchInput
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={setSearchQuery}
                 placeholder="Buscar por nombre"
-                aria-label="Buscar usuarios"
+                ariaLabel="Buscar usuarios"
+                className="admin-users-page__search"
               />
             </div>
           </div>

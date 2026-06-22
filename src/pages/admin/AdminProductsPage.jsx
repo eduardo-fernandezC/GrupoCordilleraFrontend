@@ -17,6 +17,7 @@ import { validateProductForm } from "../../validations/product.validation.js";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getRoles } from "../../auth/Roles";
 import { Navigate } from "react-router-dom";
+import SearchInput from "../../components/atoms/SearchInput";
 
 const emptyForm = {
   nombre: "",
@@ -156,13 +157,12 @@ const AdminProductsPage = () => {
           <div className="admin-products-page__table-header">
             <Text variant="h2">Productos</Text>
             <div className="admin-products-page__search-wrap">
-              <input
-                type="search"
-                className="admin-products-page__search"
+              <SearchInput
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={setSearchQuery}
                 placeholder="Buscar por nombre o categoría"
-                aria-label="Buscar productos"
+                ariaLabel="Buscar productos"
+                className="admin-products-page__search"
               />
             </div>
           </div>
