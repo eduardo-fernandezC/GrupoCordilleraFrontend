@@ -1,4 +1,4 @@
-import "./SearchInput.css";
+import "../../styles/components/atoms/SearchInput.css";
 
 const SearchInput = ({
   value,
