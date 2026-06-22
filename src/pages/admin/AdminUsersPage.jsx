@@ -191,23 +191,23 @@ const AdminUsersPage = () => {
 
               {!hasSearch && (
                 <div className="pagination">
-                  <button
+                  <Button
                     disabled={page === 0}
                     onClick={() => setPage((prev) => prev - 1)}
                   >
                     ←
-                  </button>
+                  </Button>
 
                   <span>
                     Pagina {page + 1} de {totalPages}
                   </span>
 
-                  <button
+                  <Button
                     disabled={page >= totalPages - 1}
                     onClick={() => setPage((prev) => prev + 1)}
                   >
                     →
-                  </button>
+                  </Button>
                 </div>
               )}
             </>
