@@ -11,27 +11,42 @@ const VentasMesPage = () => {
   const { data, loading, error } = useDashboardData();
   const title = "Ventas del Mes";
 
-  if (loading) return <Loader />;
   if (error)
-    return <ErrorMessage message={`Error al cargar Dashboard de ${title}`} />;
+    return (
+      <LandingTemplate>
+        <ErrorMessage message={`Error al cargar Dashboard de ${title}`} />
+      </LandingTemplate>
+    );
 
   return (
     <LandingTemplate>
       <section className="ventas-page ventas-page--mes">
         <DashboardHeader title={title} subtitle="resumen mensual" />
+
         <div className="ventas-page__stats">
-          <StatCard title="Ventas Totales Mes" value={"$" + data.ventasMes} />
+          <StatCard
+            title="Ventas Totales Mes"
+            value={loading ? "..." : "$" + data.ventasMes}
+          />
           <StatCard
             title="Cantidad Ventas Mes"
-            value={data.cantidadVentasMes}
+            value={loading ? "..." : data.cantidadVentasMes}
           />
           <StatCard
             title="Promedio Mensual"
-            value={"$" + data.promedioVentasMes}
+            value={loading ? "..." : "$" + data.promedioVentasMes}
           />
         </div>
 
-        <SalesChart ventasHoy={data.ventasHoy} ventasMes={data.ventasMes} />
+        <div className="ventas-page__chart">
+          {loading ? (
+            <div className="ventas-page__loader">
+              <Loader />
+            </div>
+          ) : (
+            <SalesChart ventasHoy={data.ventasHoy} ventasMes={data.ventasMes} />
+          )}
+        </div>
       </section>
     </LandingTemplate>
   );

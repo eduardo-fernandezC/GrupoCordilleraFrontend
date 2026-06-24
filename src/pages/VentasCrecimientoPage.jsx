@@ -10,17 +10,30 @@ const VentasCrecimientoPage = () => {
   const { data, loading, error } = useDashboardData();
   const title = "Crecimiento de Ventas";
 
-  if (loading) return <Loader />;
   if (error)
-    return <ErrorMessage message={`Error al cargar Dashboard de ${title}`} />;
+    return (
+      <LandingTemplate>
+        <ErrorMessage message={`Error al cargar Dashboard de ${title}`} />
+      </LandingTemplate>
+    );
 
   return (
     <LandingTemplate>
       <section className="ventas-page ventas-page--crecimiento">
         <DashboardHeader title={title} subtitle="Indicador de crecimiento" />
+
         <div className="ventas-page__stats ventas-page__stats--single">
-          <StatCard title="Crecimiento" value={data.crecimientoVentas + "%"} />
+          <StatCard
+            title="Crecimiento"
+            value={loading ? "..." : `${data.crecimientoVentas}%`}
+          />
         </div>
+
+        {loading && (
+          <div className="ventas-page__loader">
+            <Loader />
+          </div>
+        )}
       </section>
     </LandingTemplate>
   );
