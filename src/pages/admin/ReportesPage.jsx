@@ -94,67 +94,81 @@ const ReportesPage = () => {
     }
   };
 
-  if (isLoading) return <Loader />;
+  if (errorMessage) {
+    return (
+      <LandingTemplate>
+        <ErrorMessage message={errorMessage} />
+      </LandingTemplate>
+    );
+  }
 
   if (!isAuthenticated) {
     return (
-      <ErrorMessage message="Debes iniciar sesion para ver los reportes." />
+      <LandingTemplate>
+        <ErrorMessage message="Debes iniciar sesion para ver los reportes." />
+      </LandingTemplate>
     );
   }
 
   return (
     <LandingTemplate>
       <section className="reportes-page">
-        <div className="reportes-page__hero">
-          <div>
-            <Text variant="p" className="reportes-page__eyebrow">
-              Panel de administracion
-            </Text>
-            <Text variant="h1">Reportes</Text>
-            <Text variant="p" className="reportes-page__intro">
-              Descarga los reportes ejecutivos del sistema desde un solo lugar.
-            </Text>
+        {/* Auth loading SOLO dentro del layout */}
+        {isLoading ? (
+          <div className="reportes-page__loader">
+            <Loader />
           </div>
+        ) : (
+          <>
+            <div className="reportes-page__hero">
+              <div>
+                <Text variant="p" className="reportes-page__eyebrow">
+                  Panel de administracion
+                </Text>
+                <Text variant="h1">Reportes</Text>
+                <Text variant="p" className="reportes-page__intro">
+                  Descarga los reportes ejecutivos del sistema desde un solo
+                  lugar.
+                </Text>
+              </div>
 
-          <div className="reportes-page__hero-actions">
-            <div className="reportes-page__summary-card">
-              <Text variant="span" className="reportes-page__summary-label">
-                Disponibles
-              </Text>
-              <Text variant="span" className="reportes-page__summary-value">
-                4
-              </Text>
-            </div>
-          </div>
-        </div>
-
-        {errorMessage && (
-          <div className="reportes-page__message">
-            <Text variant="p">{errorMessage}</Text>
-          </div>
-        )}
-
-        <div className="reportes-page__grid">
-          {REPORTS.map((report) => {
-            const isDownloading = activeReport === report.key;
-
-            return (
-              <article key={report.key} className="reportes-page__card">
-                <div className="reportes-page__card-header">
-                  <Text variant="h2">{report.title}</Text>
-                  <Text variant="p">{report.description}</Text>
+              <div className="reportes-page__hero-actions">
+                <div className="reportes-page__summary-card">
+                  <Text variant="span" className="reportes-page__summary-label">
+                    Disponibles
+                  </Text>
+                  <Text variant="span" className="reportes-page__summary-value">
+                    4
+                  </Text>
                 </div>
+              </div>
+            </div>
 
-                <Button
-                  text={isDownloading ? "Descargando..." : report.buttonLabel}
-                  onClick={() => handleDownload(report)}
-                  className="reportes-page__button"
-                  disabled={isDownloading}
-                />
-              </article>
-            );
-          })}
-        </div>
+            <div className="reportes-page__grid">
+              {REPORTS.map((report) => {
+                const isDownloading = activeReport === report.key;
+
+                return (
+                  <article key={report.key} className="reportes-page__card">
+                    <div className="reportes-page__card-header">
+                      <Text variant="h2">{report.title}</Text>
+                      <Text variant="p">{report.description}</Text>
+                    </div>
+
+                    <Button
+                      text={
+                        isDownloading ? "Descargando..." : report.buttonLabel
+                      }
+                      onClick={() => handleDownload(report)}
+                      className="reportes-page__button"
+                      disabled={isDownloading}
+                    />
+                  </article>
+                );
+              })}
+            </div>
+          </>
+        )}
       </section>
     </LandingTemplate>
   );

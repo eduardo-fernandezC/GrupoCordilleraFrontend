@@ -23,13 +23,10 @@ const SalesReportPage = () => {
     handleSelectVenta,
   } = useSalesReport();
 
-  if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error} />;
 
   const totalVentas = ventas.length;
-
   const totalIngresos = ventas.reduce((acc, venta) => acc + venta.total, 0);
-
   const promedioVenta = totalVentas > 0 ? totalIngresos / totalVentas : 0;
 
   const sucursalesUnicas = new Set(ventas.map((venta) => venta.sucursal.nombre))
@@ -45,17 +42,14 @@ const SalesReportPage = () => {
 
         <div className="sales-report-page__stats">
           <StatCard title="Cantidad de ventas" value={totalVentas} />
-
           <StatCard
             title="Ingresos totales"
             value={formatCurrency(totalIngresos)}
           />
-
           <StatCard
             title="Promedio por venta"
             value={formatCurrency(promedioVenta)}
           />
-
           <StatCard title="Sucursales activas" value={sucursalesUnicas} />
         </div>
 
@@ -68,25 +62,33 @@ const SalesReportPage = () => {
               </Text>
             </div>
 
-            <SalesReportList
-              ventas={ventas}
-              selectedVentaId={selectedVentaId}
-              onSelectVenta={handleSelectVenta}
-            />
+            {loading ? (
+              <div className="sales-report-page__loader">
+                <Loader />
+              </div>
+            ) : (
+              <>
+                <SalesReportList
+                  ventas={ventas}
+                  selectedVentaId={selectedVentaId}
+                  onSelectVenta={handleSelectVenta}
+                />
 
-            <div className="pagination">
-              <Button onClick={previousPage} disabled={page === 0}>
-                ←
-              </Button>
+                <div className="pagination">
+                  <Button onClick={previousPage} disabled={page === 0}>
+                    ←
+                  </Button>
 
-              <span>
-                Pagina {page + 1} de {Math.max(totalPages, 1)}
-              </span>
+                  <span>
+                    Pagina {page + 1} de {Math.max(totalPages, 1)}
+                  </span>
 
-              <Button onClick={nextPage} disabled={page >= totalPages - 1}>
-                →
-              </Button>
-            </div>
+                  <Button onClick={nextPage} disabled={page >= totalPages - 1}>
+                    →
+                  </Button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
