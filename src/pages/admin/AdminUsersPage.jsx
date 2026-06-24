@@ -54,7 +54,6 @@ const AdminUsersPage = () => {
   if (!isAuthenticated || !roles.includes("ADMIN")) {
     return <Navigate to="/unauthorized" replace />;
   }
-
   const totalUsers = users.length;
   const hasSearch = searchQuery.trim().length > 0;
   const handleCreate = () => {
@@ -126,8 +125,6 @@ const AdminUsersPage = () => {
       notifyError(`Error al eliminar: ${err.message}`);
     }
   };
-
-  if (loading) return <Loader />;
 
   if (error) return <ErrorMessage message={error} />;
 
