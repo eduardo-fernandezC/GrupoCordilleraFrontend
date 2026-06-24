@@ -27,7 +27,7 @@ const emptyForm = {
 };
 
 const AdminProductsPage = () => {
-  const { isAuthenticated, user, isLoading } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   const roles = getRoles(user);
 
   const {
@@ -44,8 +44,6 @@ const AdminProductsPage = () => {
   const [productToDelete, setProductToDelete] = useState(null);
   const [formErrors, setFormErrors] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
-
-  if (isLoading) return <div>Loading...</div>;
 
   if (!isAuthenticated || !roles.includes("ADMIN")) {
     return <Navigate to="/unauthorized" replace />;
@@ -116,13 +114,12 @@ const AdminProductsPage = () => {
     }
   };
 
-  if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error} />;
 
   return (
     <LandingTemplate>
       <section className="admin-products-page">
-        {/* Hero Section */}
+        {/* HERO */}
         <div className="admin-products-page__hero">
           <div>
             <Text variant="p" className="admin-products-page__eyebrow">
@@ -133,6 +130,7 @@ const AdminProductsPage = () => {
               Crea, edita y elimina productos del catálogo
             </Text>
           </div>
+
           <div className="admin-products-page__hero-actions">
             <div className="admin-products-page__summary-card">
               <Text
@@ -152,10 +150,11 @@ const AdminProductsPage = () => {
           </div>
         </div>
 
-        {/* Table Section */}
+        {/* TABLE */}
         <div className="admin-products-page__table-card">
           <div className="admin-products-page__table-header">
             <Text variant="h2">Productos</Text>
+
             <div className="admin-products-page__search-wrap">
               <SearchInput
                 value={searchQuery}
@@ -166,7 +165,11 @@ const AdminProductsPage = () => {
             </div>
           </div>
 
-          {filteredProducts.length > 0 ? (
+          {loading ? (
+            <div className="admin-products-page__loader">
+              <Loader />
+            </div>
+          ) : filteredProducts.length > 0 ? (
             <div className="admin-products-page__table-wrap">
               <ProductTable
                 products={filteredProducts}
@@ -183,7 +186,7 @@ const AdminProductsPage = () => {
           )}
         </div>
 
-        {/* Form Modal */}
+        {/* FORM */}
         {isFormOpen && (
           <div className="admin-products-page__modal">
             <div className="admin-products-page__dialog">
@@ -213,7 +216,7 @@ const AdminProductsPage = () => {
           </div>
         )}
 
-        {/* Delete Modal */}
+        {/* modal para eliminar */}
         <DeleteProductModal
           product={productToDelete}
           onCancel={() => setProductToDelete(null)}
