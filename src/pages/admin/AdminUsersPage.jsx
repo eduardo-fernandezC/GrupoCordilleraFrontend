@@ -26,7 +26,7 @@ const emptyForm = {
 };
 
 const AdminUsersPage = () => {
-  const { isAuthenticated, user, isLoading } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   const roles = getRoles(user);
 
   const {
@@ -50,8 +50,6 @@ const AdminUsersPage = () => {
   const [editingUser, setEditingUser] = useState(null);
   const [userToDelete, setUserToDelete] = useState(null);
   const [formErrors, setFormErrors] = useState({});
-
-  if (isLoading) return <div>Loading...</div>;
 
   if (!isAuthenticated || !roles.includes("ADMIN")) {
     return <Navigate to="/unauthorized" replace />;
@@ -177,8 +175,12 @@ const AdminUsersPage = () => {
               />
             </div>
           </div>
-          {/*esto lo puedo desglozar */}
-          {users.length > 0 ? (
+
+          {loading ? (
+            <div className="admin-users-page__loader">
+              <Loader />
+            </div>
+          ) : users.length > 0 ? (
             <>
               <div className="admin-users-page__table-wrap">
                 <UserTable
