@@ -10,9 +10,12 @@ const ProductosPage = () => {
   const { data, loading, error } = useDashboardData();
   const title = "Estadisticas Productos";
 
-  if (loading) return <Loader />;
   if (error)
-    return <ErrorMessage message={`Error al cargar Dashboard de ${title}`} />;
+    return (
+      <LandingTemplate>
+        <ErrorMessage message={`Error al cargar Dashboard de ${title}`} />
+      </LandingTemplate>
+    );
 
   return (
     <LandingTemplate>
@@ -21,10 +24,18 @@ const ProductosPage = () => {
           title={title}
           subtitle="productos mas y menos vendidos"
         />
-        <ProductChart
-          productoMasVendido={data.productoMasVendido}
-          productoMenosVendido={data.productoMenosVendido}
-        />
+        <div className="productos-page__chart">
+          {loading ? (
+            <div className="productos-page__loader">
+              <Loader />
+            </div>
+          ) : (
+            <ProductChart
+              productoMasVendido={data.productoMasVendido}
+              productoMenosVendido={data.productoMenosVendido}
+            />
+          )}
+        </div>
       </section>
     </LandingTemplate>
   );
