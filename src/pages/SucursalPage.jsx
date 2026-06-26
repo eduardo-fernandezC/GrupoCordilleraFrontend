@@ -10,15 +10,26 @@ const SucursalPage = () => {
   const { data, loading, error } = useDashboardData();
   const title = "Sucursales";
 
-  if (loading) return <Loader />;
   if (error)
-    return <ErrorMessage message={`Error al cargar Dashboard de ${title}`} />;
+    return (
+      <LandingTemplate>
+        <ErrorMessage message={`Error al cargar Dashboard de ${title}`} />
+      </LandingTemplate>
+    );
 
   return (
     <LandingTemplate>
       <section className="page-content page-content--sucursal">
         <DashboardHeader title={title} subtitle="rendimiento por sucursal" />
-        <BranchChart sucursales={data.mejorVendedorPorSucursal} />
+        <div className="sucursal-page__chart">
+          {loading ? (
+            <div className="sucursal-page__loader">
+              <Loader />
+            </div>
+          ) : (
+            <BranchChart sucursales={data.mejorVendedorPorSucursal} />
+          )}
+        </div>
       </section>
     </LandingTemplate>
   );
